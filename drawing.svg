@@ -1,0 +1,1192 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="drawing.svg">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lend"
+       style="overflow:visible;">
+      <path
+         id="path3784"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;"
+         transform="scale(0.8) rotate(180) translate(12.5,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lstart"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lstart"
+       style="overflow:visible">
+      <path
+         id="path3781"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt"
+         transform="scale(0.8) translate(12.5,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="1972.5145"
+     inkscape:cy="525.01803"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1060"
+     inkscape:window-x="1678"
+     inkscape:window-y="-3"
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3005"
+       width="1705.1375"
+       height="1118.2389"
+       x="-51.51778"
+       y="-8.2979898"
+       sodipodi:insensitive="true" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8, 8;stroke-dashoffset:0"
+       id="rect3150"
+       width="593.96973"
+       height="279.81226"
+       x="976.8175"
+       y="146.25534" />
+    <rect
+       style="fill:#ffffff;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect2985"
+       width="226.27417"
+       height="215.16249"
+       x="51.51778"
+       y="309.90005" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="119.198"
+       y="305.85944"
+       id="text2987"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2989"
+         x="119.198"
+         y="305.85944">Main</tspan></text>
+    <rect
+       y="309.90005"
+       x="328.29959"
+       height="215.16249"
+       width="226.27417"
+       id="rect2991"
+       style="fill:#ffffff;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text2993"
+       y="305.85944"
+       x="395.9798"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       xml:space="preserve"><tspan
+         y="305.85944"
+         x="395.9798"
+         id="tspan2995"
+         sodipodi:role="line">Main_window</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 277.79195,417.4813 50.50764,0"
+       id="path2997"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#rect2985"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end="#rect2991"
+       inkscape:connection-end-point="d4" />
+    <rect
+       style="fill:#ffffff;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect2999"
+       width="226.27417"
+       height="215.16249"
+       x="693.97485"
+       y="68.473595" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="733.37073"
+       y="64.432976"
+       id="text3001"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3003"
+         x="733.37073"
+         y="64.432976">podcast_manager</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#Arrow1Lstart);marker-end:url(#Arrow1Lend)"
+       d="M 554.57376,342.78583 693.97485,250.75031"
+       id="path3007"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#rect2991"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end="#rect2999"
+       inkscape:connection-end-point="d4" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="514.1676"
+       y="204.84419"
+       id="text4407"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4409"
+         x="514.1676"
+         y="204.84419">list load_list(dir)</tspan><tspan
+         sodipodi:role="line"
+         x="514.1676"
+         y="229.84419"
+         id="tspan4411">void save_pos()</tspan><tspan
+         sodipodi:role="line"
+         x="514.1676"
+         y="254.84419"
+         id="tspan4413">void save_raiting()</tspan></text>
+    <rect
+       y="316.97113"
+       x="693.97485"
+       height="279.81226"
+       width="226.27417"
+       id="rect4415"
+       style="fill:#ffffff;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text4417"
+       y="312.93051"
+       x="762.66516"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       xml:space="preserve"><tspan
+         y="312.93051"
+         x="762.66516"
+         id="tspan4419"
+         sodipodi:role="line">pod_play</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#Arrow1Lstart);marker-end:none"
+       d="m 554.57376,429.6701 139.40109,15.01836"
+       id="path4421"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#rect2991"
+       inkscape:connection-start-point="d4"
+       inkscape:connection-end="#rect4415"
+       inkscape:connection-end-point="d4" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="725.28949"
+       y="108.87971"
+       id="text4423"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4425"
+         x="725.28949"
+         y="108.87971">loads the items</tspan><tspan
+         sodipodi:role="line"
+         x="725.28949"
+         y="133.87971"
+         id="tspan4429">&amp;</tspan><tspan
+         sodipodi:role="line"
+         x="725.28949"
+         y="158.87971"
+         id="tspan4427">saves the changes</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4431"
+       y="469.50418"
+       x="697.00519"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       xml:space="preserve"><tspan
+         id="tspan4437"
+         y="469.50418"
+         x="697.00519"
+         sodipodi:role="line">looks for other instanzes</tspan><tspan
+         y="494.50418"
+         x="697.00519"
+         sodipodi:role="line"
+         id="tspan4444">and comunicates so I</tspan><tspan
+         y="519.50415"
+         x="697.00519"
+         sodipodi:role="line"
+         id="tspan4446">get console commands</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="716.19812"
+       y="338.18433"
+       id="text4448"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4450"
+         x="716.19812"
+         y="338.18433">if alone keep looking</tspan><tspan
+         sodipodi:role="line"
+         x="716.19812"
+         y="363.18433"
+         id="tspan4452">if already running</tspan><tspan
+         sodipodi:role="line"
+         x="716.19812"
+         y="388.18433"
+         id="tspan4454">give command and</tspan><tspan
+         sodipodi:role="line"
+         x="716.19812"
+         y="413.18433"
+         id="tspan4456">exit</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="579.82758"
+       y="422.02701"
+       id="text4458"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4460"
+         x="579.82758"
+         y="422.02701">int check()</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="709.12708"
+       y="560.41791"
+       id="text3021"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3023"
+         x="709.12708"
+         y="560.41791">attach and detach to </tspan><tspan
+         sodipodi:role="line"
+         x="709.12708"
+         y="585.41791"
+         id="tspan3025">shared memory</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3027"
+       y="464.4534"
+       x="578.81744"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       xml:space="preserve"><tspan
+         y="464.4534"
+         x="578.81744"
+         id="tspan3029"
+         sodipodi:role="line">bool alone()</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="76.771591"
+       y="387.68179"
+       id="text3031"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3033"
+         x="76.771591"
+         y="387.68179">create main window</tspan><tspan
+         sodipodi:role="line"
+         x="76.771591"
+         y="412.68179"
+         id="tspan3035">if window says other</tspan><tspan
+         sodipodi:role="line"
+         x="76.771591"
+         y="437.68179"
+         id="tspan3037">instance detected</tspan><tspan
+         sodipodi:role="line"
+         x="76.771591"
+         y="462.68179"
+         id="tspan3039">return 0;</tspan><tspan
+         sodipodi:role="line"
+         x="76.771591"
+         y="487.68179"
+         id="tspan3041">else launch app;</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="339.41125"
+       y="350.30615"
+       id="text3043"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="339.41125"
+         y="350.30615"
+         id="tspan3047">connect signals and </tspan><tspan
+         sodipodi:role="line"
+         x="339.41125"
+         y="375.30615"
+         id="tspan3053">slots. create commun.</tspan><tspan
+         sodipodi:role="line"
+         x="339.41125"
+         y="400.30615"
+         id="tspan3059">if allready running </tspan><tspan
+         sodipodi:role="line"
+         x="339.41125"
+         y="425.30615"
+         id="tspan3061">write info to other</tspan><tspan
+         sodipodi:role="line"
+         x="339.41125"
+         y="450.30615"
+         id="tspan3063">else display ui</tspan><tspan
+         sodipodi:role="line"
+         x="339.41125"
+         y="475.30615"
+         id="tspan3065">and link signals</tspan><tspan
+         sodipodi:role="line"
+         x="339.41125"
+         y="500.30615"
+         id="tspan3057" /></text>
+    <g
+       id="g3046"
+       transform="translate(-199.00006,119.198)">
+      <rect
+         y="633.14886"
+         x="272.74118"
+         height="96.974648"
+         width="128.28937"
+         id="rect3040"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8, 8;stroke-dashoffset:0" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3042"
+         y="691.73767"
+         x="284.86304"
+         style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="691.73767"
+           x="284.86304"
+           id="tspan3044"
+           sodipodi:role="line">ask_for_file</tspan></text>
+    </g>
+    <g
+       transform="translate(-2.0203099,117.17769)"
+       id="g3051">
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8, 8;stroke-dashoffset:0"
+         id="rect3053"
+         width="128.28937"
+         height="96.974648"
+         x="272.74118"
+         y="633.14886" />
+      <text
+         xml:space="preserve"
+         style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="274.76151"
+         y="682.6463"
+         id="text3055"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan3058"
+           x="274.76151"
+           y="682.6463">create palylist</tspan><tspan
+           sodipodi:role="line"
+           x="274.76151"
+           y="707.6463"
+           id="tspan3060">and pod list</tspan></text>
+    </g>
+    <g
+       id="g3062"
+       transform="translate(208.09142,118.18785)">
+      <rect
+         y="633.14886"
+         x="272.74118"
+         height="96.974648"
+         width="128.28937"
+         id="rect3064"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8, 8;stroke-dashoffset:0" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3066"
+         y="682.6463"
+         x="274.76151"
+         style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           id="tspan3070"
+           y="682.6463"
+           x="274.76151"
+           sodipodi:role="line">add tab in play</tspan><tspan
+           y="707.6463"
+           x="274.76151"
+           sodipodi:role="line"
+           id="tspan3074">&amp; pod list tw</tspan></text>
+    </g>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8, 8;stroke-dashoffset:0"
+       id="rect3078"
+       width="521.23871"
+       height="189.90868"
+       x="783.87836"
+       y="669.51434" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8, 8;stroke-dashoffset:0"
+       id="rect3080"
+       width="212.13203"
+       height="171.72594"
+       x="783.87836"
+       y="865.48395" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8, 8;stroke-dashoffset:0"
+       id="rect3086"
+       width="84.852814"
+       height="37.375645"
+       x="784.88855"
+       y="668.50421" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8, 8;stroke-dashoffset:0"
+       id="rect3088"
+       width="76.771591"
+       height="39.39595"
+       x="883.88348"
+       y="669.51434" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="808.12207"
+       y="694.76819"
+       id="text3090"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3092"
+         x="808.12207"
+         y="694.76819">a</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="914.18805"
+       y="693.75806"
+       id="text3094"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3096"
+         x="914.18805"
+         y="693.75806">b</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="967.72614"
+       y="694.76819"
+       id="text3110"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3112"
+         x="967.72614"
+         y="694.76819">+</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1017.2236"
+       y="883.66669"
+       id="text3114"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3116"
+         x="1017.2236"
+         y="883.66669">+  ask user 4 lokation to scann</tspan><tspan
+         sodipodi:role="line"
+         x="1017.2236"
+         y="908.66669"
+         id="tspan3118"> and add new tab (c) with the </tspan><tspan
+         sodipodi:role="line"
+         x="1017.2236"
+         y="933.66669"
+         id="tspan3120">found items</tspan><tspan
+         sodipodi:role="line"
+         x="1017.2236"
+         y="958.66669"
+         id="tspan3122" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1008.1322"
+       y="186.66145"
+       id="text3124"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3126"
+         x="1008.1322"
+         y="186.66145">if a folder got subfolders threat the  folder like so:</tspan><tspan
+         sodipodi:role="line"
+         x="1008.1322"
+         y="211.66145"
+         id="tspan3134" /><tspan
+         sodipodi:role="line"
+         x="1008.1322"
+         y="236.66145"
+         id="tspan3136" /><tspan
+         sodipodi:role="line"
+         x="1008.1322"
+         y="261.66144"
+         id="tspan3138" /><tspan
+         sodipodi:role="line"
+         x="1008.1322"
+         y="286.66144"
+         id="tspan3140">shu_se1_aa.mp3 .. sgu_se1_bb.mp3.    shu_se1: raiting =44</tspan><tspan
+         sodipodi:role="line"
+         x="1008.1322"
+         y="311.66144"
+         id="tspan3142">shu_se2_aa.mp3 .. sgu_se2_bb.mp3.    shu_se2: raiting =49</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1027.3251"
+       y="223.02695"
+       id="text3128"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3130"
+         x="1027.3251"
+         y="223.02695">sgu/se1/aa.mp3...bb.mp3</tspan><tspan
+         sodipodi:role="line"
+         x="1027.3251"
+         y="248.02695"
+         id="tspan3132">sgu/se2/aa.mp3...bb.mp3</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1024.2947"
+       y="370.50922"
+       id="text3144"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3146"
+         x="1024.2947"
+         y="370.50922">pro gives use controll over flow</tspan><tspan
+         sodipodi:role="line"
+         x="1024.2947"
+         y="395.50922"
+         id="tspan3148">con reqiers for each new folder a new raiting</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="44.44672"
+       y="638.19965"
+       id="text3096"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3098"
+         x="44.44672"
+         y="638.19965">make intelligent: only add/remove elements, don,t regen the entire thing when reloading </tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="484.87323"
+       y="880.63623"
+       id="text3097"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3099"
+         x="484.87323"
+         y="880.63623">TAB contains:</tspan><tspan
+         sodipodi:role="line"
+         x="484.87323"
+         y="905.63623"
+         id="tspan3101">TW </tspan><tspan
+         sodipodi:role="line"
+         x="484.87323"
+         y="930.63623"
+         id="tspan3103">TWIs</tspan><tspan
+         sodipodi:role="line"
+         x="484.87323"
+         y="955.63623"
+         id="tspan3107">Playlist</tspan><tspan
+         sodipodi:role="line"
+         x="484.87323"
+         y="980.63623"
+         id="tspan3167" /><tspan
+         sodipodi:role="line"
+         x="484.87323"
+         y="1005.6362"
+         id="tspan3169">TAB(){</tspan><tspan
+         sodipodi:role="line"
+         x="484.87323"
+         y="1030.6362"
+         id="tspan3171">new TW</tspan><tspan
+         sodipodi:role="line"
+         x="484.87323"
+         y="1055.6362"
+         id="tspan3175">new playlist</tspan><tspan
+         sodipodi:role="line"
+         x="484.87323"
+         y="1080.6362"
+         id="tspan3177">ask location</tspan><tspan
+         sodipodi:role="line"
+         x="484.87323"
+         y="1105.6362"
+         id="tspan3170" /><tspan
+         sodipodi:role="line"
+         x="484.87323"
+         y="1130.6362"
+         id="tspan3168">connect TW playlist pos_change, dubleclick, drag drop,</tspan><tspan
+         sodipodi:role="line"
+         x="484.87323"
+         y="1155.6362"
+         id="tspan3173">}</tspan><tspan
+         sodipodi:role="line"
+         x="484.87323"
+         y="1180.6362"
+         id="tspan3109" /><tspan
+         sodipodi:role="line"
+         x="484.87323"
+         y="1205.6362"
+         id="tspan3172">get_playlist(return playlist)</tspan><tspan
+         sodipodi:role="line"
+         x="484.87323"
+         y="1230.6362"
+         id="tspan3174" /><tspan
+         sodipodi:role="line"
+         x="484.87323"
+         y="1255.6362"
+         id="tspan3176">//how to connect the next prev to current playlist ?</tspan><tspan
+         sodipodi:role="line"
+         x="484.87323"
+         y="1280.6362"
+         id="tspan3105" /></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.99999994;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect2985-5"
+       width="512.14288"
+       height="324.28571"
+       x="1661.507"
+       y="974.50165" />
+    <rect
+       y="1003.7874"
+       x="1661.507"
+       height="295"
+       width="512.14288"
+       id="rect2987"
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#00ff00;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1662.4838"
+       y="1024.6526"
+       id="text2989"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2991"
+         x="1662.4838"
+         y="1024.6526">Musik_by_x/</tspan><tspan
+         sodipodi:role="line"
+         x="1662.4838"
+         y="1049.6526"
+         id="tspan2993" /><tspan
+         sodipodi:role="line"
+         x="1662.4838"
+         y="1074.6526"
+         id="tspan3007" /><tspan
+         sodipodi:role="line"
+         x="1662.4838"
+         y="1099.6526"
+         id="tspan3009" /></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect2995"
+       width="115.15294"
+       height="295"
+       x="1661.507"
+       y="1003.7874" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#0000ff;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1666.0193"
+       y="1122.1323"
+       id="text2997"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="1666.0193"
+         y="1122.1323"
+         id="tspan3003-0">CD -10Star</tspan><tspan
+         sodipodi:role="line"
+         x="1666.0193"
+         y="1147.1323"
+         id="tspan3001">SN - 0 Star</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3011"
+       y="1046.876"
+       x="1669.5548"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#00ff00;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       xml:space="preserve"><tspan
+         id="tspan3015"
+         y="1046.876"
+         x="1669.5548"
+         sodipodi:role="line">Artist/ icon</tspan><tspan
+         y="1071.876"
+         x="1669.5548"
+         sodipodi:role="line"
+         id="tspan3127">smart_p.l</tspan></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3038"
+       width="73.236061"
+       height="17.172594"
+       x="1776.631"
+       y="1003.9445" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#0000ff;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1794.3087"
+       y="1018.5917"
+       id="text3040"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3042"
+         x="1794.3087"
+         y="1018.5917">podc</tspan></text>
+    <rect
+       y="1003.9445"
+       x="1849.8671"
+       height="17.172594"
+       width="91.923882"
+       id="rect3044"
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text3046"
+       y="1019.6018"
+       x="1854.0498"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       xml:space="preserve"><tspan
+         y="1019.6018"
+         x="1854.0498"
+         id="tspan3048"
+         sodipodi:role="line">a_books</tspan></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3050"
+       width="91.923882"
+       height="17.172594"
+       x="1942.296"
+       y="1003.9445" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#00ff00;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1955.428"
+       y="1019.6018"
+       id="text3052"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3054"
+         x="1955.428"
+         y="1019.6018">musik</tspan></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:1.02002525;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3056"
+       width="233.32529"
+       height="28.284271"
+       x="1777.1361"
+       y="1270.1196" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1957.4523"
+       y="1237.0472"
+       id="text3058"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3060-0"
+         x="1957.4523"
+         y="1237.0472">time/time</tspan><tspan
+         sodipodi:role="line"
+         x="1960.2257"
+         y="1262.0472"
+         id="tspan3220">slider/moodbar? </tspan></text>
+    <rect
+       y="1270.1196"
+       x="-2172.6211"
+       height="28.284271"
+       width="163.03331"
+       id="rect3062"
+       style="fill:none;stroke:#000000;stroke-width:0.97576886;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       transform="scale(-1,1)" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1908.7866"
+       y="1289.3126"
+       id="text3064"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3066"
+         x="1908.7866"
+         y="1289.3126">play pause</tspan></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.87954009;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3068"
+       width="396.9855"
+       height="192.26282"
+       x="1776.6643"
+       y="1020.96" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1856.6956"
+       y="1076.6212"
+       id="text3070"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3072"
+         x="1856.6956"
+         y="1076.6212">play_list Q(tw+ctwi+playlist)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1476.8895"
+       y="1356.8765"
+       id="text3074"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3076"
+         x="1476.8895"
+         y="1356.8765">more than one playlist and player </tspan><tspan
+         sodipodi:role="line"
+         x="1476.8895"
+         y="1381.8765"
+         id="tspan3078">so we can play musik wihle playing podcast and</tspan><tspan
+         sodipodi:role="line"
+         x="1476.8895"
+         y="1406.8765"
+         id="tspan3080">don't loose place in musik or podcast when pausing </tspan><tspan
+         sodipodi:role="line"
+         x="1476.8895"
+         y="1431.8765"
+         id="tspan3082">and switching :D</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3084"
+       y="1469.0033"
+       x="1476.8895"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       xml:space="preserve"><tspan
+         id="tspan3092-2"
+         y="1469.0033"
+         x="1476.8895"
+         sodipodi:role="line">save position for all media periodicaly so we always remember where we left of</tspan><tspan
+         y="1494.0033"
+         x="1476.8895"
+         sodipodi:role="line"
+         id="tspan3103-8">even on crash, also marke completed podcasts as listend and skipped ones as </tspan><tspan
+         y="1519.0033"
+         x="1476.8895"
+         sodipodi:role="line"
+         id="tspan3113">skipped</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1476.8895"
+       y="1574.0592"
+       id="text3105"
+       sodipodi:linespacing="125%"><tspan
+         id="tspan3109-9"
+         sodipodi:role="line"
+         x="1476.8895"
+         y="1574.0592">smart podcast playlist generation based on raiting and date number of new one...</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1803.6498"
+       y="995.216"
+       id="text3115"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3117"
+         x="1803.6498"
+         y="995.216">window_manager_stuff</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="2096.5071"
+       y="1018.0731"
+       id="text3121"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3123"
+         x="2096.5071"
+         y="1018.0731">Settings</tspan></text>
+    <rect
+       y="1003.9445"
+       x="2094.439"
+       height="17.172594"
+       width="79.781021"
+       id="rect3125"
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#0000ff;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1665.7926"
+       y="1101.6445"
+       id="text3129"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3131"
+         x="1665.7926"
+         y="1101.6445">Podcasts_r/</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1670.7142"
+       y="1185.2194"
+       id="text3208"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3210"
+         x="1670.7142"
+         y="1185.2194">(tw+ctwi)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1896.4286"
+       y="1114.5051"
+       id="text3212"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3214"
+         x="1896.4286"
+         y="1114.5051">c=custom</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1839.2858"
+       y="950.2193"
+       id="text3216"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3218"
+         x="1839.2858"
+         y="950.2193">wide layout</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3222"
+       y="1290.7412"
+       x="2020.9296"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       xml:space="preserve"><tspan
+         y="1290.7412"
+         x="2020.9296"
+         id="tspan3224"
+         sodipodi:role="line">volume</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1787.1428"
+       y="1291.6479"
+       id="text3226"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3228"
+         x="1787.1428"
+         y="1291.6479">current trak</tspan></text>
+    <rect
+       transform="scale(-1,1)"
+       style="fill:none;stroke:#000000;stroke-width:0.83175647;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3230"
+       width="118.46084"
+       height="28.284271"
+       x="-1895.9058"
+       y="1270.1196" />
+    <rect
+       transform="scale(-1,1)"
+       style="fill:none;stroke:#000000;stroke-width:1.51980841;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3232"
+       width="395.51242"
+       height="28.284271"
+       x="-2172.6211"
+       y="1240.8339" />
+    <rect
+       y="1213.691"
+       x="-2172.6211"
+       height="28.284271"
+       width="395.51242"
+       id="rect3234"
+       style="fill:none;stroke:#000000;stroke-width:1.51980841;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       transform="scale(-1,1)" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="798.02051"
+       y="900.83929"
+       id="text3179"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3181"
+         x="798.02051"
+         y="900.83929">display ranking of</tspan><tspan
+         sodipodi:role="line"
+         x="798.02051"
+         y="925.83929"
+         id="tspan3183">current tab contens</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000"
+       id="rect3170"
+       width="229.30463"
+       height="152.53304"
+       x="1894.036"
+       y="354.3468" />
+    <rect
+       y="354.3468"
+       x="2152.635"
+       height="152.53304"
+       width="229.30463"
+       id="rect3172"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000"
+       id="rect3174"
+       width="229.30463"
+       height="152.53304"
+       x="2414.2644"
+       y="354.3468" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="2103.1377"
+       y="200.8036"
+       id="text3176"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3178"
+         x="2103.1377"
+         y="200.8036">QTimer(2000)//saves   1timer shared for all</tspan><tspan
+         sodipodi:role="line"
+         x="2103.1377"
+         y="225.8036"
+         id="tspan3221">connect only to relevant one and disconect when done</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1831.4066"
+       y="597.79352"
+       id="text3180"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3182"
+         x="1831.4066"
+         y="597.79352">Manager // file indexing and saving to textfile</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1921.3101"
+       y="380.61075"
+       id="text3190"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3192"
+         x="1921.3101"
+         y="380.61075">Manager</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="2203.1426"
+       y="388.69196"
+       id="text3194"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3196"
+         x="2203.1426"
+         y="388.69196">Manager</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="2468.8127"
+       y="384.65134"
+       id="text3198"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3200"
+         x="2468.8127"
+         y="384.65134">Manager</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1969.7975"
+       y="428.08792"
+       id="text3202"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3204"
+         x="1969.7975"
+         y="428.08792">QTimer*</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3206"
+       y="428.08792"
+       x="2232.4373"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       xml:space="preserve"><tspan
+         y="428.08792"
+         x="2232.4373"
+         id="tspan3208"
+         sodipodi:role="line">QTimer*</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="2501.1379"
+       y="428.08792"
+       id="text3210"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3212"
+         x="2501.1379"
+         y="428.08792">QTimer*</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 2088.0441,354.3468 2216.2747,231.10816"
+       id="path3214"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#rect3170"
+       inkscape:connection-start-point="d4" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 2246.3478,354.3468 -30.073,-122.22849"
+       id="path3216"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 2414.2644,360.37745 2216.2747,230.09802"
+       id="path3218"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>
