@@ -64,6 +64,14 @@ void Podcast_manager::main_dir () {
             sub_dir(pc.front());	// go through the folder and add all its episodes
         }
     }
+    if(pc.empty()){ // case user has only choosen a single folder as target /// not good with raiting yet.. will create useless .value in folder ! TODO
+        sub= Podcast_Dir.absolutePath().toStdString();	//use foldername as pocast name
+        pc.push_front(new Podcast);
+        pc.front()->name=Podcast_Dir.dirName().toStdString();
+        pc.front()->dir=sub;
+        pc.front()->raiting=-1;
+        sub_dir(pc.front());	// go through the folder and add all its episodes
+    }
 }
 
 void Podcast_manager::sub_dir(Podcast *parent_i) {
