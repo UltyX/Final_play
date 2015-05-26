@@ -13,10 +13,11 @@ MainWindow::MainWindow(QStringList args_i, QWidget *parent) :
     }
     connect(comm_interface,SIGNAL(message_found(int)),this,SLOT(apply_remote_commands(int)) );  // interpret recived commands HERE
 
+cwdir= QCoreApplication::applicationDirPath();
 
-    QLabel *l =new QLabel;
-   // l->setPixmap(QPixmap::fromImage(*(new QImage("/home/ulty/music/x.png"))));
-    l->setPixmap(QPixmap::fromImage(*(new QImage("/home/ulty/projects/Final_play/resc/p2.png"))));
+    // Tabwidget config -begin
+    QLabel *l =new QLabel;   
+    l->setPixmap(QPixmap::fromImage(*(new QImage(cwdir.filePath("p2.png")))));
     l->setAlignment( Qt::AlignCenter);
   //  l->setScaledContents(true); //useless if aspect ratio is not maintained, we got have order
     l->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored );
@@ -26,9 +27,9 @@ MainWindow::MainWindow(QStringList args_i, QWidget *parent) :
     ui->tabWidget->tabBar()->setTabIcon(0,QIcon::fromTheme("list-add"));
     connect(ui->tabWidget, SIGNAL(tabBarClicked(int)),this,SLOT(add_new_on_plus_click(int)) );
     connect(ui->tabWidget->tabBar(), SIGNAL(currentChanged(int)),this,SLOT(scroll_bounds(int)) );
+    // Tabwidget config -- end
 
-
-cwdir= QCoreApplication::applicationDirPath();                                          // location of the executable, and icons
+                                         // location of the executable, and icons
 settings_location = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);   // local of the settings
 
 saver = new QTimer(this);                                   //save QTimer
@@ -48,9 +49,6 @@ ui->next_b->setIcon(style()->standardIcon(QStyle::SP_MediaSeekForward));        
 
 connect(ui->play_b   ,SIGNAL(clicked()), this, SIGNAL(play_pause()));   // play/pause button pressed, emits just a signal
 ui->play_b->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));       // give it the nice play icon
-
-
-
 
 ui->vol_sl->setRange(0,100); //set range 0-100%
 connect(ui->vol_sl,SIGNAL(valueChanged(int)),player,SLOT(setVolume(int)));  //volume slider moved
