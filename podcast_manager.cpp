@@ -78,7 +78,8 @@ void Podcast_manager::sub_dir(Podcast *parent_i) {
 
     QDir folders;
     std::string::size_type siz;
-    unordered_map<string, string> pos_map;    
+    unordered_map<string, string> pos_map; //from file
+    unordered_map<string, string> pos_map_update; //from to_file if files nolonger exist
     string dir;
     string pos;
     QStringList filters;
@@ -103,6 +104,7 @@ void Podcast_manager::sub_dir(Podcast *parent_i) {
 
     for (auto epi : (*parent_i).episodes) {
         pos=pos_map[epi->name];
+        pos_map_update[epi->name]=pos;
         if(pos=="") {
             epi->last_position=0;
             epi->listend=false;
@@ -112,8 +114,12 @@ void Podcast_manager::sub_dir(Podcast *parent_i) {
 	    epi->listend=false;
         }
         else {
-	  epi->listend=true;
-	}
+        epi->listend=true;
+        }
+    }
+    if(pos_map.size() != pos_map_update.size() ){
+        file_from___map_unorderd(&pos_map_update,dir);
+        cout << " updated .pos file for "<< parent_i->dir<< endl<<"from: "<< pos_map.size()<<"to: "<<pos_map_update.size()<<"entrys"<<endl;
     }
 }
 
