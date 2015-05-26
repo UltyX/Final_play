@@ -97,17 +97,24 @@ void Playlist_tree_wg::on_Playlist_tree_wg_customContextMenuRequested(const QPoi
 
 
 void Playlist_tree_wg::mark_epi_as_listened(){      // call from the context menu
-    Episode* epi =   ((Epi_list_item*)(this->selectedItems().first()))->getEpisode();
-    epi->listend=true;
-    manager->save_position(epi);
+    foreach (QTreeWidgetItem* item_i, this->selectedItems()) {
+
+        Episode* epi =   ((Epi_list_item*)(item_i))->getEpisode();
+        epi->listend=true;
+        manager->save_position(epi);    //overkill, would only be necessary to call at end for each podcast which has one or more episodes changed
+        }
 }
+
 void Playlist_tree_wg::reset_playtime_slot(){        // call from the context menu
-    Epi_list_item* epi_li   = (Epi_list_item*)this->selectedItems().first();
-    Episode* epi            = (epi_li)->getEpisode();
-    epi->last_position=0;
-    epi_li->setText(1,"00:00:00");
-    epi->listend=false;
-    manager->save_position(epi);
+    foreach (QTreeWidgetItem* item_i, this->selectedItems()) {
+
+        Epi_list_item* epi_li   = (Epi_list_item*)item_i;
+        Episode* epi            = (epi_li)->getEpisode();
+        epi->last_position=0;
+        epi_li->setText(1,"00:00:00");
+        epi->listend=false;
+        manager->save_position(epi);    //overkill, would only be necessary to call at end for each podcast which has one or more episodes changed
+        }
 }
 
 

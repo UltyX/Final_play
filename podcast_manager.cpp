@@ -104,22 +104,22 @@ void Podcast_manager::sub_dir(Podcast *parent_i) {
 
     for (auto epi : (*parent_i).episodes) {
         pos=pos_map[epi->name];
-        pos_map_update[epi->name]=pos;
+        pos_map_update[epi->name]=pos;                  // copy to 2.end map so i can check for useless entrys
         if(pos=="") {
-            epi->last_position=0;
+            epi->last_position=0;                       // new so set time to 0
             epi->listend=false;
         }
         else if( (pos[0]!='d') && (pos[0]!='s') ) {
-            epi->last_position = stoi (pos,&siz);
-	    epi->listend=false;
+            epi->last_position = stoi (pos,&siz);       // not listened so set time
+            epi->listend=false;
         }
         else {
-        epi->listend=true;
+            epi->listend=true;                          // indicates that it is already done
         }
     }
     if(pos_map.size() != pos_map_update.size() ){
         file_from___map_unorderd(&pos_map_update,dir);
-        cout << " updated .pos file for "<< parent_i->dir<< endl<<"from: "<< pos_map.size()<<"to: "<<pos_map_update.size()<<"entrys"<<endl;
+        cout << " updated .pos file for "<< parent_i->dir<< endl<<"from: "<< pos_map.size()<<"  to: "<<pos_map_update.size()<<"  entrys"<<endl;
     }
 }
 
