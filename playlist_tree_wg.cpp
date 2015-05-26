@@ -47,7 +47,8 @@ Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player, QStackedWidget *sta
 
     this->setAcceptDrops(true);                                     // make drag and drop work -begin
     this->setDragEnabled(true);
-    this->setDragDropMode(QAbstractItemView::InternalMove);
+    //this->setDragDropMode(QAbstractItemView::InternalMove);
+    this->setDragDropMode(QAbstractItemView::DragDrop);
     this->setSelectionMode(QAbstractItemView::ExtendedSelection);   // make drag and drop work -- end
     if(player->playlist()==NULL){
         player->setPlaylist(&playlist);
@@ -219,7 +220,7 @@ QString Playlist_tree_wg::get_dir(){
 void Playlist_tree_wg::dropEvent(QDropEvent * event)
 {
 //http://stackoverflow.com/questions/18738676/qt-drag-and-drop-treeview-what-am-i-missing
-
+std::cout << "TODO for outside items... called dropping"<<std::endl;
     QModelIndex dropIndex = indexAt(event->pos());  // event --> target position
     int to = dropIndex.row();                       // target position --> int value
     QFileInfo fileInfo;
@@ -239,4 +240,21 @@ void Playlist_tree_wg::dropEvent(QDropEvent * event)
         new_episode->setFlags(Qt::ItemIsDragEnabled |  Qt::ItemIsSelectable |  Qt::ItemIsEnabled);
         this->insertTopLevelItem(to,new_episode);
     }
+}
+
+void Playlist_tree_wg::dragEnterEvent(QDragEnterEvent *event)
+{
+    event->acceptProposedAction();  //nice green mouse icon
+}
+
+void Playlist_tree_wg::dragMoveEvent(QDragMoveEvent *event)
+{
+
+    QTreeWidget::dragMoveEvent(event);  // internal items generate highlitet destination place
+    event->acceptProposedAction();      // order matters here   //nice green mouse icon
+}
+
+void Playlist_tree_wg::dragLeaveEvent(QDragLeaveEvent *event)
+{
+    event->accept();    //nice green mouse icon
 }

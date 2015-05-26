@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
 }
 /*
 
+switch from txtfiles to sqlite db
 
 
 */

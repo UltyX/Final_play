@@ -42,7 +42,13 @@ void save_position();
 void item_dubble_clck(QTreeWidgetItem* item_i, int column);
 void reset_playtime_slot();
 void mark_epi_as_listened();
-void dropEvent(QDropEvent * event);
+protected:
+
+void dragEnterEvent(QDragEnterEvent *event) Q_DECL_OVERRIDE;
+void dragMoveEvent(QDragMoveEvent *event) Q_DECL_OVERRIDE;
+void dragLeaveEvent(QDragLeaveEvent *event) Q_DECL_OVERRIDE;
+void dropEvent(QDropEvent *event) Q_DECL_OVERRIDE;
+
 public slots:
 void generate_ordered_playlist(bool new_first);
 public:
