@@ -219,8 +219,24 @@ QString Playlist_tree_wg::get_dir(){
 
 void Playlist_tree_wg::dropEvent(QDropEvent * event)
 {
+
+    const QMimeData *mimeData = event->mimeData();
+    if (mimeData->hasUrls()) {
+            std::cout<<"urls"<<std::endl;
+            QList<QUrl> urlList = mimeData->urls();            
+
+            foreach (QUrl where, urlList ) {
+                std::cout << "x"<<std::endl;
+                QString url = where.path();
+            //    manager->addFromUrl(url);  // not realy doable without database support
+            }
+            std::cout << "nTODO for outside items\nnot realy doable without database support because raiting and updating..."<<std::endl;
+            return;
+    }
+
+
 //http://stackoverflow.com/questions/18738676/qt-drag-and-drop-treeview-what-am-i-missing
-std::cout << "TODO for outside items... called dropping"<<std::endl;
+
     QModelIndex dropIndex = indexAt(event->pos());  // event --> target position
     int to = dropIndex.row();                       // target position --> int value
     QFileInfo fileInfo;
