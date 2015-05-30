@@ -7,7 +7,8 @@ CONFIG += c++11
 QT       += core gui \
       multimedia \
       multimediawidgets \
-widgets
+widgets \
+sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

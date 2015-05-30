@@ -94,6 +94,15 @@ tray_icon->show();
 
     setWindowTitle("Final Play");   // in windo decoration set app name
     show();                     // display main window
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");  //
+    db.setHostName("acidalia");
+    db.setDatabaseName("customdb");
+    db.setUserName("mojito");
+    db.setPassword("J0a1m8");
+   if( ! db.open()){std::cout<<"opening Database failed"<<std::endl;}
+     QSqlQuery sq(db);
+   if( ! sq.prepare("CREATE TABLE RAITINGS(NAME   TEXT , LOCTION   TEXT ,RAITING   TEXT )")){std::cout<<"preparing query failed"<<std::endl;}
 }
 /*
 *  TODO:

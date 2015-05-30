@@ -5,6 +5,8 @@ Podcast_manager::Podcast_manager(string dir)
     Podcast_Dir=QString::fromStdString(dir);
     position_file_name=".pos.txt";
     value_file_name=".vale.txt";
+
+
 }
 
 

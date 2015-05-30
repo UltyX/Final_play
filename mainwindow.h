@@ -11,6 +11,9 @@
 #include <map>
 #include <unordered_map>
 
+#include <QSqlDatabase>
+#include <QSqlQuery>
+
 #include <QPixmap>
 #include <QImage>
 #include <QLabel>
