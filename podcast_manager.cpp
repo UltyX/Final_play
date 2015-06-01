@@ -1,47 +1,18 @@
 #include "podcast_manager.hpp"
 
-Podcast_manager::Podcast_manager(string dir)
-{
-    Podcast_Dir=QString::fromStdString(dir);
-    position_file_name=".pos.txt";
-    value_file_name=".vale.txt";
 
 
-}
 
 
 void Podcast_manager::set_values() {
-
-    std::string::size_type siz;   
-    string dir=(Podcast_Dir.absoluteFilePath(QString::fromStdString(value_file_name)).toStdString());
-    unordered_map<string,string> my_map;
-    string key;
-    string value;
-
-    map_unorderd___from_file(&my_map,dir);
-
     for ( auto pod : pc) {
-
-        key=pod->name;
-        value=my_map[key];				//get value
-
-        if(   value  == "" ) {				// check if it is still not initialisiert  (empty map when read creats std objekt which is an empty string)
-            my_map[key]="0";				// add it to the file with =0 so it will be availabel in the file            
-        }
-        else {
-            pod->raiting = stoi (value,&siz);		//Numeric Conversions string -> int
-        }
+            get_raiting_from_DB(pod);
     }
 }
 
-void Podcast_manager::update_values()
-{    
-    string dir=Podcast_Dir.absoluteFilePath(QString::fromStdString(value_file_name)).toStdString();
-    unordered_map<string,string> my_map;
-    for ( auto pod : pc) {
-        my_map[pod->name]= std::to_string(pod->raiting);
-    }
-    file_from___map_unorderd(&my_map,dir);
+void Podcast_manager::update_values(Podcast* podc)
+{        
+        set_DB_raiting_from(podc);
 }
 
 
@@ -62,7 +33,7 @@ void Podcast_manager::main_dir () {
             pc.push_front(new Podcast);
             pc.front()->name=temp.baseName().toStdString();
             pc.front()->dir=sub;
-            pc.front()->raiting=-1;
+            pc.front()->raiting=-2;
             sub_dir(pc.front());	// go through the folder and add all its episodes
         }
     }
@@ -79,11 +50,6 @@ void Podcast_manager::main_dir () {
 void Podcast_manager::sub_dir(Podcast *parent_i) {
 
     QDir folders;
-    std::string::size_type siz;
-    unordered_map<string, string> pos_map; //from file
-    unordered_map<string, string> pos_map_update; //from to_file if files nolonger exist
-    string dir;
-    string pos;
     QStringList filters;
     folders.cd(parent_i->dir.c_str());
 
@@ -101,28 +67,9 @@ void Podcast_manager::sub_dir(Podcast *parent_i) {
     }
 
 //set left off positions
-    dir=(folders.absoluteFilePath(QString::fromStdString(position_file_name))).toStdString();
-    map_unorderd___from_file(&pos_map,dir);	// open the position file
-
     for (auto epi : (*parent_i).episodes) {
-        pos=pos_map[epi->name];
-        pos_map_update[epi->name]=pos;                  // copy to 2.end map so i can check for useless entrys
-        if(pos=="") {
-            epi->last_position=0;                       // new so set time to 0
-            epi->listend=false;
-        }
-        else if( (pos[0]!='d') && (pos[0]!='s') ) {
-            epi->last_position = stoi (pos,&siz);       // not listened so set time
-            epi->listend=false;
-        }
-        else {
-            epi->listend=true;                          // indicates that it is already done
-        }
-    }
-    if(pos_map.size() != pos_map_update.size() ){
-        file_from___map_unorderd(&pos_map_update,dir);
-        cout << " updated .pos file for "<< parent_i->dir<< endl<<"from: "<< pos_map.size()<<"  to: "<<pos_map_update.size()<<"  entrys"<<endl;
-    }
+        get_time_from_DB(epi);
+    }    
 }
 
 
@@ -149,29 +96,82 @@ list<Podcast*> Podcast_manager::load_list() {
 
 void Podcast_manager::save_position(Episode *epi)
 {
-    unordered_map<string, string> pos_map;
-    QDir folders=QString::fromStdString(epi->parent->dir);
+    set_DB_time_from(epi);
+}
 
-    string dir=(folders.absoluteFilePath(QString::fromStdString(position_file_name))).toStdString();
-    string pos_time;
 
-    if(!epi->listend) {	//if it is still playing write the position, else mark it as done 'd'
-        pos_time=to_string(epi->last_position);
+Podcast_manager::Podcast_manager(string dir)
+{
+    Podcast_Dir=QString::fromStdString(dir);
+
+   if(! raiting_GetQuery.prepare("SELECT raiting FROM Raitings WHERE name = ?")){qDebug() <<raiting_GetQuery.lastError().text();}
+   if(! posTime_GetQuery.prepare("SELECT playtime, done FROM Times WHERE name = ?")){qDebug() <<posTime_GetQuery.lastError().text();}
+
+   if(! raiting_SetQuery.prepare("UPDATE Raitings SET raiting = ? where name= ?")){qDebug() <<raiting_SetQuery.lastError().text();}
+   if(! posTime_SetQuery.prepare("UPDATE Times SET playtime = ?,done = ? where name= ?")){qDebug() <<posTime_SetQuery.lastError().text();}
+
+
+   if(!  raiting_AddQuery.prepare("INSERT INTO Raitings(name, location, raiting) "
+                              "VALUES (:name, :local, :raiting)")){
+       qDebug() <<raiting_AddQuery.lastError().text();
+   }
+
+    if(! posTime_AddQuery.prepare("INSERT INTO Times(name, location, playtime, done) "
+                              "VALUES (:name, :local, :playtime, :done)")){
+        qDebug() <<posTime_AddQuery.lastError().text();
     }
-    else {
-        pos_time="d";
-    }
-    map_unorderd___from_file(&pos_map,dir);	//generate map
-    pos_map[epi->name]=pos_time;    	//add/overwrite position
-    file_from___map_unorderd(&pos_map,dir);	//write to file
+
 }
 
 
 
+void Podcast_manager::get_time_from_DB(Episode* for_this){
 
+    posTime_GetQuery.addBindValue(QString::fromStdString(for_this->name));
+    posTime_GetQuery.exec();
+    if(posTime_GetQuery.next()){
+        for_this->last_position = posTime_GetQuery.value(0).toInt();
+        for_this->listend       = posTime_GetQuery.value(1).toBool();   //TODO does not save and recall raiting...
+    }
+    else{
+        qDebug()<< posTime_GetQuery.lastError().text()<<"no time for you, adding new timetable entry";
+        posTime_AddQuery.bindValue(":name", QString::fromStdString(for_this->name));
+        posTime_AddQuery.bindValue(":location", QString::fromStdString(for_this->dir));
+        posTime_AddQuery.bindValue(":playtime", for_this->last_position);
+        posTime_AddQuery.bindValue(":done", for_this->listend);
+        posTime_AddQuery.exec();
+    }
+}
+void Podcast_manager::set_DB_time_from(Episode* from_this){
 
+    posTime_SetQuery.addBindValue(from_this->last_position);
+    posTime_SetQuery.addBindValue(from_this->listend);
+    posTime_SetQuery.addBindValue(QString::fromStdString(from_this->name));
+    posTime_SetQuery.exec();
+}
 
+void Podcast_manager::get_raiting_from_DB(Podcast* for_this){
 
+    raiting_GetQuery.addBindValue(QString::fromStdString(for_this->name));
+    raiting_GetQuery.exec();//
+    if(raiting_GetQuery.next())
+    {for_this->raiting= raiting_GetQuery.value(0).toInt();}
+    else{
+        qDebug()<< raiting_GetQuery.lastError().text()<<"no raitingtable for you, adding new timetable entry";
+        raiting_AddQuery.bindValue(":name", QString::fromStdString(for_this->name));
+        raiting_AddQuery.bindValue(":location", QString::fromStdString(for_this->dir));
+        raiting_AddQuery.bindValue(":raiting", for_this->raiting);
+        raiting_AddQuery.exec();
+    }
+
+}
+void Podcast_manager::set_DB_raiting_from(Podcast* from_this){
+
+    raiting_SetQuery.addBindValue(from_this->raiting);
+    raiting_SetQuery.addBindValue(QString::fromStdString(from_this->name));
+  if(!  raiting_SetQuery.exec()){qDebug() <<raiting_SetQuery.lastError().text();}
+  else{qDebug()<< from_this->raiting <<"should be now in table";}
+}
 
 
 

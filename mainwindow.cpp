@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include <QSqlError>
 MainWindow::MainWindow(QStringList args_i, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -61,6 +61,19 @@ connect(player, SIGNAL(positionChanged(qint64)),  this,SLOT(seek_sl_setValue (qi
 
 connect(ui->order_ckbox,SIGNAL(toggled(bool)),this,SLOT(generate_ordered_playlist()));
 
+QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");  //my std Database
+db.setHostName("acidalia");
+db.setDatabaseName("customdb");
+db.setUserName("mojito");
+db.setPassword("J0a1m8");
+if( ! db.open()){std::cout<<"opening Database failed"<<db.lastError().text().toStdString()<<std::endl;}
+ QSqlQuery sq(db);
+if( ! sq.prepare( "CREATE TABLE Raitings(name   TEXT PRIMARY KEY, location   TEXT ,raiting   INT )" )){std::cout<<"preparing query failed "<<sq.lastError().text().toStdString() <<std::endl;}
+if( ! sq.exec()){std::cout<<"proppably already exsits. creating table failed "<<sq.lastError().text().toStdString()<<std::endl;}
+if( ! sq.prepare( "CREATE TABLE Times(name   TEXT PRIMARY KEY, location TEXT ,playtime   INT, done BOOL )" )){std::cout<<"preparing query failed "<<sq.lastError().text().toStdString() <<std::endl;}
+if( ! sq.exec()){std::cout<<"proppably already exsits. creating table failed "<<sq.lastError().text().toStdString()<<std::endl;}
+
+
 
 list_from_file(&locations , settings_location.filePath(".smap_fp").toStdString());  // Remember from last time what tabs where open -begin
 int index_tab;
@@ -93,16 +106,33 @@ tray_icon->show();
 
 
     setWindowTitle("Final Play");   // in windo decoration set app name
-    show();                     // display main window
+    show();                         // display main window
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");  //
-    db.setHostName("acidalia");
-    db.setDatabaseName("customdb");
-    db.setUserName("mojito");
-    db.setPassword("J0a1m8");
-   if( ! db.open()){std::cout<<"opening Database failed"<<std::endl;}
-     QSqlQuery sq(db);
-   if( ! sq.prepare("CREATE TABLE RAITINGS(NAME   TEXT , LOCTION   TEXT ,RAITING   TEXT )")){std::cout<<"preparing query failed"<<std::endl;}
+
+
+
+
+
+/*
+    // move to manager -->
+    QSqlQuery query(db);
+    if( ! query.prepare("INSERT INTO raitings(name, location, raiting) "
+                     "VALUES (:name, :local, :raiting)")){std::cout<<"prepare failed"<<query.lastError().text().toStdString()<<std::endl;}
+    query.bindValue(":name", "SN1");
+    query.bindValue(":local", "/home/ulty/");
+    query.bindValue(":raiting", 12);
+    if( !query.exec()){std::cout<<"exec failed _x_ "<<query.lastError().text().toStdString()<<std::endl;}
+
+    QSqlQuery  query2;
+    query2.prepare("SELECT name,raiting FROM raitings WHERE name = 'SN1'");    // selection criteria here
+    query2.exec();
+    query2.next();                                                          // needs to be called once, pointer is set bevore the first selected item
+    QString name = query2.value(0).toString();                              // get the first selected argument we asked for
+    int rat = query2.value(1).toInt();                                      // get the second selected argument we asked for
+    qDebug() << name << rat;
+    // move to manager -->
+
+*/
 }
 /*
 *  TODO:

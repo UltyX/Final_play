@@ -51,9 +51,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="1972.5145"
-     inkscape:cy="525.01803"
+     inkscape:zoom="0.7"
+     inkscape:cx="701.09586"
+     inkscape:cy="-755.9003"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -1188,5 +1188,93 @@
        id="path3218"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="594.28571"
+       y="1535.2194"
+       id="text3199"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3201"
+         x="594.28571"
+         y="1535.2194">Ratings:</tspan><tspan
+         sodipodi:role="line"
+         x="594.28571"
+         y="1565.2194"
+         id="tspan3203">Folder based</tspan><tspan
+         sodipodi:role="line"
+         x="594.28571"
+         y="1595.2194"
+         id="tspan3237">Folder Name &amp; URL  and   Raiting</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3207"
+       y="1488.0764"
+       x="752.85699"
+       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       xml:space="preserve"><tspan
+         y="1488.0764"
+         x="752.85699"
+         id="tspan3209"
+         sodipodi:role="line">DB</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3211"
+       y="1626.6479"
+       x="595.71539"
+       style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       xml:space="preserve"><tspan
+         y="1626.6479"
+         x="595.71539"
+         id="tspan3213"
+         sodipodi:role="line">Times:</tspan><tspan
+         id="tspan3215"
+         y="1656.6479"
+         x="595.71539"
+         sodipodi:role="line">Filename baised</tspan><tspan
+         y="1686.6479"
+         x="595.71539"
+         sodipodi:role="line"
+         id="tspan3219">Remove ?? @ when</tspan></text>
+    <rect
+       y="1450.9336"
+       x="580"
+       height="298.57144"
+       width="384.28571"
+       id="rect3227"
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+    <text
+       xml:space="preserve"
+       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="-395.71429"
+       y="1882.3622"
+       id="text3229"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3231"
+         x="-395.71429"
+         y="1882.3622">New tab -&gt; (manager.genlist)Files_indexing -&gt; (manager.genlist)ask DB for time &amp; values -&gt; (manager.save_time)update/register_new during playback</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#Arrow1Lstart);marker-end:url(#Arrow1Lend)"
+       d="m 474.28572,1843.7908 c 55.71428,-40 277.14286,2.8571 277.14286,-22.8571 0,-25.7143 1.42857,-54.2858 1.42857,-54.2858"
+       id="path3235"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path3239"
+       d="m 1077.1428,1843.7908 c -55.7143,-40 -277.14287,2.8571 -277.14287,-22.8571 0,-25.7143 -1.4285,-54.2858 -1.4285,-54.2858"
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-end:url(#Arrow1Lend)" />
+    <text
+       xml:space="preserve"
+       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="512.85712"
+       y="1973.7908"
+       id="text4945"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4947"
+         x="512.85712"
+         y="1973.7908">drag and drop   manager needs add files by url </tspan></text>
   </g>
 </svg>

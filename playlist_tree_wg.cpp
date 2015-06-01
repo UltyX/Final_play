@@ -181,7 +181,7 @@ void Playlist_tree_wg::on_podcast_list_tw_itemChanged(QTreeWidgetItem *item_i, i
     Podlist_item *item=(Podlist_item*)item_i;
     if((item->getPodcast() !=NULL)&&(column!=0)&&(item->get_setup_done()) ){
         item->getPodcast()->raiting= item->text(1).toInt();
-        manager->update_values();
+        manager->update_values(item->getPodcast());
         std::cout<< "updating values: "<< item->getPodcast()->name<< "\nwith Raitung:" <<item->getPodcast()->raiting<<" column: "  <<column <<std::endl;
     }
 }
