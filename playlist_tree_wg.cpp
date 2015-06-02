@@ -221,16 +221,12 @@ void Playlist_tree_wg::dropEvent(QDropEvent * event)
 {
 
     const QMimeData *mimeData = event->mimeData();
-    if (mimeData->hasUrls()) {
-            std::cout<<"urls"<<std::endl;
-            QList<QUrl> urlList = mimeData->urls();            
-
+    if (mimeData->hasUrls()) {            
+            QList<QUrl> urlList = mimeData->urls();
             foreach (QUrl where, urlList ) {
-                std::cout << "x"<<std::endl;
-                QString url = where.path();
-            //    manager->addFromUrl(url);  // not realy doable without database support
+                manager->add_from_url(where);  // not realy doable without database support
             }
-            std::cout << "nTODO for outside items\nnot realy doable without database support because raiting and updating..."<<std::endl;
+std::cout << "updating the ui not yet done 1"<<std::endl;
             return;
     }
 

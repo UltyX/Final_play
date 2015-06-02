@@ -5,11 +5,10 @@
 
 
 void Podcast_manager::set_values() {
-    int t=myTimer.elapsed();
+
     for ( auto pod : pc) {
             get_raiting_from_DB(pod);
-    }
-    qDebug()<< myTimer.elapsed()-t<< " ms to check and add the raitings";
+    }    
 }
 
 void Podcast_manager::update_values(Podcast* podc)
@@ -17,36 +16,56 @@ void Podcast_manager::update_values(Podcast* podc)
         set_DB_raiting_from(podc);
 }
 
+void Podcast_manager::add_from_url(QUrl where){
+
+
+    if(where.path()!=where.toLocalFile()){
+        qDebug()<<"warning path my missbehave Podcast_manager::add_from_url";
+        qDebug()<<where.path();
+        qDebug()<<where.toLocalFile();
+    }
+    QFileInfo info(where.toLocalFile());
+
+
+    if(info.isDir()){
+        main_dir(info.absoluteFilePath());
+        qDebug()<<"dir";
+    }else if(info.isFile()){
+
+        qDebug()<<"file/s not yet supported";
+
+    }
+    else{qDebug()<<"Podcast_manager::add_from_url unknown filetype or other error: is no file and is no dir...";}
+
+}
 
 
 
+void Podcast_manager::main_dir (QString path) {
+    QDir dir(path);
+    bool subfolder_found=false;
 
-void Podcast_manager::main_dir () {
-
-    string sub;
-    if( !Podcast_Dir.exists() ) {
-        cout << "main_dir, did not find dir: "<< Podcast_Dir.absolutePath().toStdString()<< endl;
+    if( !dir.exists() ) {
+        cout << "main_dir, did not find dir: "<< dir.absolutePath().toStdString()<< endl;
         return;
     }
-    for ( auto temp:Podcast_Dir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries) ) {
 
-        if(temp.isDir()) {		//current dir is folder?
-            sub= temp.absoluteFilePath().toStdString();	//use foldername as pocast name
-            pc.push_front(new Podcast);
-            pc.front()->name=temp.baseName().toStdString();
-            pc.front()->dir=sub;
-            pc.front()->raiting=-2;
-            sub_dir(pc.front());	// go through the folder and add all its episodes
-        }
+    for ( auto temp:dir.entryInfoList(QDir::NoDotAndDotDot|QDir::Dirs|QDir::NoSymLinks) ) {       //get all folders in location
+
+               main_dir(temp.absoluteFilePath());
+               subfolder_found=true;                                        //either you are a Parent Dir or you are a subdir no mixing of the two
     }
-    if(pc.empty()){ // case user has only choosen a single folder as target /// not good with raiting yet.. will create useless .value in folder ! TODO
-        sub= Podcast_Dir.absolutePath().toStdString();	//use foldername as pocast name
-        pc.push_front(new Podcast);
-        pc.front()->name=Podcast_Dir.dirName().toStdString();
-        pc.front()->dir=sub;
-        pc.front()->raiting=-1;
-        sub_dir(pc.front());	// go through the folder and add all its episodes
+    if(!subfolder_found){                                                   // no subfolders found, asume this is the only relevant folder
+        add_podcast_to_list( dir.dirName() , dir.absolutePath() );          // use foldername as pocast name
     }
+}
+
+void Podcast_manager::add_podcast_to_list(QString name,QString path){
+    pc.push_front(new Podcast);
+    pc.front()->name=name.toStdString();
+    pc.front()->dir=path.toStdString();
+    pc.front()->raiting=-2;
+    sub_dir(pc.front());	// go through the folder and add all its episodes
 }
 
 void Podcast_manager::sub_dir(Podcast *parent_i) {
@@ -60,7 +79,7 @@ void Podcast_manager::sub_dir(Podcast *parent_i) {
         return;
     }
     filters <<"*.mp*"<<"*.ogg"<<"*.ogv"<<"*.flac"<<"*.wav" <<"*.oga" <<"*.ogx" <<"*.ogm" <<"*.spx"<< "*.opus";
-    for (auto temp:folders.entryInfoList(filters,QDir::Files)) {    //can also add sorting Here
+    for (auto temp:folders.entryInfoList(filters,QDir::Files | QDir::NoDotAndDotDot)) {    //can also add sorting Here
 
         parent_i->episodes.push_front(new Episode);
         parent_i->episodes.front()->name=temp.fileName().toStdString();
@@ -69,11 +88,10 @@ void Podcast_manager::sub_dir(Podcast *parent_i) {
         parent_i->episodes.front()->last_position=0;                            // sain default value
         parent_i->episodes.front()->listend=false;                              // sain default value
     }
-int t=myTimer.elapsed();
+
     for (auto epi : (*parent_i).episodes) {
         get_time_from_DB(epi);                  // if already in DB get time else add with default
-    }    
-    qDebug()<< myTimer.elapsed()-t<< " ms to check and add the time, for "<<(*parent_i).episodes.size() ;
+    }       
 }
 
 
@@ -83,23 +101,22 @@ int t=myTimer.elapsed();
 
 list<Podcast*> Podcast_manager::load_list() {  
     int t=myTimer.elapsed();
-  for(auto xxp  : pc){              // clean up any old items first -begin
-    for (auto xxe : xxp->episodes){
-      delete xxe;
+    for(auto xxp  : pc){              // clean up any old items first -begin
+        for (auto xxe : xxp->episodes){
+            delete xxe;
     }
     delete xxp;
-  }
-    pc.clear();                     // clean up any old items first -- end
-QSqlDatabase::database().transaction();     //WARNING THIS IS NOT HOW IT SHOULD BE USED IN RELATION TO PREPARED QUERYS ! BUT HELL IT FAST NOW WEEEEEEE
-    main_dir();		// find podcasts and use sub_dir to add episodes, set time and listened !!!
+    }
+    pc.clear();                                                 // clean up any old items first -- end
+    QSqlDatabase::database().transaction();                     //WARNING THIS IS NOT HOW IT SHOULD BE USED IN RELATION TO PREPARED QUERYS ! BUT HELL IT FAST NOW WEEEEEEE
+    main_dir(Podcast_Dir.absolutePath());                       // find podcasts and use sub_dir to add episodes, set time and listened !!!
 
 
 
-qDebug()<< myTimer.elapsed()-t<< " ms aaa)";
+
     set_values();	// set Rankings
-
-qDebug()<< myTimer.elapsed()-t<< " ms to index the given dir (pod raiting and epsiode positions...)";
-QSqlDatabase::database().commit();          //WARNING THIS IS NOT HOW IT SHOULD BE USED IN RELATION TO PREPARED QUERYS ! EEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+    QSqlDatabase::database().commit();          //WARNING THIS IS NOT HOW IT SHOULD BE USED IN RELATION TO PREPARED QUERYS ! EEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+    qDebug()<< myTimer.elapsed()-t<< " ms to index the given dir (pod raiting and epsiode positions...)";
     return pc;
 }
 
@@ -147,12 +164,8 @@ void Podcast_manager::get_time_from_DB(Episode* for_this){
         for_this->listend       = posTime_GetQuery.value(1).toBool();   //TODO does not save and recall raiting...
     }
     else{
-        qDebug()<< posTime_GetQuery.lastError().text()<<"no time for you, adding new timetable entry";
-        posTime_AddQuery.bindValue(":name", QString::fromStdString(for_this->name));
-        posTime_AddQuery.bindValue(":location", QString::fromStdString(for_this->dir)); //TODO make a extra funktion for Adding episodes
-        posTime_AddQuery.bindValue(":playtime", for_this->last_position);
-        posTime_AddQuery.bindValue(":done", for_this->listend);
-        posTime_AddQuery.exec();
+        qDebug()<< posTime_GetQuery.lastError().text()<<"no time for you, adding new timetable entry"<<QString::fromStdString(for_this->name);
+        add_DB_time_from(for_this);
     }
 }
 void Podcast_manager::set_DB_time_from(Episode* from_this){
@@ -162,29 +175,46 @@ void Podcast_manager::set_DB_time_from(Episode* from_this){
     posTime_SetQuery.addBindValue(QString::fromStdString(from_this->name));
     posTime_SetQuery.exec();
 }
+void Podcast_manager::add_DB_time_from(Episode* from_this){
+
+    posTime_AddQuery.bindValue(":name", QString::fromStdString(from_this->name));
+    posTime_AddQuery.bindValue(":location", QString::fromStdString(from_this->dir)); //TODO make a extra funktion for Adding episodes
+    posTime_AddQuery.bindValue(":playtime", from_this->last_position);
+    posTime_AddQuery.bindValue(":done", from_this->listend);
+    posTime_AddQuery.exec();
+}
 
 void Podcast_manager::get_raiting_from_DB(Podcast* for_this){
 
     raiting_GetQuery.addBindValue(QString::fromStdString(for_this->name));
     raiting_GetQuery.exec();
     if(raiting_GetQuery.next())
-    {for_this->raiting= raiting_GetQuery.value(0).toInt();}
+    {
+        for_this->raiting= raiting_GetQuery.value(0).toInt();
+    }
     else{
         qDebug()<< raiting_GetQuery.lastError().text()<<"no raitingtable for you, adding new timetable entry";
-        raiting_AddQuery.bindValue(":name", QString::fromStdString(for_this->name));
-        raiting_AddQuery.bindValue(":location", QString::fromStdString(for_this->dir)); //TODOmake a extra funktion for Adding podcasts
-        raiting_AddQuery.bindValue(":raiting", for_this->raiting);
-        raiting_AddQuery.exec();
+        add_DB_raiting_from(for_this);
     }
-
 }
+
 void Podcast_manager::set_DB_raiting_from(Podcast* from_this){
 
     raiting_SetQuery.addBindValue(from_this->raiting);
     raiting_SetQuery.addBindValue(QString::fromStdString(from_this->name));
-  if(!  raiting_SetQuery.exec()){qDebug() <<raiting_SetQuery.lastError().text();}
-  else{qDebug()<< from_this->raiting <<"should be now in table";}
+    if(!  raiting_SetQuery.exec()){qDebug() <<raiting_SetQuery.lastError().text();}
+    else{qDebug()<< from_this->raiting <<"should be now in table";}
 }
+
+void Podcast_manager::add_DB_raiting_from(Podcast* from_this){
+
+    raiting_AddQuery.bindValue(":name", QString::fromStdString(from_this->name));
+    raiting_AddQuery.bindValue(":location", QString::fromStdString(from_this->dir)); //TODOmake a extra funktion for Adding podcasts
+    raiting_AddQuery.bindValue(":raiting", from_this->raiting);
+    raiting_AddQuery.exec();
+}
+
+
 /*
 
   http://stackoverflow.com/questions/3852068/sqlite-insert-very-slow
@@ -211,5 +241,24 @@ query.exec();
 */
 
 
+/*
+void Podcast_manager::main_dir () {
 
+
+    if( !Podcast_Dir.exists() ) {
+        cout << "main_dir, did not find dir: "<< Podcast_Dir.absolutePath().toStdString()<< endl;
+        return;
+    }
+
+    for ( auto temp:Podcast_Dir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries) ) {    //get all folders in location
+        if(temp.isDir()) {                                                                  //current dir is folder?
+
+               add_podcast_to_list(temp.baseName(),temp.absoluteFilePath());
+        }
+    }
+    if(pc.empty()){                                                                 // no subfolders found, asume this is the only relevant folder
+        add_podcast_to_list( Podcast_Dir.dirName() , Podcast_Dir.absolutePath() );  //use foldername as pocast name
+    }
+}
+*/
 
