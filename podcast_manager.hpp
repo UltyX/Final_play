@@ -10,17 +10,20 @@
 #include <QSqlError>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QSqlDatabase>
 
 #include <QFile>
 #include <QFileInfo>
 #include <QDir>
 #include <QDebug>
 
+#include<QTime> //debug
+
 #include "convinience.hpp"
 
 using namespace std;
 
-class Podcast_manager {
+class Podcast_manager {QTime myTimer;//debug
   
     list<Podcast*> pc;    
     QDir Podcast_Dir;

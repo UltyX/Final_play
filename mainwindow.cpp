@@ -63,16 +63,16 @@ connect(ui->order_ckbox,SIGNAL(toggled(bool)),this,SLOT(generate_ordered_playlis
 
 QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");  //my std Database
 db.setHostName("acidalia");
-db.setDatabaseName("customdb");
+db.setDatabaseName(settings_location.filePath("FinalPlayDB") );
 db.setUserName("mojito");
 db.setPassword("J0a1m8");
 if( ! db.open()){std::cout<<"opening Database failed"<<db.lastError().text().toStdString()<<std::endl;}
- QSqlQuery sq(db);
+ QSqlQuery sq(db);  //recreate in case it got lost
 if( ! sq.prepare( "CREATE TABLE Raitings(name   TEXT PRIMARY KEY, location   TEXT ,raiting   INT )" )){std::cout<<"preparing query failed "<<sq.lastError().text().toStdString() <<std::endl;}
 if( ! sq.exec()){std::cout<<"proppably already exsits. creating table failed "<<sq.lastError().text().toStdString()<<std::endl;}
 if( ! sq.prepare( "CREATE TABLE Times(name   TEXT PRIMARY KEY, location TEXT ,playtime   INT, done BOOL )" )){std::cout<<"preparing query failed "<<sq.lastError().text().toStdString() <<std::endl;}
 if( ! sq.exec()){std::cout<<"proppably already exsits. creating table failed "<<sq.lastError().text().toStdString()<<std::endl;}
-
+//my std Database
 
 
 list_from_file(&locations , settings_location.filePath(".smap_fp").toStdString());  // Remember from last time what tabs where open -begin
