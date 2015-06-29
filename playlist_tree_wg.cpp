@@ -23,6 +23,7 @@ Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player, QStackedWidget *sta
 
     connect(this,SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),this, SLOT(item_dubble_clck(QTreeWidgetItem*,int)  ) );
     connect(player,SIGNAL(currentMediaChanged(QMediaContent)),this,SLOT(skipp_to_last_pos()) );     //SKIPP to POSITION, WOULD HAVE liked to do it over playlist current media changed but race condition (emits signal(position skipping to) then changes track)
+    connect(player,SIGNAL(stateChanged(QMediaPlayer::State)),this,SLOT( playerstate_changed(QMediaPlayer::State)) );
     //connect(playlist,SIGNAL(currentIndexChanged(int)),this,SLOT(update_TW_playlist(int)) );       //Playlist and Treewidget link, to show grafikly which one is playing now
 
     manager = new Podcast_manager( podcast_dir.toStdString());              // create an instance of the manager, it will save and load position and rating, and index the files
@@ -52,6 +53,8 @@ Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player, QStackedWidget *sta
     this->setSelectionMode(QAbstractItemView::ExtendedSelection);   // make drag and drop work -- end
     if(player->playlist()==NULL){
         player->setPlaylist(&playlist);
+    playerstate_old = player->state();
+
 }
 
 
@@ -61,28 +64,49 @@ void Playlist_tree_wg::item_dubble_clck(QTreeWidgetItem* item_i, int column){
 
     int index = this->indexOfTopLevelItem(item_i);
 
-   std::cout<<"set_pl"<<std::endl;
+   std::cout<<"doblle cklick"<<std::endl;
    if(player->playlist()!= &playlist){  //   will emit a player current media changed
        player->setPlaylist(&playlist);  /// WARNING will reset playlist index back to 0  when set
+       std::cout<<"set_playlist_from_this_tab"<<std::endl;
    }
-   std::cout<<"set_index"<<std::endl;
+
    if(index != playlist.currentIndex()){
-      playlist.setCurrentIndex( index );
+        playlist.setCurrentIndex( index );
+        std::cout<<"set_index"<<std::endl;
   }
    player->play();
-    std::cout<<"row:"<<column<<"  index:"<< index<<std::endl;
+    //std::cout<<"row:"<<column<<"  index:"<< index<<std::endl;
 }
 
 void Playlist_tree_wg::skipp_to_last_pos(){     // called when mediaplayer media changes and if our playlist is in use skipp to the last pos of the item
-    if(player->playlist()!= &playlist){return;} // if true not our battle :D
+    std::cout<<"skipping_ to last pos "<<std::endl;
+    if(player->playlist()!= &playlist){
+        std::cout<<" skipp to position ignored "<<std::endl; // also gets called on exit for some reasone
+        return;
+    } // if true not our battle :D
     int index=playlist.currentIndex();
     if((index!=-1)&&(this->topLevelItemCount()>0)){ // catch bad states
         std::cout<< index<<"setting playback position to "<< ((Epi_list_item*)this->topLevelItem(index))->getEpisode()->last_position /1000<< "s"<<std::endl;       //debug
         player->setPosition(((Epi_list_item*)this->topLevelItem(index))->getEpisode()->last_position);
+
+        if (player->position() != ((Epi_list_item*)this->topLevelItem(index))->getEpisode()->last_position){
+        std::cout<<"set pos failed = "<<player->position()<<std::endl;}
     }
 }
 
+void Playlist_tree_wg::playerstate_changed(QMediaPlayer::State state){
 
+    if(player->playlist()!= &playlist){     /// replace this with a propper disconect from the player when tabs change, so we don't have to actively ignor signals
+        std::cout<<" ignore state change "<<std::endl; // also gets called on exit for some reasone
+        playerstate_old = state;
+        return;
+    } // if true not our battle :D
+
+    if(playerstate_old == QMediaPlayer::StoppedState){   /// workaround for initial first item load, see set pos failed for cause
+        skipp_to_last_pos();
+    }
+    playerstate_old = state ;
+}
 
 
 
