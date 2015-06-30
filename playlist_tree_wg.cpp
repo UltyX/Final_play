@@ -2,16 +2,16 @@
 
 Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player, QStackedWidget *stack_wg, QTimer* save_timer,QString location):QTreeWidget()
 {
-    player = the_player;  
-    corresponing_stack_wg = stack_wg;
+    player = the_player;                                        // the only player in this programm, we share it between tabs and use its signals to set position, also we give it our playlist
+    corresponing_stack_wg = stack_wg;                           // the stack WG, we put our Raiting WG on it, and display it from there
 
-    raiting_stack = new my_stack_tw();
-    raiting_stack->setColumnCount(2);    // Lable all the things
-    QStringList a={"Name","Raiting"};
-    raiting_stack->setHeaderLabels(a);
+    raiting_stack = new my_stack_tw();                          // create our very own Raiting WG
+    raiting_stack->setColumnCount(2);                           // Lable all the things
+    QStringList raiting_wg_labels={"Name","Raiting"};
+    raiting_stack->setHeaderLabels(raiting_wg_labels);
     this->setColumnCount(2);
-    a={"Name","Last Position"};
-    this->setHeaderLabels(a);           // Lable all the things
+    QStringList playlist_wg_labels={"Name","Last Position"};
+    this->setHeaderLabels(playlist_wg_labels);                   // Lable all the things
 
     corresponing_stack_wg->addWidget(raiting_stack);   //add our raintings widget to the stack wg
 
@@ -47,18 +47,18 @@ Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player, QStackedWidget *sta
 
 
     this->setAcceptDrops(true);                                     // make drag and drop work -begin
-    this->setDragEnabled(true);
-    //this->setDragDropMode(QAbstractItemView::InternalMove);
-    this->setDragDropMode(QAbstractItemView::DragDrop);
+    this->setDragEnabled(true);                                     //
+    //this->setDragDropMode(QAbstractItemView::InternalMove);       //
+    this->setDragDropMode(QAbstractItemView::DragDrop);             //
     this->setSelectionMode(QAbstractItemView::ExtendedSelection);   // make drag and drop work -- end
-    if(player->playlist()==NULL){
+    if(player->playlist()==NULL){                                   // give player an initail playlist
         player->setPlaylist(&playlist);
     playerstate_old = player->state();
 
 }
 
 
-}
+}// Goal: one central DB for time many small DB/Tabels for playlists.
 
 void Playlist_tree_wg::item_dubble_clck(QTreeWidgetItem* item_i, int column){
 
@@ -95,17 +95,17 @@ void Playlist_tree_wg::skipp_to_last_pos(){     // called when mediaplayer media
 }
 
 void Playlist_tree_wg::playerstate_changed(QMediaPlayer::State state){
+    int temp_state  = playerstate_old;
+    playerstate_old = state;
 
     if(player->playlist()!= &playlist){     /// replace this with a propper disconect from the player when tabs change, so we don't have to actively ignor signals
         std::cout<<" ignore state change "<<std::endl; // also gets called on exit for some reasone
-        playerstate_old = state;
         return;
     } // if true not our battle :D
 
-    if(playerstate_old == QMediaPlayer::StoppedState){   /// workaround for initial first item load, see set pos failed for cause
+    if( temp_state == QMediaPlayer::StoppedState){   /// workaround for initial first item load, see set pos failed for cause
         skipp_to_last_pos();
-    }
-    playerstate_old = state ;
+    }    
 }
 
 
@@ -200,7 +200,7 @@ if(player->playlist()!= &playlist)return;
 }
 
 
-void Playlist_tree_wg::on_podcast_list_tw_itemChanged(QTreeWidgetItem *item_i, int column)
+void Playlist_tree_wg::on_podcast_list_tw_itemChanged(QTreeWidgetItem *item_i, int column)// user has changed the value of one of our podcasts, save change to DB ?
 {
     Podlist_item *item=(Podlist_item*)item_i;
     if((item->getPodcast() !=NULL)&&(column!=0)&&(item->get_setup_done()) ){
@@ -213,7 +213,7 @@ void Playlist_tree_wg::on_podcast_list_tw_itemChanged(QTreeWidgetItem *item_i, i
 void Playlist_tree_wg::add_podcast(Podcast *pod_i)
 {
     Podlist_item *new_podcast = new Podlist_item(raiting_stack);
-    new_podcast->setFlags(new_podcast->flags() | Qt::ItemIsEditable);
+    new_podcast->setFlags(new_podcast->flags() | Qt::ItemIsEditable);   //alow user to change raiting
     new_podcast->setPodcast(pod_i);
     raiting_stack->addTopLevelItem(new_podcast);
 }
@@ -222,12 +222,12 @@ void Playlist_tree_wg::add_podcast(Podcast *pod_i)
 void Playlist_tree_wg::add_media(Episode *epi)
 {
     QFileInfo fileInfo( QString::fromStdString( epi->dir ) );                        //ask the Episode where it is in the filesystem and save it as Qstring
-    playlist.addMedia( QUrl::fromLocalFile( fileInfo.absoluteFilePath() ) );
+    playlist.addMedia( QUrl::fromLocalFile( fileInfo.absoluteFilePath() ) );                    // add to our playlist
 
     Epi_list_item *new_episode = new Epi_list_item(this);
     new_episode->setEpisode(epi);
     new_episode->setFlags(Qt::ItemIsDragEnabled |  Qt::ItemIsSelectable |  Qt::ItemIsEnabled);
-    this->addTopLevelItem(new_episode);
+    this->addTopLevelItem(new_episode);                                                         // add to playlist WG
 }
 void Playlist_tree_wg::remove_from_stack_wg(){
     corresponing_stack_wg->removeWidget(raiting_stack); //removes it from the wg but not delets it
