@@ -30,7 +30,7 @@ my_stack_tw *raiting_stack;
 Podcast_manager *manager;
 QStackedWidget* corresponing_stack_wg;
 QString podcast_dir;
-int playerstate_old;
+//int playerstate_old;
 
 private slots:
 void add_podcast(Podcast *pod_i);                                           //add foldername als overarching description
@@ -43,7 +43,7 @@ void save_position();
 void item_dubble_clck(QTreeWidgetItem* item_i, int column);
 void reset_playtime_slot();
 void mark_epi_as_listened();
-void playerstate_changed(QMediaPlayer::State state);
+//void playerstate_changed(QMediaPlayer::State state);
 
 protected:
 

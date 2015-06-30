@@ -22,9 +22,10 @@ Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player, QStackedWidget *sta
     }
 
     connect(this,SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),this, SLOT(item_dubble_clck(QTreeWidgetItem*,int)  ) );
-    connect(player,SIGNAL(currentMediaChanged(QMediaContent)),this,SLOT(skipp_to_last_pos()) );     //SKIPP to POSITION, WOULD HAVE liked to do it over playlist current media changed but race condition (emits signal(position skipping to) then changes track)
-    connect(player,SIGNAL(stateChanged(QMediaPlayer::State)),this,SLOT( playerstate_changed(QMediaPlayer::State)) );
-    //connect(playlist,SIGNAL(currentIndexChanged(int)),this,SLOT(update_TW_playlist(int)) );       //Playlist and Treewidget link, to show grafikly which one is playing now
+    connect(player,SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)),this,SLOT( skipp_to_last_pos() ) );
+    //connect(player,SIGNAL(currentMediaChanged(QMediaContent)),this,SLOT(skipp_to_last_pos()) );                       //SKIPP to POSITION, WOULD HAVE liked to do it over playlist current media changed but race condition (emits signal(position skipping to) then changes track)
+    //connect(player,SIGNAL(stateChanged(QMediaPlayer::State)),this,SLOT( playerstate_changed(QMediaPlayer::State)) );  //was only a work around, to be deleted if no other use found for it
+    ///connect(playlist,SIGNAL(currentIndexChanged(int)),this,SLOT(update_TW_playlist(int)) );         TODO             //Playlist and Treewidget link, to show grafikly which one is playing now
 
     manager = new Podcast_manager( podcast_dir.toStdString());              // create an instance of the manager, it will save and load position and rating, and index the files
     generate_ordered_playlist(false);                                       // use the manager to run through the filesystem and add 1lvl of folders and their contents to the mix
@@ -53,10 +54,9 @@ Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player, QStackedWidget *sta
     this->setSelectionMode(QAbstractItemView::ExtendedSelection);   // make drag and drop work -- end
     if(player->playlist()==NULL){                                   // give player an initail playlist
         player->setPlaylist(&playlist);
-    playerstate_old = player->state();
 
-}
-
+    }
+   // playerstate_old = player->state();
 
 }// Goal: one central DB for time many small DB/Tabels for playlists.
 
@@ -79,21 +79,20 @@ void Playlist_tree_wg::item_dubble_clck(QTreeWidgetItem* item_i, int column){
 }
 
 void Playlist_tree_wg::skipp_to_last_pos(){     // called when mediaplayer media changes and if our playlist is in use skipp to the last pos of the item
-    std::cout<<"skipping_ to last pos "<<std::endl;
-    if(player->playlist()!= &playlist){
-        std::cout<<" skipp to position ignored "<<std::endl; // also gets called on exit for some reasone
+
+    std::cout<<"seeking to last position "<<std::endl;
+    if((player->playlist()!= &playlist)||((player->mediaStatus() != QMediaPlayer::LoadedMedia )&&(player->mediaStatus() != QMediaPlayer::BufferedMedia ))){// can't seek if media is not loaded yet
+        std::cout<<" seek to position ignored "<<player->mediaStatus()<<std::endl; // also gets called on exit for some reasone
         return;
     } // if true not our battle :D
+
     int index=playlist.currentIndex();
     if((index!=-1)&&(this->topLevelItemCount()>0)){ // catch bad states
         std::cout<< index<<"setting playback position to "<< ((Epi_list_item*)this->topLevelItem(index))->getEpisode()->last_position /1000<< "s"<<std::endl;       //debug
         player->setPosition(((Epi_list_item*)this->topLevelItem(index))->getEpisode()->last_position);
-
-        if (player->position() != ((Epi_list_item*)this->topLevelItem(index))->getEpisode()->last_position){
-        std::cout<<"set pos failed = "<<player->position()<<std::endl;}
     }
 }
-
+/*
 void Playlist_tree_wg::playerstate_changed(QMediaPlayer::State state){
     int temp_state  = playerstate_old;
     playerstate_old = state;
@@ -106,7 +105,7 @@ void Playlist_tree_wg::playerstate_changed(QMediaPlayer::State state){
     if( temp_state == QMediaPlayer::StoppedState){   /// workaround for initial first item load, see set pos failed for cause
         skipp_to_last_pos();
     }    
-}
+}*/
 
 
 

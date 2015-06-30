@@ -74,14 +74,14 @@ if( ! sq.prepare( "CREATE TABLE Times(name   TEXT PRIMARY KEY, location TEXT ,pl
 if( ! sq.exec()){std::cout<<"proppably already exsits. creating table failed "<<sq.lastError().text().toStdString()<<std::endl;}
 //my std Database
 
-
+/// TODO put this in MainDB instead of textfile
 list_from_file(&locations , settings_location.filePath(".smap_fp").toStdString());  // Remember from last time what tabs where open -begin
 int index_tab;
 for(auto x:locations){
     index_tab = ui->tabWidget->count()-1;
     ui->tabWidget->insertTab(index_tab,new Playlist_tree_wg(player,ui->stackedWidget,saver,QString::fromStdString(x)), QString::number(index_tab));
 }                                                                                   // Remember from last time what tabs where open -- end
-
+/// TODO
 
 // Icon begin
 QIcon icon_temp(cwdir.filePath("xx.png"));          // generate a temporary icon
