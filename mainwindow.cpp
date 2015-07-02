@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QSqlError>
+#include <QSplitter>  // alow user at some point to resize the ratio between widgetsizes TODO
+
 MainWindow::MainWindow(QStringList args_i, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)

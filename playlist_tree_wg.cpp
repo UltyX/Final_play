@@ -164,8 +164,8 @@ raiting_stack->clear();
         }
     }
     this->resizeColumnToContents(0);
-    raiting_stack->resizeColumnToContents(0);
-    raiting_stack->resizeColumnToContents(1);
+    //raiting_stack->resizeColumnToContents(0);   // resize
+    raiting_stack->resizeColumnToContents(1);   // resize
 }
 
 
