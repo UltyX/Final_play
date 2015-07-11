@@ -21,7 +21,7 @@ cwdir= QCoreApplication::applicationDirPath();
     QLabel *l =new QLabel;   
     l->setPixmap(QPixmap::fromImage(*(new QImage(cwdir.filePath("p2.png")))));
     l->setAlignment( Qt::AlignCenter);
-  //  l->setScaledContents(true); //useless if aspect ratio is not maintained, we got have order
+    //l->setScaledContents(true); //useless if aspect ratio is not maintained, we got have order
     l->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored );
     ui->tabWidget->addTab( l, "");
     ui->tabWidget->tabBar()->tabButton( 0,QTabBar::RightSide)->resize(0,0);  //    hide closebutton on new_tab tab ->hide() leaves big empty space, will crash if closeable tabs not enabeled
@@ -34,8 +34,8 @@ cwdir= QCoreApplication::applicationDirPath();
                                          // location of the executable, and icons
 settings_location = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);   // local of the settings
 
-saver = new QTimer(this);                                   //save QTimer
-saver->start(2000);                                                 //save signal ever x ms
+saver = new QTimer(this);                                        //save QTimer, will be connected to the Playlist_tree_wg's.
+saver->start(2000);                                              //save signal ever x ms
 
 player = new QMediaPlayer(this);    // THE MEDIA PLAYER BACKEND HERE
 

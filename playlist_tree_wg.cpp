@@ -2,9 +2,10 @@
 
 Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player, QStackedWidget *stack_wg, QTimer* save_timer,QString location):QTreeWidget()
 {
+    timer = save_timer;
     player = the_player;                                        // the only player in this programm, we share it between tabs and use its signals to set position, also we give it our playlist
     corresponing_stack_wg = stack_wg;                           // the stack WG, we put our Raiting WG on it, and display it from there
-
+    connected_to_player = false;
     raiting_stack = new my_stack_tw();                          // create our very own Raiting WG
     raiting_stack->setColumnCount(2);                           // Lable all the things
     QStringList raiting_wg_labels={"Name","Raiting"};
@@ -21,9 +22,9 @@ Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player, QStackedWidget *sta
         podcast_dir=location;
     }
 
-    connect(this,SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),this, SLOT(item_dubble_clck(QTreeWidgetItem*,int)  ) );
-    connect(player,SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)),this,SLOT( skipp_to_last_pos() ) );
-    //connect(player,SIGNAL(currentMediaChanged(QMediaContent)),this,SLOT(skipp_to_last_pos()) );                       //SKIPP to POSITION, WOULD HAVE liked to do it over playlist current media changed but race condition (emits signal(position skipping to) then changes track)
+    connect(this,SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),this, SLOT(item_dubble_clck(QTreeWidgetItem*,int)  ) );    // this widget has been clicked. it will tell the player to play the item and change the current playlist if needed
+    connect(player,SIGNAL(currentMediaChanged(QMediaContent)),this,SLOT(current_media_changed(QMediaContent)) );    // detect when playlist has changed so we don't call all the funktinos of all the widgets all the time
+
     //connect(player,SIGNAL(stateChanged(QMediaPlayer::State)),this,SLOT( playerstate_changed(QMediaPlayer::State)) );  //was only a work around, to be deleted if no other use found for it
     ///connect(playlist,SIGNAL(currentIndexChanged(int)),this,SLOT(update_TW_playlist(int)) );         TODO             //Playlist and Treewidget link, to show grafikly which one is playing now
 
@@ -43,8 +44,7 @@ Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player, QStackedWidget *sta
     connect(this,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT( on_Playlist_tree_wg_customContextMenuRequested(QPoint)) );
     // end context menu setup
 
-    connect(save_timer,SIGNAL(timeout()),this,SLOT(save_position()));   //saving people, hunting things, the family business
-    // periodicly save playback position and kill deamons Sammy
+
 
 
     this->setAcceptDrops(true);                                     // make drag and drop work -begin
@@ -54,10 +54,7 @@ Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player, QStackedWidget *sta
     this->setSelectionMode(QAbstractItemView::ExtendedSelection);   // make drag and drop work -- end
     if(player->playlist()==NULL){                                   // give player an initail playlist
         player->setPlaylist(&playlist);
-
     }
-   // playerstate_old = player->state();
-
 }// Goal: one central DB for time many small DB/Tabels for playlists.
 
 void Playlist_tree_wg::item_dubble_clck(QTreeWidgetItem* item_i, int column){
@@ -67,6 +64,7 @@ void Playlist_tree_wg::item_dubble_clck(QTreeWidgetItem* item_i, int column){
    std::cout<<"doblle cklick"<<std::endl;
    if(player->playlist()!= &playlist){  //   will emit a player current media changed
        player->setPlaylist(&playlist);  /// WARNING will reset playlist index back to 0  when set
+
        std::cout<<"set_playlist_from_this_tab"<<std::endl;
    }
 
@@ -81,7 +79,13 @@ void Playlist_tree_wg::item_dubble_clck(QTreeWidgetItem* item_i, int column){
 void Playlist_tree_wg::skipp_to_last_pos(){     // called when mediaplayer media changes and if our playlist is in use skipp to the last pos of the item
 
     std::cout<<"seeking to last position "<<std::endl;
-    if((player->playlist()!= &playlist)||((player->mediaStatus() != QMediaPlayer::LoadedMedia )&&(player->mediaStatus() != QMediaPlayer::BufferedMedia ))){// can't seek if media is not loaded yet
+
+    if(player->playlist()!= &playlist){
+        std::cout<< "skipp called but playlist is not current ! "<<std::endl;
+        return;
+    }
+
+    if( (player->mediaStatus() != QMediaPlayer::LoadedMedia )&&(player->mediaStatus() != QMediaPlayer::BufferedMedia ) ){// can't seek if media is not loaded/buffered yet
         std::cout<<" seek to position ignored "<<player->mediaStatus()<<std::endl; // also gets called on exit for some reasone
         return;
     } // if true not our battle :D
@@ -176,7 +180,10 @@ void Playlist_tree_wg::save_position(){
     Epi_list_item* epi_list_item;
     Episode *epi;
    // std::cout<< "save!  "<<std::endl;
-if(player->playlist()!= &playlist)return;
+if(player->playlist()!= &playlist){
+    std::cout<< "save called but playlist is not current ! "<<std::endl;
+    return;
+}
 //std::cout<< "save...  "<<std::endl;
     if( (player->state() == QMediaPlayer::PlayingState) && ( ((duration = player->duration())) !=-1) ){// duration may not be available when initial playback begins... ie player->duration() returns -1
         epi_list_item = (Epi_list_item*)(this->topLevelItem(playlist.currentIndex()));
@@ -233,12 +240,45 @@ void Playlist_tree_wg::remove_from_stack_wg(){
     delete raiting_stack;                               // delete it
 }
 
+
+
+void Playlist_tree_wg::disconnect_temp(){   //we nolonger need to care for all the signals as long as another playlist is active
+    std::cout<< " disconnecting player signals  "<<std::endl;
+    disconnect(player,SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)),this,SLOT( skipp_to_last_pos() ) );     //done buffering and such
+    disconnect(timer,SIGNAL(timeout()),this,SLOT(save_position()));                                                 //periodicly save playback position
+    connected_to_player = false;
+}
+void Playlist_tree_wg::connect_signals(){   //atach this widget to the timer and player
+    std::cout<< " connecting player signals  "<<std::endl;
+    connect(player,SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)),this,SLOT( skipp_to_last_pos() ) );        //done buffering and such
+    connect(timer,SIGNAL(timeout()),this,SLOT(save_position()));                                                    //periodicly save playback position
+    connected_to_player = true;
+}
+
+void Playlist_tree_wg::current_media_changed(QMediaContent current_media_p){
+
+    std::cout<< " current media changed WWWWWWWWWWWWWWWWWWWWWWWWWWW "<<std::endl;
+    if( (player->playlist() != &playlist)&&(connected_to_player == true) ){
+        disconnect_temp();
+    }
+    else if( (player->playlist() == &playlist)&&(connected_to_player == false) ){
+        connect_signals();
+    }
+}
+
+
 Playlist_tree_wg::~Playlist_tree_wg(){
 // raiting_stack gets deletet by stackwidget in the end if i don't remove and delete it bevorehand
 }
 QString Playlist_tree_wg::get_dir(){
     return podcast_dir;
 }
+
+
+
+
+
+///  drag and drop down there V
 
 void Playlist_tree_wg::dropEvent(QDropEvent * event)
 {

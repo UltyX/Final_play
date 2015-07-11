@@ -30,6 +30,9 @@ my_stack_tw *raiting_stack;
 Podcast_manager *manager;
 QStackedWidget* corresponing_stack_wg;
 QString podcast_dir;
+QTimer* timer;
+bool connected_to_player;
+
 //int playerstate_old;
 
 private slots:
@@ -43,6 +46,10 @@ void save_position();
 void item_dubble_clck(QTreeWidgetItem* item_i, int column);
 void reset_playtime_slot();
 void mark_epi_as_listened();
+
+void disconnect_temp();
+void connect_signals();
+void current_media_changed(QMediaContent current_media_p);
 //void playerstate_changed(QMediaPlayer::State state);
 
 protected:
