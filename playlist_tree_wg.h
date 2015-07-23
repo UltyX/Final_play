@@ -45,7 +45,9 @@ void skipp_to_last_pos();
 void save_position();
 void item_dubble_clck(QTreeWidgetItem* item_i, int column);
 void reset_playtime_slot();
-void mark_epi_as_listened();
+
+void mark_epi_as_listened(bool hard);
+
 
 void disconnect_temp();
 void connect_signals();
@@ -58,6 +60,10 @@ void dragEnterEvent(QDragEnterEvent *event) Q_DECL_OVERRIDE;
 void dragMoveEvent(QDragMoveEvent *event) Q_DECL_OVERRIDE;
 void dragLeaveEvent(QDragLeaveEvent *event) Q_DECL_OVERRIDE;
 void dropEvent(QDropEvent *event) Q_DECL_OVERRIDE;
+
+signals:
+void listend_soft(bool = false);
+void listend_hard(bool = true);
 
 public slots:
 void generate_ordered_playlist(bool new_first);

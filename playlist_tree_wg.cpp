@@ -24,7 +24,7 @@ Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player, QStackedWidget *sta
 
     connect(this,SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),this, SLOT(item_dubble_clck(QTreeWidgetItem*,int)  ) );    // this widget has been clicked. it will tell the player to play the item and change the current playlist if needed
     connect(player,SIGNAL(currentMediaChanged(QMediaContent)),this,SLOT(current_media_changed(QMediaContent)) );    // detect when playlist has changed so we don't call all the funktinos of all the widgets all the time
-
+    //connect(player,SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)),this, SLOT() );    // in case i want to replace playlist with manual media changes
     //connect(player,SIGNAL(stateChanged(QMediaPlayer::State)),this,SLOT( playerstate_changed(QMediaPlayer::State)) );  //was only a work around, to be deleted if no other use found for it
     ///connect(playlist,SIGNAL(currentIndexChanged(int)),this,SLOT(update_TW_playlist(int)) );         TODO             //Playlist and Treewidget link, to show grafikly which one is playing now
 
@@ -35,9 +35,17 @@ Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player, QStackedWidget *sta
 
     // begin context menu setup                        puting things into context :D (Menu)
     setContextMenuPolicy(Qt::CustomContextMenu);                                                // gives me in mainwondow the event when right clicked
-    QAction *mark_as_listened = new QAction( "mark as listened", &playlist_contextMenu );       // create first action
-    connect(mark_as_listened,SIGNAL(triggered()),this,SLOT(mark_epi_as_listened()) );           // connect first action to the slot where its behavior is defined
-    playlist_contextMenu.addAction(mark_as_listened);                                           // add first action to the menu
+
+    QAction *mark_as_listened = new QAction( "soft mark as listened", &playlist_contextMenu );          // create  action
+    connect(mark_as_listened,SIGNAL(triggered()),this,SIGNAL(listend_soft()) );                         // connect  action to a signal with false value
+    playlist_contextMenu.addAction(mark_as_listened);                                                   // add first action to the menu
+    connect(this,SIGNAL(listend_soft(bool)),this,SLOT(mark_epi_as_listened(bool)));                     // connect 2. signal to solt
+
+    QAction *mark_as_listened_remove = new QAction( "hard mark as listened", &playlist_contextMenu );    // create  action
+    connect(mark_as_listened_remove,SIGNAL(triggered()),this,SIGNAL(listend_hard()) );                   // connect  action to a signal with true value
+    playlist_contextMenu.addAction(mark_as_listened_remove);                                             // add first action to the menu
+    connect(this,SIGNAL(listend_hard(bool)),this,SLOT(mark_epi_as_listened(bool)));                      // connect 2. signal to solt
+
     QAction *reset_play_time = new QAction( "Reset playtime", &playlist_contextMenu );
     connect(reset_play_time,SIGNAL(triggered()),this,SLOT( reset_playtime_slot() ) );
     playlist_contextMenu.addAction(reset_play_time);
@@ -47,15 +55,19 @@ Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player, QStackedWidget *sta
 
 
 
+
     this->setAcceptDrops(true);                                     // make drag and drop work -begin
     this->setDragEnabled(true);                                     //
-    //this->setDragDropMode(QAbstractItemView::InternalMove);       //
+    //this->setDragDropMode(QAbstractItemView::InternalMove);       // -forgot why I had this at one point
     this->setDragDropMode(QAbstractItemView::DragDrop);             //
     this->setSelectionMode(QAbstractItemView::ExtendedSelection);   // make drag and drop work -- end
     if(player->playlist()==NULL){                                   // give player an initail playlist
         player->setPlaylist(&playlist);
     }
-}// Goal: one central DB for time many small DB/Tabels for playlists.
+}
+// Planing:
+// Goal: one central DB for time many small DB/Tabels for playlists. || Maybee get away from the premate playlist and only use the tree_WG, so we don't have to update the playlist when user
+// reoders or drag and dropps. this would propaply only require me to check for end of playback ie QMediaPlayer::MediaStatus QMediaPlayer::EndOfMedia or media change SIGNALS
 
 void Playlist_tree_wg::item_dubble_clck(QTreeWidgetItem* item_i, int column){
 
@@ -84,18 +96,26 @@ void Playlist_tree_wg::skipp_to_last_pos(){     // called when mediaplayer media
         std::cout<< "skipp called but playlist is not current ! "<<std::endl;
         return;
     }
-
     if( (player->mediaStatus() != QMediaPlayer::LoadedMedia )&&(player->mediaStatus() != QMediaPlayer::BufferedMedia ) ){// can't seek if media is not loaded/buffered yet
         std::cout<<" seek to position ignored "<<player->mediaStatus()<<std::endl; // also gets called on exit for some reasone
         return;
     } // if true not our battle :D
 
     int index=playlist.currentIndex();
+    Episode *epi;
     if((index!=-1)&&(this->topLevelItemCount()>0)){ // catch bad states
-        std::cout<< index<<"setting playback position to "<< ((Epi_list_item*)this->topLevelItem(index))->getEpisode()->last_position /1000<< "s"<<std::endl;       //debug
-        player->setPosition(((Epi_list_item*)this->topLevelItem(index))->getEpisode()->last_position);
+        epi = ((Epi_list_item*) this->topLevelItem(index))->getEpisode();
+
+        if(epi->listend){
+            playlist.next();    ///TODO good on forward bad on reverse !!
+        }
+        else{
+            std::cout<< index<<"setting playback position to "<< ((Epi_list_item*)this->topLevelItem(index))->getEpisode()->last_position /1000<< "s"<<std::endl;       //debug
+            player->setPosition(epi->last_position);
+        }
     }
 }
+
 /*
 void Playlist_tree_wg::playerstate_changed(QMediaPlayer::State state){
     int temp_state  = playerstate_old;
@@ -124,14 +144,21 @@ void Playlist_tree_wg::on_Playlist_tree_wg_customContextMenuRequested(const QPoi
 }
 
 
-void Playlist_tree_wg::mark_epi_as_listened(){      // call from the context menu
+void Playlist_tree_wg::mark_epi_as_listened(bool hard=false){      // call from the context menu
+    std::cout<< " marking  "<<hard<<std::endl;
     foreach (QTreeWidgetItem* item_i, this->selectedItems()) {
 
         Episode* epi =   ((Epi_list_item*)(item_i))->getEpisode();
         epi->listend=true;
-        manager->save_position(epi);    //overkill, would only be necessary to call at end for each podcast which has one or more episodes changed
+        manager->save_position(epi);
+        if(hard){
+            playlist.removeMedia( this->indexOfTopLevelItem(item_i) );  // makes a little jump but works fine during play
+            delete item_i;  // don't forget to delete item else index of playlist will be wrong for the next,
+                            // unless we deleted from bottum to top, but the
         }
+   }
 }
+
 
 void Playlist_tree_wg::reset_playtime_slot(){        // call from the context menu
     foreach (QTreeWidgetItem* item_i, this->selectedItems()) {
@@ -141,7 +168,7 @@ void Playlist_tree_wg::reset_playtime_slot(){        // call from the context me
         epi->last_position=0;
         epi_li->setText(1,"00:00:00");
         epi->listend=false;
-        manager->save_position(epi);    //overkill, would only be necessary to call at end for each podcast which has one or more episodes changed
+        manager->save_position(epi);
         }
 }
 
@@ -152,7 +179,7 @@ void Playlist_tree_wg::reset_playtime_slot(){        // call from the context me
 void Playlist_tree_wg::generate_ordered_playlist(bool new_first){// anoyingly will end playback when called...
 
 playlist.clear();
-this->clear();
+this->clear();              //clear this widget (playlist_wg) out
 raiting_stack->clear();
 
 
@@ -179,12 +206,12 @@ void Playlist_tree_wg::save_position(){
     qint64 position_sec;
     Epi_list_item* epi_list_item;
     Episode *epi;
-   // std::cout<< "save!  "<<std::endl;
-if(player->playlist()!= &playlist){
-    std::cout<< "save called but playlist is not current ! "<<std::endl;
-    return;
-}
-//std::cout<< "save...  "<<std::endl;
+    // std::cout<< "save!  "<<std::endl;
+    if(player->playlist()!= &playlist){
+        std::cout<< "save called but playlist is not current ! "<<std::endl;
+        return;
+    }
+    //std::cout<< "save...  "<<std::endl;
     if( (player->state() == QMediaPlayer::PlayingState) && ( ((duration = player->duration())) !=-1) ){// duration may not be available when initial playback begins... ie player->duration() returns -1
         epi_list_item = (Epi_list_item*)(this->topLevelItem(playlist.currentIndex()));
         epi=epi_list_item->getEpisode();
@@ -197,11 +224,11 @@ if(player->playlist()!= &playlist){
              std::cout<< "current position  "<<position<<std::endl;
              std::cout<< "current duratoin "<<duration<<std::endl;
         }
-   epi->last_position=position;
-   manager->save_position(epi);
+        epi->last_position=position;
+        manager->save_position(epi);
 
-   QTime currentTime((position_sec/3600)%60, (position_sec/60)%60, position_sec%60);
-   this->topLevelItem(playlist.currentIndex())->setText(1, currentTime.toString("hh:mm:ss")  ); //update ui
+        QTime currentTime((position_sec/3600)%60, (position_sec/60)%60, position_sec%60);
+        this->topLevelItem(playlist.currentIndex())->setText(1, currentTime.toString("hh:mm:ss")  ); //update ui
     }
 }
 
