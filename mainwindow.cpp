@@ -81,7 +81,8 @@ list_from_file(&locations , settings_location.filePath(".smap_fp").toStdString()
 int index_tab;
 for(auto x:locations){
     index_tab = ui->tabWidget->count()-1;
-    ui->tabWidget->insertTab(index_tab,new Playlist_tree_wg(player,ui->stackedWidget,saver,QString::fromStdString(x)), QString::number(index_tab));
+    ui->tabWidget->insertTab(index_tab,new Playlist_tree_wg(player,ui->stackedWidget,saver,QString::fromStdString(x),&current_wg), QString::number(index_tab));
+    std::cout<<(current_wg->get_dir().toStdString());
 }                                                                                   // Remember from last time what tabs where open -- end
 /// TODO
 
@@ -295,8 +296,9 @@ void MainWindow::add_new_on_plus_click(int index){              //TAB
     std::cout<<index<<std::endl;
     int number_of_items=ui->tabWidget->count()-1;
     if(index==number_of_items){
-        ui->tabWidget->insertTab(number_of_items,new Playlist_tree_wg(player,ui->stackedWidget,saver,""), QString::number(number_of_items));
+        ui->tabWidget->insertTab(number_of_items,new Playlist_tree_wg(player,ui->stackedWidget,saver,"",&current_wg), QString::number(number_of_items));
         ui->tabWidget->setCurrentIndex(number_of_items);
+        std::cout<<(current_wg->get_dir().toStdString())<<std::endl;
         }
 }
 

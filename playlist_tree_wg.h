@@ -18,6 +18,7 @@
 #include <QMediaPlaylist>
 #include <iostream>
 #include "epi_list_item.hpp"
+//#include "mainwindow.h"
 
 class Playlist_tree_wg : public QTreeWidget
 {
@@ -32,6 +33,7 @@ QStackedWidget* corresponing_stack_wg;
 QString podcast_dir;
 QTimer* timer;
 bool connected_to_player;
+Playlist_tree_wg** current_wg_mem_p;
 
 //int playerstate_old;
 
@@ -69,7 +71,7 @@ public slots:
 void generate_ordered_playlist(bool new_first);
 public:
 
-    Playlist_tree_wg(QMediaPlayer* the_player, QStackedWidget * stack_wg , QTimer *save_timer, QString location);
+    Playlist_tree_wg(QMediaPlayer* the_player, QStackedWidget * stack_wg , QTimer *save_timer, QString location, Playlist_tree_wg **current_playlist_wg_mem_p);
     ~Playlist_tree_wg();
 
 void remove_from_stack_wg();

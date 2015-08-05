@@ -1,6 +1,6 @@
 #include "playlist_tree_wg.h"
 
-Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player, QStackedWidget *stack_wg, QTimer* save_timer,QString location):QTreeWidget()
+Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player, QStackedWidget *stack_wg, QTimer* save_timer,QString location,Playlist_tree_wg** current_playlist_wg_mem_p):QTreeWidget()
 {
     timer = save_timer;
     player = the_player;                                        // the only player in this programm, we share it between tabs and use its signals to set position, also we give it our playlist
@@ -52,10 +52,6 @@ Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player, QStackedWidget *sta
     connect(this,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT( on_Playlist_tree_wg_customContextMenuRequested(QPoint)) );
     // end context menu setup
 
-
-
-
-
     this->setAcceptDrops(true);                                     // make drag and drop work -begin
     this->setDragEnabled(true);                                     //
     //this->setDragDropMode(QAbstractItemView::InternalMove);       // -forgot why I had this at one point
@@ -64,10 +60,14 @@ Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player, QStackedWidget *sta
     if(player->playlist()==NULL){                                   // give player an initail playlist
         player->setPlaylist(&playlist);
     }
+    current_wg_mem_p=current_playlist_wg_mem_p;      //works ! good now we can start to replace if(playlist is current) with *current_playlist_wg_mem_p
+    (*current_wg_mem_p)=this;
 }
 // Planing:
 // Goal: one central DB for time many small DB/Tabels for playlists. || Maybee get away from the premate playlist and only use the tree_WG, so we don't have to update the playlist when user
 // reoders or drag and dropps. this would propaply only require me to check for end of playback ie QMediaPlayer::MediaStatus QMediaPlayer::EndOfMedia or media change SIGNALS
+// but then how do we know which playlist is current when we can't get_playlist == our_playlist for saving and such ?
+// add a attribut to mainwindow which has the current playlist_wg in it, will be set when user dubbleclicks an item of one of the playlists
 
 void Playlist_tree_wg::item_dubble_clck(QTreeWidgetItem* item_i, int column){
 
@@ -307,31 +307,29 @@ QString Playlist_tree_wg::get_dir(){
 
 ///  drag and drop down there V
 
-void Playlist_tree_wg::dropEvent(QDropEvent * event)
+void Playlist_tree_wg::dropEvent(QDropEvent * event)    //
 {
-
     const QMimeData *mimeData = event->mimeData();
     if (mimeData->hasUrls()) {            
             QList<QUrl> urlList = mimeData->urls();
             foreach (QUrl where, urlList ) {
                 manager->add_from_url(where);  // not realy doable without database support
             }
-std::cout << "updating the ui not yet done 1"<<std::endl;
+            std::cout << "updating the ui not yet done 1"<<std::endl;
             return;
     }
 
-
 //http://stackoverflow.com/questions/18738676/qt-drag-and-drop-treeview-what-am-i-missing
 
-    QModelIndex dropIndex = indexAt(event->pos());  // event --> target position
-    int to = dropIndex.row();                       // target position --> int value
+    QModelIndex dropIndex = indexAt(event->pos());  // event --> target position     /// wrong when to far below of one item
+    int to = dropIndex.row();                       // target position --> int value ///
     QFileInfo fileInfo;
 
     list <QTreeWidgetItem*> my_list = this->selectedItems().toStdList();   // get moved times list
     my_list.reverse();                                                     // reverse list for bottom to top adding/removing so index does not change
 
-
-    Epi_list_item *new_episode;/// WARNING moving down and possible complex stuff is broken still !!
+    list <Epi_list_item*> my_list_epis;
+    Epi_list_item *new_episode;         /// WARNING moving down and possible complex stuff is broken still !!
     foreach (QTreeWidgetItem* x, my_list ) {
         std::cout << "to: "<<to<<"    from: "<< this->indexOfTopLevelItem(x)<<std::endl;        // add    item in new place in  playlist
         fileInfo.setFile( QString::fromStdString( ((Epi_list_item*)x)->getEpisode()->dir ) );
@@ -351,7 +349,6 @@ void Playlist_tree_wg::dragEnterEvent(QDragEnterEvent *event)
 
 void Playlist_tree_wg::dragMoveEvent(QDragMoveEvent *event)
 {
-
     QTreeWidget::dragMoveEvent(event);  // internal items generate highlitet destination place
     event->acceptProposedAction();      // order matters here   //nice green mouse icon
 }
