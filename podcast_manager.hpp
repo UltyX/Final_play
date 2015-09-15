@@ -2,64 +2,59 @@
 #define podcast_manager_w_w
 
 #include "podcast_strukts.hpp"
+#include "querys.h"
 #include <string>
 
 #include <list>
 #include <iostream>
 
-#include <QSqlError>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlDatabase>
 
+
+#include <QStandardPaths>
 #include <QUrl>
 #include <QFile>
 #include <QFileInfo>
 #include <QDir>
-#include <QDebug>
+#include <set>
 
 #include<QTime> //debug
 
-#include "convinience.hpp"
-
 using namespace std;
 
-class Podcast_manager {QTime myTimer;//debug
+class Podcast_manager {
+    QTime myTimer;//debug
   
-    list<Podcast*> pc;    
-    QDir Podcast_Dir;
+    QStringList filters;
+    Querys* querys;
+    list<Podcast*> * current_list;
+    std::set<QString> *myset_epi;
+    std::set<QString> *myset_pod;
 
-    QSqlQuery  raiting_GetQuery;
-    QSqlQuery  posTime_GetQuery;
-
-    QSqlQuery  raiting_SetQuery;
-    QSqlQuery  posTime_SetQuery;
-
-    QSqlQuery  raiting_AddQuery;
-    QSqlQuery  posTime_AddQuery;
-
-    void sub_dir(Podcast *parent_i);
     void main_dir (QString path);
     void add_podcast_to_list(QString name,QString path);    //creates a new podcast in the pc list with the given path
-    void set_values();    
+    void add_episodes_to_(Podcast *parent_i);
+    void open_DB();
 
-    void get_time_from_DB(Episode* for_this);       // querys the DB for the Episode values and sets them in the Episode. If DB does not know the Episode the episode is added to the DB with its current values.
-    void set_DB_time_from(Episode* from_this);      // atemptts to set the DB values to the current values of the Episode. Does nothing if the Episode is not found.
-    void add_DB_time_from(Episode* from_this);      // Adds the requested item to the DB. No error / duplicate checking yet.
 
-    void get_raiting_from_DB(Podcast* for_this);    // querys the DB for the Podcast values and sets them in the Podcast. If DB does not know the Podcast the episode is added to the DB with its current values.
-    void set_DB_raiting_from(Podcast* from_this);   // attempts to set the DB values to the current values of the Podcast. Does nothing if the Podcast is not found.
-    void add_DB_raiting_from(Podcast* from_this);   // Adds the requested item to the DB. No error / duplicate checking yet.
-    
 public:
-    Podcast_manager(string dir);
-    
-    list<Podcast*> load_list();		//goes thourgh the filesystem and makes a list of all the podcasts including the episodes. calling it again will destroy all previes objekts and replace them... Warning invalid püointers posible!
-    void save_position(Episode *epi);	//still a good idea to let this class handle the saving process
-    void update_values(Podcast *podc);
-    void add_from_url(QUrl where);
+    // the next step rewrite it so that playlist needs to provide a Dir for an update and the regular calles to add to the list
+    //
+    Podcast_manager(); // TODO < V
+    void apend_to_list(QDir Podcast_Dir, list<Podcast*> * the_list , std::set<QString> *myset_epi_i, std::set<QString> *myset_pod_i);    //goes thourgh the filesystem and makes a list of all the podcasts including the episode
+    void save_position(Episode *epi);                                   // launch a save_pos_update query
+    void update_value(Podcast *podc);                                   // launch a raiting__update query
+    void save_volume(int volume);
+    int  get_volume();
+
+
+
+    QStringList get_locations(QString tab_name);
+    void save_locations(QString tab_name, QStringList locations);
+    QStringList get_saved_tabs_names();
+    void delete_locations(QString tab_name);
+
+
+  //  void add_from_url(QUrl where); // can propably be replaced by the apend to list func now ! TODO
 };
-
-
 
 #endif

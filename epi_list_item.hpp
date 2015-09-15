@@ -13,6 +13,7 @@ class Epi_list_item : public QTreeWidgetItem {
 
     public:
     Epi_list_item(QTreeWidget* parent);
+
     Epi_list_item(const Epi_list_item* other);
 
 
@@ -25,6 +26,23 @@ class Epi_list_item : public QTreeWidgetItem {
     bool get_setup_done(){return setup_done;}
 
     void setEpisode(Episode * epi_i);
+
+private:
+    bool operator<(const QTreeWidgetItem &other)const {   //needs to be QTreeWidgetItem else it will not replace the virtual parent funktion and never be called
+
+    int column = treeWidget()->sortColumn();
+    if(column==2){
+        if(episode->parent->raiting == ((Epi_list_item*)(&other))->episode->parent->raiting){
+            return (episode->name > ((Epi_list_item*)(&other))->episode->name);                         // by name
+        }
+        else{
+            return(  episode->parent->raiting < ((Epi_list_item*)(&other))->episode->parent->raiting);  // by raiting
+        }
+    }
+    else{
+        return text(column) < other.text(column);
+        }
+    }
 };
 
 #endif

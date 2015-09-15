@@ -1,21 +1,18 @@
-#include "pod_play.h"
+#include "communiction_node.h"
 
 
-pod_play::pod_play(QStringList args)
+communiction_node::communiction_node(QStringList args)
 {
     other_instance_detected=false;
     smem = new QSharedMemory("pod_play");	//create    sharedmemory
-    smem->attach();				//attach to sharedmemory
-    smem->create(sizeof(int));			//tell it to be big enough for a std int
-
-
-
+    smem->attach();                         //attach to sharedmemory
+    smem->create(sizeof(int));              //tell it to be big enough for a std int
 
     string arg;
     if(args.count()>1) {
         for(auto x: args.toStdList() ) {// write valid arguments into sharedmemory as int's then exit
             arg=x.toStdString();
-cout<<arg<<endl;
+            cout<<arg<<endl;
             if(arg=="vol_+") {
                 write_sm(volume_up_e);
             }
@@ -88,13 +85,13 @@ file_from___map_unorderd( &settings_map, (current_dir+"settings.txt") );
 }
 */
 
-bool pod_play::was_other_instance_detected()
+bool communiction_node::was_other_instance_detected()
 {
-return other_instance_detected;
+    return other_instance_detected;
 }
 
 
-void pod_play::checking()
+void communiction_node::checking()
 {
     int info=empty_e;
 
@@ -109,7 +106,7 @@ void pod_play::checking()
 
 
 
-void pod_play::read__sm(int &a)//maybe i can do it with a single copy of buffer and stream, if i open and close to clear them out
+void communiction_node::read__sm(int &a)//maybe i can do it with a single copy of buffer and stream, if i open and close to clear them out
 {
 
     QBuffer buffer;
@@ -123,7 +120,7 @@ void pod_play::read__sm(int &a)//maybe i can do it with a single copy of buffer 
 
 }
 
-void pod_play::write_sm(int a)// do you realy need to construct a Buffer and a DataStream every time a_new, can't i just put them in the corner somewhere ?
+void communiction_node::write_sm(int a)// do you realy need to construct a Buffer and a DataStream every time a_new, can't i just put them in the corner somewhere ?
 {
     QBuffer buffer;
     buffer.open(QBuffer::ReadWrite);
@@ -138,7 +135,7 @@ void pod_play::write_sm(int a)// do you realy need to construct a Buffer and a D
     smem->unlock();
 }
 
-pod_play::~pod_play()
+communiction_node::~communiction_node()
 {
     smem->detach();	//detache from sharedmemory, we are done here
 }

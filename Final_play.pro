@@ -5,10 +5,10 @@
 #-------------------------------------------------
 CONFIG += c++11
 QT       += core gui \
-      multimedia \
-      multimediawidgets \
-widgets \
-sql
+        multimedia \
+        multimediawidgets \
+        widgets \
+        sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -18,21 +18,21 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp\
-podcast_manager.cpp\
-convinience.cpp\
-pod_play.cpp\
-playlist_tree_wg.cpp \
-    my_stack_tw.cpp \
-    epi_list_item.cpp
+        podcast_manager.cpp\
+        communiction_node.cpp\
+        playlist_tree_wg.cpp \
+        my_stack_tw.cpp \
+        epi_list_item.cpp \
+    querys.cpp
 
 HEADERS  += mainwindow.h\
-podcast_strukts.hpp\
-podcast_manager.hpp\
-convinience.hpp\
-pod_play.h \
-    podlist_item.hpp \
-epi_list_item.hpp\
-playlist_tree_wg.h \
-    my_stack_tw.h
+        podcast_strukts.hpp\
+        podcast_manager.hpp\
+        communiction_node.h \
+        podlist_item.hpp \
+        epi_list_item.hpp\
+        playlist_tree_wg.h \
+        my_stack_tw.h \
+    querys.h
 
 FORMS    += mainwindow.ui

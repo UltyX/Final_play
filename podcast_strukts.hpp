@@ -9,13 +9,7 @@ struct Episode {
     Podcast* parent;
     int last_position;
     bool listend;
-    //date created/edited
-    int yy;
-    int mm;
-    int dd;
-    int hh;
-    int min;
-    //date created/edited
+
 };
 
 //#include <sqlite3.h>
@@ -27,7 +21,6 @@ struct Podcast {
     std::list< Episode* > episodes;
     int raiting;
     
-    int samplerate;
 };
 
 #endif

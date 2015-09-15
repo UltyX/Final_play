@@ -1,12 +1,12 @@
-#ifndef Podlist_item_W_w
-#define Podlist_item_W_w
+#ifndef Pod_list_item_W_w
+#define Pod_list_item_W_w
 #include <QTreeWidgetItem>
 #include "podcast_strukts.hpp"
 #include <iostream>
-class Podlist_item : public QTreeWidgetItem {
+class Pod_list_item : public QTreeWidgetItem {
 
     public:
-    Podlist_item(QTreeWidget* parent):QTreeWidgetItem(parent){podcast=NULL;setup_done=false;}
+    Pod_list_item(QTreeWidget* parent):QTreeWidgetItem(parent){podcast=NULL;setup_done=false;}
  // ~Podlist_item(){std::cout<<"been killed p"<<std::endl;}
 
 

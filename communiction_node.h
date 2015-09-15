@@ -1,5 +1,5 @@
-#ifndef pod_play_H
-#define pod_play_H
+#ifndef communiction_node_H
+#define communiction_node_H
 
 
 
@@ -13,7 +13,7 @@
 #include <QStringList>
 #include <iostream>
 using namespace std;
-class pod_play : public QObject	// inherates from QObject
+class communiction_node : public QObject	// inherates from QObject
 {
     Q_OBJECT			// no Idea what that macro does
 
@@ -31,9 +31,9 @@ private slots:
     void checking();		//call this to see if there has been a command send
 
 public:
-    pod_play(QStringList args);
+    communiction_node(QStringList args);
     bool was_other_instance_detected();
-    virtual ~pod_play();
+    virtual ~communiction_node();
 };
 
 enum settings {volume_up_e,volume_down_e,seek_forw_e,seek_back_e,play_pause_e,quit_e,skipp_e,next_e,prev_e,save_pos_e,empty_e,test_ping_e};

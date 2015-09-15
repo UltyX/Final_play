@@ -9,13 +9,14 @@ MainWindow::MainWindow(QStringList args_i, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    comm_interface = new pod_play(args_i);                  // create instance of the shared memory communication interface
+    comm_interface = new communiction_node(args_i);                  // create instance of the shared memory communication interface
     if(comm_interface->was_other_instance_detected()){      // nothing more we need to do, commands if there have been written to s.mem
         return;                                             // return without creating the UI
     }
     connect(comm_interface,SIGNAL(message_found(int)),this,SLOT(apply_remote_commands(int)) );  // interpret recived commands HERE
-
-cwdir= QCoreApplication::applicationDirPath();
+    manager = new Podcast_manager();
+    current_playlist = NULL;
+    cwdir= QCoreApplication::applicationDirPath();
 
     // Tabwidget config -begin
     QLabel *l =new QLabel;   
@@ -32,110 +33,73 @@ cwdir= QCoreApplication::applicationDirPath();
     // Tabwidget config -- end
 
                                          // location of the executable, and icons
-settings_location = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);   // local of the settings
-
-saver = new QTimer(this);                                        //save QTimer, will be connected to the Playlist_tree_wg's.
-saver->start(2000);                                              //save signal ever x ms
-
-player = new QMediaPlayer(this);    // THE MEDIA PLAYER BACKEND HERE
 
 
+    saver = new QTimer(this);                                        //save QTimer, will be connected to the Playlist_tree_wg's.
+    saver->start(2000);                                              //save signal ever x ms
 
-connect(this,SIGNAL(play())         ,player ,SLOT(play()));       //play  button hooked up over main window signal emit for play/pause switching
-connect(this,SIGNAL(pause())        ,player ,SLOT(pause()));      //pause button hooked up over main window signal emit for play/pause switching
-connect(this,SIGNAL(play_pause())   ,this   ,SLOT(switch_play_pause()));    //switch between playing and pause, had to implement it myselfe. not in player as funktion available
-
-
-ui->previos_b->setIcon(style()->standardIcon(QStyle::SP_MediaSeekBackward));    // give it the nice icon
-ui->next_b->setIcon(style()->standardIcon(QStyle::SP_MediaSeekForward));        // give it the nice icon
-
-connect(ui->play_b   ,SIGNAL(clicked()), this, SIGNAL(play_pause()));   // play/pause button pressed, emits just a signal
-ui->play_b->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));       // give it the nice play icon
-
-ui->vol_sl->setRange(0,100); //set range 0-100%
-connect(ui->vol_sl,SIGNAL(valueChanged(int)),player,SLOT(setVolume(int)));  //volume slider moved
-ui->vol_sl->setValue(25);   // decent iniatail value
-
-connect(  this, SIGNAL(seeking(qint64))        ,player,SLOT(setPosition(qint64))       );   //seek slider moved
-connect(player, SIGNAL(durationChanged(qint64)),  this,SLOT(seek_sl_setLenght(qint64)) );   //update seek slider over mainwindow slot
-connect(player, SIGNAL(positionChanged(qint64)),  this,SLOT(seek_sl_setValue (qint64)) );   //update seek slider over mainwindow slot
+    player = new QMediaPlayer(this);    // THE MEDIA PLAYER BACKEND HERE
 
 
-connect(ui->order_ckbox,SIGNAL(toggled(bool)),this,SLOT(generate_ordered_playlist()));
 
-QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");  //my std Database
-db.setHostName("acidalia");
-db.setDatabaseName(settings_location.filePath("FinalPlayDB") );
-db.setUserName("mojito");
-db.setPassword("J0a1m8");
-if( ! db.open()){std::cout<<"opening Database failed"<<db.lastError().text().toStdString()<<std::endl;}
- QSqlQuery sq(db);  //recreate in case it got lost
-if( ! sq.prepare( "CREATE TABLE Raitings(name   TEXT PRIMARY KEY, location   TEXT ,raiting   INT )" )){std::cout<<"preparing query failed "<<sq.lastError().text().toStdString() <<std::endl;}
-if( ! sq.exec()){std::cout<<"proppably already exsits. creating table failed "<<sq.lastError().text().toStdString()<<std::endl;}
-if( ! sq.prepare( "CREATE TABLE Times(name   TEXT PRIMARY KEY, location TEXT ,playtime   INT, done BOOL )" )){std::cout<<"preparing query failed "<<sq.lastError().text().toStdString() <<std::endl;}
-if( ! sq.exec()){std::cout<<"proppably already exsits. creating table failed "<<sq.lastError().text().toStdString()<<std::endl;}
-//my std Database
+    connect(this,SIGNAL(play())         ,player ,SLOT(play()));       //play  button hooked up over main window signal emit for play/pause switching
+    connect(this,SIGNAL(pause())        ,player ,SLOT(pause()));      //pause button hooked up over main window signal emit for play/pause switching
+    connect(this,SIGNAL(play_pause())   ,this   ,SLOT(switch_play_pause()));    //switch between playing and pause, had to implement it myselfe. not in player as funktion available
 
-/// TODO put this in MainDB instead of textfile
-list_from_file(&locations , settings_location.filePath(".smap_fp").toStdString());  // Remember from last time what tabs where open -begin
-int index_tab;
-for(auto x:locations){
-    index_tab = ui->tabWidget->count()-1;
-    ui->tabWidget->insertTab(index_tab,new Playlist_tree_wg(player,ui->stackedWidget,saver,QString::fromStdString(x),&current_wg), QString::number(index_tab));
-    std::cout<<(current_wg->get_dir().toStdString());
-}                                                                                   // Remember from last time what tabs where open -- end
-/// TODO
 
-// Icon begin
-QIcon icon_temp(cwdir.filePath("xx.png"));          // generate a temporary icon
-setWindowIcon(icon_temp);                           // set windows icon to same as tray/temp icon
-tray_icon =  new QSystemTrayIcon(icon_temp, this);  // generate the system tray objekt withe the temp icon
+    ui->previos_b->setIcon(style()->standardIcon(QStyle::SP_MediaSeekBackward));    // give it the nice icon
+    ui->next_b->setIcon(style()->standardIcon(QStyle::SP_MediaSeekForward));        // give it the nice icon
 
-connect( tray_icon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(tray_icon_clicked( QSystemTrayIcon::ActivationReason  )) );  // on left-,dubble-,middel- click
+    connect(ui->play_b   ,SIGNAL(clicked()), this, SIGNAL(play_pause()));   // play/pause button pressed, emits just a signal
+    ui->play_b->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));       // give it the nice play icon
 
-QAction *quit_action = new QAction( "Exit", tray_icon );            // tray menu exit option
-connect( quit_action, SIGNAL(triggered()), qApp, SLOT(quit()));     //
+    ui->vol_sl->setRange(0,100); //set range 0-100%
+    connect(ui->vol_sl,SIGNAL(valueChanged(int)),player,SLOT(setVolume(int)));  //volume slider moved
+    connect(ui->vol_sl,SIGNAL(sliderReleased()),this,SLOT(save_volume()) );
+    connect(ui->vol_sl,SIGNAL(valueChanged(int)),this,SLOT(save_volume()) );
+    ui->vol_sl->setValue(manager->get_volume());   // decent iniatail value
 
-QAction *up_action = new QAction( "update", tray_icon );                                // tray menu re- generate playlist
-connect( up_action, SIGNAL(triggered()), this, SLOT(generate_ordered_playlist()) );     //
+    connect(  this, SIGNAL(seeking(qint64))        ,player,SLOT(setPosition(qint64))       );   //seek slider moved
+    connect(player, SIGNAL(durationChanged(qint64)),  this,SLOT(seek_sl_setLenght(qint64)) );   //update seek slider over mainwindow slot
+    connect(player, SIGNAL(positionChanged(qint64)),  this,SLOT(seek_sl_setValue (qint64)) );   //update seek slider over mainwindow slot
 
-QMenu *tray_icon_menu = new QMenu("File");              // make the menu
-tray_icon_menu->addAction( up_action );                 // add the option
-tray_icon_menu->addAction( quit_action );               // add the option
-tray_icon->setContextMenu( tray_icon_menu );            /// link menu with tray objekt
-ui->menuBar->addMenu( tray_icon_menu );
-tray_icon->show();
-// Icon end
+
+    connect(ui->order_ckbox,SIGNAL(toggled(bool)),this,SLOT(generate_ordered_playlist()));
+
+
+
+
+    // Icon begin
+    QIcon icon_temp(cwdir.filePath("xx.png"));          // generate a temporary icon
+    setWindowIcon(icon_temp);                           // set windows icon to same as tray/temp icon
+    tray_icon =  new QSystemTrayIcon(icon_temp, this);  // generate the system tray objekt withe the temp icon
+
+    connect( tray_icon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(tray_icon_clicked( QSystemTrayIcon::ActivationReason  )) );  // on left-,dubble-,middel- click
+
+    QAction *quit_action = new QAction( "Exit", tray_icon );            // tray menu exit option
+    connect( quit_action, SIGNAL(triggered()), qApp, SLOT(quit()));     //
+
+    QAction *up_action = new QAction( "update", tray_icon );                                // tray menu re- generate playlist
+    connect( up_action, SIGNAL(triggered()), this, SLOT(generate_ordered_playlist()) );     //
+
+    QMenu *tray_icon_menu = new QMenu("File");              // make the menu
+    tray_icon_menu->addAction( up_action );                 // add the option
+    tray_icon_menu->addAction( quit_action );               // add the option
+    tray_icon->setContextMenu( tray_icon_menu );            /// link menu with tray objekt
+    ui->menuBar->addMenu( tray_icon_menu );
+    tray_icon->show();
+    // Icon end
 
 
     setWindowTitle("Final Play");   // in windo decoration set app name
     show();                         // display main window
 
+    foreach ( QString tab_name, manager->get_saved_tabs_names() ){  //resotre tabs from DB
+        add_tab( manager->get_locations(tab_name),tab_name );
+    }
 
 
 
-
-
-/*
-    // move to manager -->
-    QSqlQuery query(db);
-    if( ! query.prepare("INSERT INTO raitings(name, location, raiting) "
-                     "VALUES (:name, :local, :raiting)")){std::cout<<"prepare failed"<<query.lastError().text().toStdString()<<std::endl;}
-    query.bindValue(":name", "SN1");
-    query.bindValue(":local", "/home/ulty/");
-    query.bindValue(":raiting", 12);
-    if( !query.exec()){std::cout<<"exec failed _x_ "<<query.lastError().text().toStdString()<<std::endl;}
-
-    QSqlQuery  query2;
-    query2.prepare("SELECT name,raiting FROM raitings WHERE name = 'SN1'");    // selection criteria here
-    query2.exec();
-    query2.next();                                                          // needs to be called once, pointer is set bevore the first selected item
-    QString name = query2.value(0).toString();                              // get the first selected argument we asked for
-    int rat = query2.value(1).toInt();                                      // get the second selected argument we asked for
-    qDebug() << name << rat;
-    // move to manager -->
-
-*/
 }
 /*
 *  TODO:
@@ -167,8 +131,8 @@ void MainWindow::apply_remote_commands(int comand){ //comm_interface looks for c
         case play_pause_e:  emit play_pause();                                  break;
         case quit_e:                                                            break;
         case skipp_e:                                                           break;
-        case next_e:        this->on_next_b_clicked();                          break;
-        case prev_e:        this->on_previos_b_clicked();                       break;
+        case next_e:        ui->next_b->pressed();                              break;
+        case prev_e:        ui->previos_b->pressed();                           break;
         case save_pos_e:    std::cout<< "??? why1 "<<std::endl;                 break;
         case empty_e:       std::cout<< "??? why2 "<<std::endl;                 break;
         case test_ping_e:   std::cout<< "pinged by other instance "<<std::endl; break;
@@ -180,8 +144,9 @@ void MainWindow::apply_remote_commands(int comand){ //comm_interface looks for c
 
 
 void MainWindow::switch_play_pause()    //play / pause with one button. this slot..signal player
-{   if(player->mediaStatus()== QMediaPlayer::NoMedia){
-    player->playlist()->setCurrentIndex(0);                 //can't play with no media...
+{
+    if(player->mediaStatus()== QMediaPlayer::NoMedia){
+        return;              //can't play with no media...
     }
     if(player->state() != QMediaPlayer::PlayingState){      //ask if playing or not (paused)
         emit play();                                                        // tell it over the singal/slot connection to play
@@ -192,6 +157,7 @@ void MainWindow::switch_play_pause()    //play / pause with one button. this slo
         ui->play_b->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));   // set the play icon on the button
     }
 }
+
 
 void MainWindow::seek_sl_setLenght(qint64 lenght)//since the slider got no fitting slot for set lenght compatible with player signals I wrote this over main window.  this slot..signal player
 {
@@ -215,36 +181,17 @@ void MainWindow::on_seek_sl_sliderReleased()// since the slider has no on releas
     emit seeking(ui->seek_sl->value());
 }
 
-
-
-
-
-void MainWindow::closeEvent(QCloseEvent *event) // just minimize and don't close the player
-{
-    if (tray_icon->isVisible()) {
-        hide();
-        event->ignore();
+void MainWindow::save_volume(){
+    if(!ui->vol_sl->isSliderDown()){
+        manager->save_volume( ui->vol_sl->value() );
     }
 }
-
-MainWindow::~MainWindow()
-{
-    locations.clear();                                                                                 // save tabs to disk -begin
-    for(int i=0; i< (ui->tabWidget->count()-1); i++){
-       locations.push_back(((Playlist_tree_wg*)ui->tabWidget->widget(i))->get_dir().toStdString());
-    }
-    file_from_list(&locations,settings_location.filePath(".smap_fp").toStdString() );                   // save tabs to disk -- end
-
-    delete comm_interface;  //will result in sharedmem. not being detached if skipped !
-    delete ui;
-}
-
 
 
 
 void MainWindow::tray_icon_clicked(QSystemTrayIcon::ActivationReason reason){   //ICON RIGHTCLICK MENU DISPLAY
     if(reason==QSystemTrayIcon::MiddleClick){
-emit play_pause();
+    emit play_pause();
     }
     else if(reason==QSystemTrayIcon::Trigger  ){    //noramal leftclick hide_unhide takes about 1,5sec... no idea why ?...
         if(isVisible()){
@@ -253,8 +200,8 @@ emit play_pause();
         else
         {
             show();
-            raise();
             setFocus();
+            activateWindow();
         }
     }
 }
@@ -275,49 +222,95 @@ void MainWindow::on_seek_sl_valueChanged(int value) //on value change gives us a
 
 
 
-void MainWindow::on_tabWidget_tabCloseRequested(int index)  //TAB
-{
-    ((Playlist_tree_wg*)ui->tabWidget->widget(index))->remove_from_stack_wg();
-   delete ui->tabWidget->widget(index); //also removes the tabed page YAY  ~of the wiget informs the stack wg
-}
+
 
 void MainWindow::scroll_bounds(int i){                      //TAB don't lest user scroll into plus tab again & stackwidget set to same index
-std::cout<<i<<std::endl;
-ui->stackedWidget->setCurrentIndex(i);
-int number_of_tabs=ui->tabWidget->count()-1;
-if(i==number_of_tabs){
-    ui->tabWidget->setCurrentIndex(number_of_tabs-1);
+
+    ui->stackedWidget->setCurrentIndex(i);
+    int number_of_tabs=ui->tabWidget->count()-1;
+    if(i==number_of_tabs){
+        ui->tabWidget->setCurrentIndex(number_of_tabs-1);
+    }
 }
-}
 
-void MainWindow::add_new_on_plus_click(int index){              //TAB
+void MainWindow::add_new_on_plus_click(int index){              //TAB ADD
 
-
-    std::cout<<index<<std::endl;
     int number_of_items=ui->tabWidget->count()-1;
     if(index==number_of_items){
-        ui->tabWidget->insertTab(number_of_items,new Playlist_tree_wg(player,ui->stackedWidget,saver,"",&current_wg), QString::number(number_of_items));
-        ui->tabWidget->setCurrentIndex(number_of_items);
-        std::cout<<(current_wg->get_dir().toStdString())<<std::endl;
-        }
+       add_tab();
+    }
+}
+void MainWindow::add_tab(QStringList locations, QString tab_name){    // instance and connect new Tab
+    int number_of_items=ui->tabWidget->count()-1;
+    if(tab_name.isEmpty()){
+        int i =0;
+        QStringList names = manager->get_saved_tabs_names();
+        do{
+            tab_name=QString::number(i);
+            i++;
+        }while(names.contains(tab_name));
+    }
+    Playlist_tree_wg* new_playlist = new Playlist_tree_wg(player,manager,ui->stackedWidget,saver,locations,tab_name);
+
+    connect( new_playlist,SIGNAL( connect_me(Playlist_tree_wg*) ),this,SLOT( connect_playlist(Playlist_tree_wg*))   ); // playlist has been set current
+    connect( new_playlist,SIGNAL( disconnect_me(Playlist_tree_wg*)),this,SLOT(disconnect_playlist(Playlist_tree_wg*)));
+
+    connect( new_playlist,SIGNAL( current_wg_update(Playlist_tree_wg*)  ),this,SIGNAL( current_wg_update(Playlist_tree_wg*)  )); // tell others to disconect
+    connect( this,SIGNAL( current_wg_update(Playlist_tree_wg*)  ),new_playlist,SLOT(set_current(Playlist_tree_wg*))  );         // tell others to disconect
+
+    ui->tabWidget->insertTab(number_of_items, new_playlist  , tab_name);
+    ui->tabWidget->setCurrentIndex(number_of_items);
+    if(current_playlist == NULL){   // set a ini playlist
+        new_playlist->set_current( new_playlist );
+        current_playlist = new_playlist;
+    }
 }
 
-void MainWindow::generate_ordered_playlist(){
+void MainWindow::connect_playlist(Playlist_tree_wg* playlist_wg){ // Connect TAB
+    //emit current_wg_update(playlist_wg);
+    connect(ui->previos_b,SIGNAL(pressed()),playlist_wg,SLOT(play_prev()) );
+    connect(ui->next_b,SIGNAL(pressed()),playlist_wg,SLOT(play_next()) );
+    playlist_wg->connect_signals();
+}
+void MainWindow::disconnect_playlist(Playlist_tree_wg* playlist_wg){  // DISConnect TAB
+    disconnect(ui->previos_b,SIGNAL(pressed()),playlist_wg,SLOT(play_prev()) );
+    disconnect(ui->next_b,SIGNAL(pressed()),playlist_wg,SLOT(play_next()) );
+    playlist_wg->disconnect_temp();
+}
+
+
+
+void MainWindow::generate_ordered_playlist(){   // regenerate playlists
    int number_of_tabs= ui->tabWidget->count()-1;
     for(int i=0;i<number_of_tabs;i++)
     {
-        ((Playlist_tree_wg*)ui->tabWidget->widget(i))->generate_ordered_playlist(ui->order_ckbox->isChecked());
+        ((Playlist_tree_wg*)ui->tabWidget->widget(i))->generate_ordered_playlist();
     }
 }
 
 
 
-void MainWindow::on_previos_b_clicked()
+
+// delete functions -------------------------------------------------------------------------------------------------V
+
+void MainWindow::on_tabWidget_tabCloseRequested(int index)  //close TAB
 {
-    player->playlist()->previous();
+    manager->delete_locations(((Playlist_tree_wg*)ui->tabWidget->widget(index))->get_name());
+
+    ((Playlist_tree_wg*)ui->tabWidget->widget(index))->remove_from_stack_wg();  // remove stack WG
+    delete ui->tabWidget->widget(index);                                         // remove playlist tab WG
 }
 
-void MainWindow::on_next_b_clicked()
+void MainWindow::closeEvent(QCloseEvent *event) // just minimize and don't close the player
 {
-    player->playlist()->next();
+    if (tray_icon->isVisible()) {
+        hide();
+        event->ignore();
+    }
+}
+
+MainWindow::~MainWindow()
+{
+    delete comm_interface;  //will result in sharedmem. not being detached if skipped !
+    delete ui;
 }

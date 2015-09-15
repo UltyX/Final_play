@@ -3,7 +3,7 @@
 
 #include <QTreeWidget>
 #include <iostream>
-class my_stack_tw : public QTreeWidget
+class Raiting_tree_wg : public QTreeWidget
 {
     Q_OBJECT
 
@@ -12,8 +12,8 @@ private slots:
 
 
 public:
-    my_stack_tw();
-    ~my_stack_tw();
+    Raiting_tree_wg();
+    ~Raiting_tree_wg();
 };
 
 #endif // MY_STACK_TW_H
