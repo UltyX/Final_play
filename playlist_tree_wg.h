@@ -85,6 +85,7 @@ public slots:
     void set_current( Playlist_tree_wg * who );
     void disconnect_temp();
     void connect_signals();
+    void set_duration(QString time_formated_i);
 
 public:
 

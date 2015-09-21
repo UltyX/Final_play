@@ -16,6 +16,7 @@ MainWindow::MainWindow(QStringList args_i, QWidget *parent) :
     connect(comm_interface,SIGNAL(message_found(int)),this,SLOT(apply_remote_commands(int)) );  // interpret recived commands HERE
     manager = new Podcast_manager();
     current_playlist = NULL;
+
     cwdir= QCoreApplication::applicationDirPath();
 
     // Tabwidget config -begin
@@ -166,7 +167,9 @@ void MainWindow::seek_sl_setLenght(qint64 lenght)//since the slider got no fitti
     QTime totalTime((lenght/3600)%60, (lenght/60)%60, lenght%60);
     QString tStr = totalTime.toString("hh:mm:ss");
     ui->lcdNumber_2->display(tStr);
-
+    if(current_playlist!=NULL){
+        current_playlist->set_duration(tStr);
+    }
 }
 
 void MainWindow::seek_sl_setValue(qint64 pos)//since the slider got no fitting slot for set value compatible with player signals I wrote this over main window. this slot..signal player

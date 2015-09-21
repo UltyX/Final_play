@@ -13,8 +13,8 @@ Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player,Podcast_manager* Pod
     raiting_stack = new Raiting_tree_wg();                          // create our very own Raiting WG
 
 
-    this->setColumnCount(3);                                    // 2 Collums Playlist WG
-    QStringList playlist_wg_labels={"Name","Last Position","Raiting"};
+    this->setColumnCount(4);                                    // 2 Collums Playlist WG
+    QStringList playlist_wg_labels={"Name","Last Position","Raiting","Duration"};
     this->setHeaderLabels(playlist_wg_labels);                  // Lable all the things
 
     corresponing_stack_wg->addWidget(raiting_stack);   //add our raintings widget to the stack wg
@@ -306,6 +306,12 @@ void Playlist_tree_wg::paint_item(Epi_list_item* item_i,bool norm){
     }
 }
 
+void Playlist_tree_wg::set_duration(QString time_formated_i){
+
+    if(current_item != NULL){
+        current_item->setText(3,time_formated_i);
+    }
+}
 
 
 void Playlist_tree_wg::remove_from_stack_wg(){

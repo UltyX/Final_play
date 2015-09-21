@@ -51,7 +51,7 @@ public:
     explicit MainWindow(QStringList args_i,QWidget *parent = 0);
     ~MainWindow();
    bool singel_app();
-   Playlist_tree_wg *current_wg;
+
 
 
 
