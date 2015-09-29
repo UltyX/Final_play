@@ -28,7 +28,7 @@ communiction_node::communiction_node(QStringList args)
             if(arg=="pause") {
                 write_sm(play_pause_e);
             }
-            if(arg=="skipp") {
+            if(arg=="skip") {
                 write_sm(skipp_e);// marks it as listened
             }
             if(arg=="next") {
