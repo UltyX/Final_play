@@ -39,7 +39,7 @@ class Playlist_tree_wg : public QTreeWidget
     Epi_list_item* current_item;
 
     list <Podcast*> pc; // TODO a MAP <String, Podcast*> would be better
-
+    QStringList row_names;
 //int playerstate_old;
 
 private slots:
@@ -93,7 +93,7 @@ public:
     ~Playlist_tree_wg();
 
     void remove_from_stack_wg();        // caled by main window when deconstruction is wanted
-
+    QStringList get_row_names();
     void set_dirs( QStringList dirs );  // ??? nothing here yet
     QString get_name(){return tab_name;}
 };

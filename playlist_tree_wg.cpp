@@ -14,8 +14,8 @@ Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player,Podcast_manager* Pod
 
 
     this->setColumnCount(4);                                    // 2 Collums Playlist WG
-    QStringList playlist_wg_labels={"Name","Last Position","Raiting","Duration"};
-    this->setHeaderLabels(playlist_wg_labels);                  // Lable all the things
+    row_names=QStringList({"Name","Last Position","Raiting","Duration"});
+    this->setHeaderLabels(row_names);                  // Lable all the things
 
     corresponing_stack_wg->addWidget(raiting_stack);   //add our raintings widget to the stack wg
 
@@ -313,6 +313,9 @@ void Playlist_tree_wg::set_duration(QString time_formated_i){
     }
 }
 
+QStringList Playlist_tree_wg::get_row_names(){
+    return row_names;
+}
 
 void Playlist_tree_wg::remove_from_stack_wg(){
     corresponing_stack_wg->removeWidget(raiting_stack); //removes it from the wg but not delets it

@@ -41,16 +41,40 @@
         <item>
          <layout class="QHBoxLayout" name="options">
           <item>
-           <widget class="QCheckBox" name="order_ckbox">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+           <widget class="QPushButton" name="add_local_b">
             <property name="text">
-             <string>new first</string>
+             <string>add_location</string>
             </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="row_sort0_b">
+            <property name="minimumSize">
+             <size>
+              <width>80</width>
+              <height>0</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="row_AD0_b">
+            <property name="minimumSize">
+             <size>
+              <width>80</width>
+              <height>0</height>
+             </size>
+            </property>
+            <item>
+             <property name="text">
+              <string>Ascending</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Descending</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item>
@@ -262,7 +286,7 @@
      <x>0</x>
      <y>0</y>
      <width>990</width>
-     <height>19</height>
+     <height>17</height>
     </rect>
    </property>
   </widget>

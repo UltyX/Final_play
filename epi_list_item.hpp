@@ -30,6 +30,8 @@ class Epi_list_item : public QTreeWidgetItem {
 private:
     bool operator<(const QTreeWidgetItem &other)const {   //needs to be QTreeWidgetItem else it will not replace the virtual parent funktion and never be called
 
+        /// todo ask mainwindow for sort rules like 1: importans [row 2 asending ] 2: if 1. rule had some that are ==  [3. row desending]   ...
+
     int column = treeWidget()->sortColumn();
     if(column==2){
         if(episode->parent->raiting == ((Epi_list_item*)(&other))->episode->parent->raiting){

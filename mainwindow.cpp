@@ -65,7 +65,7 @@ MainWindow::MainWindow(QStringList args_i, QWidget *parent) :
     connect(player, SIGNAL(positionChanged(qint64)),  this,SLOT(seek_sl_setValue (qint64)) );   //update seek slider over mainwindow slot
 
 
-    connect(ui->order_ckbox,SIGNAL(toggled(bool)),this,SLOT(generate_ordered_playlist()));
+
 
 
 
@@ -266,6 +266,7 @@ void MainWindow::add_tab(QStringList locations, QString tab_name){    // instanc
     if(current_playlist == NULL){   // set a ini playlist
         new_playlist->set_current( new_playlist );
         current_playlist = new_playlist;
+        ui->row_sort0_b->addItems(  current_playlist->get_row_names() ); // get _row for button
     }
 }
 

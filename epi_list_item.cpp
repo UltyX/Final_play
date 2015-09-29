@@ -46,6 +46,7 @@ void Epi_list_item::setEpisode(Episode * epi_i){
       qint64 pos = epi_i->last_position/1000;
       QTime currentTime((pos/3600)%60, (pos/60)%60, pos%60);
       setText(1, currentTime.toString("hh:mm:ss") );
+      setText(2, QString::number(epi_i->parent->raiting ) );
 
       setData(1,Qt::ToolTipRole,"shows where you last left off");
       setup_done=true;
