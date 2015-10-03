@@ -24,15 +24,17 @@
     return the_clone;
     }*/
 
-
+//                              parameter          parameter given to parent class constructor first
 Epi_list_item::Epi_list_item(QTreeWidget* parent):QTreeWidgetItem(parent){
     episode=NULL;
     setup_done=false;
+    main_w = parent->parent();
 }
 
 
 Epi_list_item::Epi_list_item(const Epi_list_item* other):QTreeWidgetItem(other->parent()){
     setEpisode(other->episode);
+    main_w = other->main_w;
 
 
     std::cout<<"copy from other"<<std::endl;

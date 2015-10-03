@@ -36,6 +36,7 @@ MainWindow::MainWindow(QStringList args_i, QWidget *parent) :
                                          // location of the executable, and icons
 
 
+
     saver = new QTimer(this);                                        //save QTimer, will be connected to the Playlist_tree_wg's.
     saver->start(2000);                                              //save signal ever x ms
 

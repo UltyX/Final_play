@@ -5,12 +5,14 @@
 #include <QTime>
 #include "podcast_strukts.hpp"
 #include <iostream>
+//#include "mainwindow.h"  // when adding an include file breaks your programm, just c++ things
+//#include "ui_mainwindow.h" //
 
 class Epi_list_item : public QTreeWidgetItem {
 
     bool setup_done;
     Episode *episode;
-
+    QObject *main_w;
     public:
     Epi_list_item(QTreeWidget* parent);
 
@@ -31,6 +33,9 @@ private:
     bool operator<(const QTreeWidgetItem &other)const {   //needs to be QTreeWidgetItem else it will not replace the virtual parent funktion and never be called
 
         /// todo ask mainwindow for sort rules like 1: importans [row 2 asending ] 2: if 1. rule had some that are ==  [3. row desending]   ...
+        //((MainWindow*)main_w)->ui->row_AD0_b;
+        //((MainWindow*)main_w)->ui->row_sort0_b;
+        /// circular include nonsense ! I'll switch to a nother language, Iam done with c++ !
 
     int column = treeWidget()->sortColumn();
     if(column==2){
