@@ -73,6 +73,9 @@ MainWindow::MainWindow(QStringList args_i, QWidget *parent) :
 
     // Icon begin
     QIcon icon_temp(cwdir.filePath("xx.png"));          // generate a temporary icon
+    if ( icon_temp.isNull() ){
+        printf("broken icon load");
+    }
     setWindowIcon(icon_temp);                           // set windows icon to same as tray/temp icon
     tray_icon =  new QSystemTrayIcon(icon_temp, this);  // generate the system tray objekt withe the temp icon
 
