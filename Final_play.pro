@@ -5,7 +5,7 @@
 #-------------------------------------------------
 CONFIG += c++11
 QT       += core gui \
-        multimedia \
+        multimedia \            # sudo apt-get install qt5-default qtmultimedia5-dev libqt5multimediawidgets5 libqt5multimedia5-plugins libqt5multimedia5
         multimediawidgets \
         widgets \
         sql
@@ -33,6 +33,6 @@ HEADERS  += mainwindow.h\
         epi_list_item.hpp\
         playlist_tree_wg.h \
         my_stack_tw.h \
-    querys.h
+        querys.h
 
 FORMS    += mainwindow.ui
