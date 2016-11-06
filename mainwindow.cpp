@@ -197,7 +197,7 @@ void MainWindow::save_volume(){
 
 
 void MainWindow::tray_icon_clicked(QSystemTrayIcon::ActivationReason reason){   //ICON RIGHTCLICK MENU DISPLAY
-    if(reason==QSystemTrayIcon::MiddleClick){
+    if(reason==QSystemTrayIcon::MiddleClick  || reason==QSystemTrayIcon::Context ){ // or context middle button is bugged TODO remove once
     emit play_pause();
     }
     else if(reason==QSystemTrayIcon::Trigger  ){    //noramal leftclick hide_unhide takes about 1,5sec... no idea why ?...
@@ -211,6 +211,26 @@ void MainWindow::tray_icon_clicked(QSystemTrayIcon::ActivationReason reason){   
             activateWindow();
         }
     }
+
+
+    std::cout << "Systray icon click with: " <<std::endl;
+        if (reason==QSystemTrayIcon::Unknown  ){
+            std::cout << "Unknown" <<std::endl;
+        }
+        if (reason==QSystemTrayIcon::DoubleClick){
+            std::cout << "DoubleClick" <<std::endl;
+        }
+        if (reason==QSystemTrayIcon::Context){
+            std::cout << "Context" <<std::endl;
+        }
+        if (reason==QSystemTrayIcon::Trigger){
+            std::cout << "Trigger" <<std::endl;
+        }
+        if (reason==QSystemTrayIcon::MiddleClick){
+            std::cout << "MiddleClick" <<std::endl;
+        }
+
+
 }
 
 
@@ -270,7 +290,7 @@ void MainWindow::add_tab(QStringList locations, QString tab_name){    // instanc
     if(current_playlist == NULL){   // set a ini playlist
         new_playlist->set_current( new_playlist );
         current_playlist = new_playlist;
-        ui->row_sort0_b->addItems(  current_playlist->get_row_names() ); // get _row for button
+        //ui->row_sort0_b->addItems(  current_playlist->get_row_names() ); // get _row for button
     }
 }
 
