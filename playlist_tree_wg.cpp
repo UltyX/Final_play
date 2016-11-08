@@ -26,6 +26,10 @@ Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player,Podcast_manager* Pod
         dirs=locations;
     }
 
+    my_timer.setSingleShot(false);
+    my_timer.setInterval(5);
+    connect(&my_timer,SIGNAL(timeout()),this,SLOT(timer_stop()) );
+
     connect(this  ,SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),this, SLOT(item_dubble_clck(QTreeWidgetItem*,int)  ) );              //
     connect(raiting_stack,SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(on_podcast_list_tw_itemChanged(QTreeWidgetItem*,int)) );  // here because manager
 
@@ -74,9 +78,13 @@ void Playlist_tree_wg::item_dubble_clck(QTreeWidgetItem* item_i, int column){
     play_item((Epi_list_item*) item_i);
 }
 
-void Playlist_tree_wg::skipp_to_last_pos(){     // called when mediaplayer media changes and if our playlist is in use skipp to the last pos of the item
 
+void Playlist_tree_wg::skipp_to_last_pos(){     // called when mediaplayer media changes and if our playlist is in use skipp to the last pos of the item
+    cout <<"skipp to last pos"<<endl;
     Episode *epi;
+
+
+
 
     if( (current_item!=NULL)&&(this->topLevelItemCount()>0)){ // catch bad states
         epi = current_item->getEpisode();
@@ -85,8 +93,10 @@ void Playlist_tree_wg::skipp_to_last_pos(){     // called when mediaplayer media
             play_next(); // or previos if user wants to go up
             //play_prev();
         }
-        else{
+        else{            
+
             player->setPosition(epi->last_position);
+
         }
     }
 }
@@ -99,11 +109,30 @@ void Playlist_tree_wg::player_mediastatus_changed(QMediaPlayer::MediaStatus stat
     }
     else if( (state == QMediaPlayer::LoadedMedia )||(state == QMediaPlayer::BufferedMedia ) )
     {
+        timer_start();
         skipp_to_last_pos();
     }
 }
 
+void Playlist_tree_wg::timer_start(){
+    Episode *epi;
+    if( (current_item!=NULL)&&(this->topLevelItemCount()>0)){ // catch bad states
+        epi = current_item->getEpisode();
+        soll_time = epi->last_position;
 
+        my_timer.start();
+    }
+}
+
+void Playlist_tree_wg::timer_stop(){
+
+    if (soll_time-2 < player->position()){
+        my_timer.stop();
+    }
+    else{
+        player->setPosition(soll_time);
+    }
+}
 
 void Playlist_tree_wg::on_Playlist_tree_wg_customContextMenuRequested(const QPoint &pos)// rigthclick context menu
 {

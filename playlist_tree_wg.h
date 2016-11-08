@@ -19,6 +19,7 @@
 #include <iostream>
 #include "epi_list_item.hpp"
 
+#include <QTimer>
 #include <set>
 //#include "mainwindow.h"
 
@@ -40,6 +41,8 @@ class Playlist_tree_wg : public QTreeWidget
 
     list <Podcast*> pc; // TODO a MAP <String, Podcast*> would be better
     QStringList row_names;
+    QTimer my_timer;
+    int soll_time;
 //int playerstate_old;
 
 private slots:
@@ -65,6 +68,9 @@ void paint_item(Epi_list_item* item_i,bool norm);
 void play_item( Epi_list_item* item_i );
 void play_prev();
 void play_next();
+
+void timer_start();
+void timer_stop();
 
 protected:
 /*
