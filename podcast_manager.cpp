@@ -23,25 +23,24 @@ Podcast_manager::Podcast_manager()        // Constructor
 {
     myTimer.start();
     qDebug()<< "manager";
-    querys = new Querys(); // must be done after DB opened
+    open_DB();
     filters <<"*.mp*"<<"*.ogg"<<"*.ogv"<<"*.flac"<<"*.wav" <<"*.oga" <<"*.ogx" <<"*.ogm" <<"*.spx"<< "*.opus"<< "*.m4a";
-    qDebug()<< "manager constructed";
+    qDebug()<< "manager";
 }
 
 
 
 void Podcast_manager::apend_to_list(QDir Podcast_Dir,list<Podcast*> * the_list,std::set<QString>* myset_epi_i,std::set<QString>* myset_pod_i ) {
-    int t           = myTimer.elapsed();
-    current_list    = the_list;
-    myset_epi       = myset_epi_i;
-    myset_pod       = myset_pod_i;
+    int t=myTimer.elapsed();
+    current_list = the_list;
+    myset_epi = myset_epi_i;
+    myset_pod = myset_pod_i;
 
-
-    QSqlDatabase::database().transaction();     // WARNING THIS IS NOT HOW IT SHOULD BE USED IN RELATION TO PREPARED QUERYS ! BUT HELL IT FAST NOW WEEEEEEE
+    QSqlDatabase::database().transaction();     //WARNING THIS IS NOT HOW IT SHOULD BE USED IN RELATION TO PREPARED QUERYS ! BUT HELL IT FAST NOW WEEEEEEE
 
     main_dir(Podcast_Dir.absolutePath());       // find podcasts and use sub_dir to add episodes, set time and listened !!!
 
-    QSqlDatabase::database().commit();          // WARNING THIS IS NOT HOW IT SHOULD BE USED IN RELATION TO PREPARED QUERYS ! EEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+    QSqlDatabase::database().commit();          //WARNING THIS IS NOT HOW IT SHOULD BE USED IN RELATION TO PREPARED QUERYS ! EEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
     qDebug()<< myTimer.elapsed()-t<< " ms to index the given dir (pod raiting and epsiode positions...)";
 
@@ -76,27 +75,26 @@ void Podcast_manager::main_dir (QString path) { // expand to handle single files
 }
 
 
-// Creates a Podcast and adds the Episodes to it.
-void Podcast_manager::add_podcast_to_list(QString name, QString path){
+
+void Podcast_manager::add_podcast_to_list(QString name,QString path){
     Podcast* pod_new;
 
-    if(myset_pod->find(name) == myset_pod->end() ){     // Check if the Podcast has already been created. Can't remember why.
-        pod_new             = new Podcast;
-        pod_new->name       = name.toStdString();
-        pod_new->dir        = path.toStdString();
-        pod_new->raiting    = -2;                       // default value
+    if(myset_pod->find(name) == myset_pod->end() ){
+        pod_new = new Podcast;
+        pod_new->name     = name.toStdString();
+        pod_new->dir      = path.toStdString();
+        pod_new->raiting  = -2;   // default value
 
-        querys->get_raiting_from_DB(pod_new);           // ask DB for raiting
+        querys->get_raiting_from_DB(pod_new);     // ask DB for raiting
         current_list->push_front(pod_new);
     }
-    for(auto podi: (*current_list) ) {                  // easyer MAP  <Name,Podcast*> it would have been with dedicated update function TODO
+    for(auto podi: (*current_list) ) { // easyer MAP  <Name,Podcast*> it would have been with dedicated update function TODO
         if(QString::fromStdString(podi->name) == name ){
-            add_episodes_to_(podi);                     // go through the folder and add all its episodes
+            add_episodes_to_(podi);// go through the folder and add all its episodes
         }
     }
 }
 
-// Creates and adds an Episode to a Podcast
 void Podcast_manager::add_episodes_to_(Podcast *parent_i) {
 
     Episode * epi_new;
@@ -113,11 +111,11 @@ void Podcast_manager::add_episodes_to_(Podcast *parent_i) {
         if(myset_epi->find(temp.fileName()) == myset_epi->end() ){ // if in set
             epi_new = new Episode;
             cout << temp.fileName().toStdString()<<endl;
-            epi_new->name               = temp.fileName().toStdString();
-            epi_new->parent             = parent_i;
-            epi_new->dir                = temp.absoluteFilePath().toStdString();
-            epi_new->last_position      = 0;                                     // sain default value
-            epi_new->listend            = false;                                 // sain default value
+            epi_new->name               =temp.fileName().toStdString();
+            epi_new->parent             =parent_i;
+            epi_new->dir                =temp.absoluteFilePath().toStdString();
+            epi_new->last_position      =0;                                     // sain default value
+             epi_new->listend            =false;                                 // sain default value
             querys->get_time_from_DB(epi_new);
             parent_i->episodes.push_front(epi_new);
         }
@@ -156,8 +154,6 @@ int Podcast_manager::get_volume(){
 QStringList Podcast_manager::get_saved_tabs_names(){
     return querys->get_setting_from_DB("tab_names").split("\n", QString::SkipEmptyParts);
 }
-
-
 void Podcast_manager::save_locations(QString tab_name, QStringList locations){
 
     QStringList  temp_list=get_saved_tabs_names();
@@ -169,14 +165,10 @@ void Podcast_manager::save_locations(QString tab_name, QStringList locations){
     querys->set_DB_setting_from(tab_name,value);
     qDebug()<< "atempt to save "<<tab_name<<value;
 }
-
-
 QStringList Podcast_manager::get_locations(QString tab_name){
     qDebug()<< "atempt to load "<<querys->get_setting_from_DB(tab_name).split("\n", QString::SkipEmptyParts);
     return querys->get_setting_from_DB(tab_name).split("\n", QString::SkipEmptyParts);
 }
-
-
 void Podcast_manager::delete_locations(QString tab_name){
     QStringList  temp_list=get_saved_tabs_names();
     if(temp_list.contains( tab_name ) ){
@@ -193,6 +185,13 @@ void Podcast_manager::delete_locations(QString tab_name){
 // Locations
 
 
+void Podcast_manager::open_DB(){// kindly only call this once, no mem leek prevention here
+
+
+
+    querys = new Querys(); // must be done after DB opened
+
+}
 
 
 
@@ -259,5 +258,24 @@ query.exec();
     pc.clear();
 */
 
+/*
+void Podcast_manager::main_dir () {
 
+
+    if( !Podcast_Dir.exists() ) {
+        cout << "main_dir, did not find dir: "<< Podcast_Dir.absolutePath().toStdString()<< endl;
+        return;
+    }
+
+    for ( auto temp:Podcast_Dir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries) ) {    //get all folders in location
+        if(temp.isDir()) {                                                                  //current dir is folder?
+
+               add_podcast_to_list(temp.baseName(),temp.absoluteFilePath());
+        }
+    }
+    if(pc.empty()){                                                                 // no subfolders found, asume this is the only relevant folder
+        add_podcast_to_list( Podcast_Dir.dirName() , Podcast_Dir.absolutePath() );  //use foldername as pocast name
+    }
+}
+*/
 

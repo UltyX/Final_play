@@ -2,9 +2,6 @@
 #define QUERYS_H
 #include "podcast_strukts.hpp"
 
-#include <QDir>
-#include <QStandardPaths>
-
 #include <QDebug>
 
 #include <QSqlError>
@@ -15,22 +12,22 @@ using namespace std;
 
 class Querys
 {
-
-        QSqlQuery  settings_GetQuery;
-        QSqlQuery  settings_SetQuery;
-        QSqlQuery  settings_AddQuery;
+        QSqlQuery*  sq;
+        QSqlQuery*  settings_GetQuery;
+        QSqlQuery*  settings_SetQuery;
+        QSqlQuery*  settings_AddQuery;
 /*
         QSqlQuery  dirLoc_SetQuery;
         QSqlQuery  dirLoc_GetQuery;
         QSqlQuery  dirLoc_AddQuery;*/
 
-        QSqlQuery  raiting_GetQuery;
-        QSqlQuery  raiting_SetQuery;
-        QSqlQuery  raiting_AddQuery;
+        QSqlQuery*  raiting_GetQuery;
+        QSqlQuery*  raiting_SetQuery;
+        QSqlQuery*  raiting_AddQuery;
 
-        QSqlQuery  posTime_GetQuery;
-        QSqlQuery  posTime_SetQuery;
-        QSqlQuery  posTime_AddQuery;
+        QSqlQuery*  posTime_GetQuery;
+        QSqlQuery*  posTime_SetQuery;
+        QSqlQuery*  posTime_AddQuery;
 
 
         void print_query_error( QSqlQuery *from_this, QString info );
