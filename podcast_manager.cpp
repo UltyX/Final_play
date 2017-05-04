@@ -60,7 +60,7 @@ void Podcast_manager::main_dir (QString path) { // expand to handle single files
     }
 
     if( !dir.exists() ) {
-        cout << "main_dir, did not find dir: "<< dir.absolutePath().toStdString()<< endl;
+        qDebug()<< "main_dir, did not find dir: "<< dir.absolutePath();
         return;
     }
 
@@ -103,14 +103,14 @@ void Podcast_manager::add_episodes_to_(Podcast *parent_i) {
     folders.cd(path);
 
     if(!folders.exists()) {
-        cout << "sub_dir, did not find dir: "<< parent_i->dir<< endl;
+        qDebug()<< "sub_dir, did not find dir: "<< path;
         return;
     }
 
     for (auto temp:folders.entryInfoList(filters,QDir::Files | QDir::NoDotAndDotDot)) {    //can also add sorting Here BY DATE
         if(myset_epi->find(temp.fileName()) == myset_epi->end() ){ // if in set
             epi_new = new Episode;
-            cout << temp.fileName().toStdString()<<endl;
+            qDebug() << temp.fileName();
             epi_new->name               =temp.fileName().toStdString();
             epi_new->parent             =parent_i;
             epi_new->dir                =temp.absoluteFilePath().toStdString();

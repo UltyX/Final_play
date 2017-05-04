@@ -8,7 +8,12 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QVariant>         // needed for the addBind of querys, no idea why
-using namespace std;
+
+#include <QSql>
+#include <QDir>
+#include <QStandardPaths>
+
+
 
 class Querys
 {

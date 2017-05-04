@@ -1,8 +1,6 @@
 #include "querys.h"
 
-#include <QSql>
-#include <QDir>
-#include <QStandardPaths>
+
 
 Querys::Querys()// TODO deletion, we only add and never delete, this may posibly fill the DB up a tiny bit.
 {
@@ -20,19 +18,19 @@ Querys::Querys()// TODO deletion, we only add and never delete, this may posibly
     db.setPassword("J0a1m8");
     if( ! db.open()){ qDebug() <<"opening Database failed"<<db.lastError().text();}
 
-    sq                  = new QSqlQuery(db);
+    sq                 = new QSqlQuery(db);
 
-     settings_GetQuery  = new QSqlQuery(db);
-     settings_SetQuery  = new QSqlQuery(db);
-     settings_AddQuery  = new QSqlQuery(db);
+    settings_GetQuery  = new QSqlQuery(db);
+    settings_SetQuery  = new QSqlQuery(db);
+    settings_AddQuery  = new QSqlQuery(db);
 
-     raiting_GetQuery   = new QSqlQuery(db);
-     raiting_SetQuery   = new QSqlQuery(db);
-     raiting_AddQuery   = new QSqlQuery(db);
+    raiting_GetQuery   = new QSqlQuery(db);
+    raiting_SetQuery   = new QSqlQuery(db);
+    raiting_AddQuery   = new QSqlQuery(db);
 
-     posTime_GetQuery   = new QSqlQuery(db);
-     posTime_SetQuery   = new QSqlQuery(db);
-     posTime_AddQuery   = new QSqlQuery(db);
+    posTime_GetQuery   = new QSqlQuery(db);
+    posTime_SetQuery   = new QSqlQuery(db);
+    posTime_AddQuery   = new QSqlQuery(db);
 
 
     // The raitings table folder and its raiting

@@ -6,7 +6,7 @@
 #include <string>
 
 #include <list>
-#include <iostream>
+//#include <iostream>
 
 
 
@@ -19,7 +19,7 @@
 
 #include<QTime> //debug
 
-using namespace std;
+using namespace std;    // std::list
 
 class Podcast_manager {
     QTime myTimer;//debug
