@@ -1,9 +1,27 @@
 #include "querys.h"
 
-Querys::Querys(QSqlDatabase *db)// TODO deletion, we only add and never delete, this may posibly fill the DB up a tiny bit.
+Querys::Querys()// TODO deletion, we only add and never delete, this may posibly fill the DB up a tiny bit.
 {
+    // ------------------------------------------------------------------------------------------------------- open the DB V
+    foreach (QString driv, QSqlDatabase::drivers() ){
+        qDebug()<< QSqlDatabase::isDriverAvailable(driv)<<driv;
+    }
+    //Problem querys are created bevore DB is opended so we need to open db first or create qerys after it
+    QDir settings_location = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setHostName("acidalia");
+    db.setDatabaseName(settings_location.filePath("FinalPlayDB_test") );
+    db.setUserName("mojito");
+    db.setPassword("J0a1m8");
+    if( ! db.open()){   qDebug() <<"opening Database failed" <<  db.lastError().text();  }
 
-    QSqlQuery sq((*db));  //recreate in case it got lost
+    // ------------------------------------------------------------------------------------------------------- open the DB A
+
+
+
+    // ------------------------------------------------------------------------------------------------------- prepare the querys V
+
+    QSqlQuery sq(db);  //recreate in case it got lost
 
     // The raitings table folder and its raiting
     if( ! sq.prepare( "CREATE TABLE Raitings(name   TEXT PRIMARY KEY, location   TEXT ,raiting   INT )" )){print_query_error(&sq ,"preparing query failed ");}
@@ -39,7 +57,11 @@ Querys::Querys(QSqlDatabase *db)// TODO deletion, we only add and never delete, 
         print_query_error(&settings_AddQuery,"preparing query failed ");
     }
 
+    // ------------------------------------------------------------------------------------------------------- prepare the querys  A
 }
+
+
+
 
 
 

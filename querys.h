@@ -2,6 +2,9 @@
 #define QUERYS_H
 #include "podcast_strukts.hpp"
 
+#include <QDir>
+#include <QStandardPaths>
+
 #include <QDebug>
 
 #include <QSqlError>
@@ -34,7 +37,7 @@ class Querys
 
 
 public:
-    Querys(QSqlDatabase * db);
+    Querys();
     void get_time_from_DB(Episode* for_this);       // querys the DB for the Episode values and sets them in the Episode. If DB does not know the Episode the episode is added to the DB with its current values.
     void set_DB_time_from(Episode* from_this);      // atemptts to set the DB values to the current values of the Episode. Does nothing if the Episode is not found.
     void add_DB_time_from(Episode* from_this);      // Adds the requested item to the DB. No error / duplicate checking yet.
