@@ -71,7 +71,8 @@ MainWindow::MainWindow(QStringList args_i, QWidget *parent) :
 
 
 
-    // Icon begin
+    // ----------------------------------------------------------------------------------------------------------------------------------------------- Icon begin
+
     QIcon icon_temp(cwdir.filePath("xx.png"));          // generate a temporary icon
     if ( icon_temp.isNull() ){
         printf("broken icon load");
@@ -93,7 +94,8 @@ MainWindow::MainWindow(QStringList args_i, QWidget *parent) :
     tray_icon->setContextMenu( tray_icon_menu );            /// link menu with tray objekt
     ui->menuBar->addMenu( tray_icon_menu );
     tray_icon->show();
-    // Icon end
+
+    // ----------------------------------------------------------------------------------------------------------------------------------------------- Icon end
 
 
     setWindowTitle("Final Play");   // in windo decoration set app name
@@ -267,6 +269,8 @@ void MainWindow::add_new_on_plus_click(int index){              //TAB ADD
        add_tab();
     }
 }
+
+// Main part of the Program, creates the playlist and the tab
 void MainWindow::add_tab(QStringList locations, QString tab_name){    // instance and connect new Tab
     int number_of_items=ui->tabWidget->count()-1;
     if(tab_name.isEmpty()){

@@ -1,28 +1,30 @@
 #include "podcast_manager.hpp"
 
 
+/*
+ perform the middelman duties between HDD Databas and the playlist
+ go over HDD and writ it into DB
+ make querys to DB and give the results to the playlist that asked
 
-// perform the middelman duties between HDD Databas and the playlist
-// go over HDD and writ it into DB
-// make querys to DB and give the results to the playlist that asked
-
-// usage: Ask it to scann a folder for items / subfolder_items
-// it shall add these to the DB
-// ask it to give you all items in the DB by certen critiria
+ usage: Ask it to scann a folder for items / subfolder_items
+ it shall add these to the DB
+ ask it to give you all items in the DB by certen critiria
 
 
-// so we have a DB with 2 Tabels so far.
-// Tabels: Raitings and Times
-// Raitings stores the raitings of the given Podcasts / Folders
-// Times stores the time where we left off and if the episode was marked as listened
-// in the constructor we prepare the querys that we use to access the DB
+ so we have a DB with 2 Tabels so far.
+ Tabels: Raitings and Times
+ Raitings stores the raitings of the given Podcasts / Folders
+ Times stores the time where we left off and if the episode was marked as listened
+ in the constructor we prepare the querys that we use to access the DB
+*/
+
 
 Podcast_manager::Podcast_manager()        // Constructor
 {
     myTimer.start();
     qDebug()<< "manager";
     open_DB();
-    filters <<"*.mp*"<<"*.ogg"<<"*.ogv"<<"*.flac"<<"*.wav" <<"*.oga" <<"*.ogx" <<"*.ogm" <<"*.spx"<< "*.opus";
+    filters <<"*.mp*"<<"*.ogg"<<"*.ogv"<<"*.flac"<<"*.wav" <<"*.oga" <<"*.ogx" <<"*.ogm" <<"*.spx"<< "*.opus"<< "*.m4a";
     qDebug()<< "manager";
 }
 

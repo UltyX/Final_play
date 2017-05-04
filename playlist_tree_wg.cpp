@@ -3,14 +3,14 @@
 Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player,Podcast_manager* Podcast_manager_i,
                                    QStackedWidget *stack_wg, QTimer* save_timer,QStringList locations,QString tab_name_i):QTreeWidget()
 {
-    timer   = save_timer;                                       // timeout used for save pos, when this playlist is current
-    tab_name = tab_name_i;                                      // say my name. For saving of locations
-    player  = the_player;                                       // the only player in this programm, we share it between tabs and use its signals to set position, also we give it our playlist
-    manager =  Podcast_manager_i;                               // the manager, DB access, HDD indexing
-    corresponing_stack_wg = stack_wg;                           // the stack WG, we put our Raiting WG on it, and display it from there
-    connected_to_player   = false;
-    current_item = NULL;
-    raiting_stack = new Raiting_tree_wg();                          // create our very own Raiting WG
+    timer                   = save_timer;                       // timeout used for save pos, when this playlist is current
+    tab_name                = tab_name_i;                       // say my name. For saving of locations
+    player                  = the_player;                       // the only player in this programm, we share it between tabs and use its signals to set position, also we give it our playlist
+    manager                 =  Podcast_manager_i;               // the manager, DB access, HDD indexing
+    corresponing_stack_wg   = stack_wg;                         // the stack WG, we put our Raiting WG on it, and display it from there
+    connected_to_player     = false;
+    current_item            = NULL;
+    raiting_stack           = new Raiting_tree_wg();            // create our very own Raiting WG
 
 
     this->setColumnCount(4);                                    // 2 Collums Playlist WG

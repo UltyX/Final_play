@@ -1,5 +1,9 @@
 #include "my_stack_tw.h"
-
+/*
+The Stack Widget.
+It holds the podcast raitings.
+Changing score is connected and recieved by playlist_tree_wg.
+*/
 Raiting_tree_wg::Raiting_tree_wg()
 {
 
@@ -15,8 +19,9 @@ Raiting_tree_wg::Raiting_tree_wg()
 void Raiting_tree_wg::on_podcast_list_tw_itemDoubleClicked(QTreeWidgetItem *item, int column)
 {
     this->editItem(item, 1);
+    column++;                   // removes the warning "unused var"
 }
 
 Raiting_tree_wg::~Raiting_tree_wg(){
-std::cout <<"stack wg got removed"<<std::endl;
+    std::cout <<"stack wg got removed"<<std::endl;
 }
