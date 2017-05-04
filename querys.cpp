@@ -44,7 +44,7 @@ Querys::Querys(QSqlDatabase *db)// TODO deletion, we only add and never delete, 
 
 
 
-// Setting Querys
+// Setting Querys. Returns the value of a setting as a QString. If the DB does not has the setting yet a new entry will be created and an empty string is returned.
 QString Querys::get_setting_from_DB(QString setting_name){
 
     settings_GetQuery.addBindValue(setting_name);
@@ -58,14 +58,16 @@ QString Querys::get_setting_from_DB(QString setting_name){
     }
     return "";
 }
+
+// Saves a setting in the DB
 void Querys::set_DB_setting_from(QString setting_name,QString value){
 
-    get_setting_from_DB(setting_name);  // makes sure we have an entry and if not make one
+    get_setting_from_DB(setting_name);              // makes sure we have an entry and if not make one
     settings_SetQuery.addBindValue(value);
     settings_SetQuery.addBindValue(setting_name);
-    settings_SetQuery.exec();   // can't use this, it does not error when no entry found to update
+    settings_SetQuery.exec();                       // can't use this, it does not error when no entry found to update
 }
-
+// new settings entry will be created in the DB
 void Querys::add_DB_setting_from(QString setting_name, QString value){
 
     settings_AddQuery.bindValue(":name"          , setting_name);
@@ -107,7 +109,7 @@ void Querys::add_DB_time_from(Episode* from_this){
 // Time Querys
 
 
-// Raiting Querys
+// Raiting Querys, sets the raiting of a podcast from the DB value
 void Querys::get_raiting_from_DB(Podcast* for_this){
 
     qDebug() <<QString::fromStdString(for_this->name);
@@ -123,6 +125,7 @@ void Querys::get_raiting_from_DB(Podcast* for_this){
     }
 }
 
+// Save Raiting, sets the raiting of a podcast to the DB.
 void Querys::set_DB_raiting_from(Podcast* from_this){
 
     raiting_SetQuery.addBindValue(from_this->raiting);
@@ -135,6 +138,7 @@ void Querys::set_DB_raiting_from(Podcast* from_this){
     }
 }
 
+// Adds a new line to the DB with the podcast name, location, and raiting.
 void Querys::add_DB_raiting_from(Podcast* from_this){
 
     raiting_AddQuery.bindValue(":name"     , QString::fromStdString(from_this->name));

@@ -1,6 +1,13 @@
 #ifndef communiction_node_H
 #define communiction_node_H
-
+/*
+Hi.
+This is the part of the programm that talks to other instances of this program to exchange messages like play next or increase volume.
+Used when you do ./Finalply -playnext.
+Only works of course when a other instance is allready running.
+Comunication is done via shared memory with the QSharedMemory.
+This class will be instanced onece per running finalplay.
+*/
 
 
 #include <QtCore/QObject>	//the default QT Objekt for pod_play, giving me all the QT goodness

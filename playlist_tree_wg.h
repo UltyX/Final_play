@@ -23,21 +23,23 @@
 #include <set>
 //#include "mainwindow.h"
 
-class Playlist_tree_wg : public QTreeWidget
+class Playlist_tree_wg : public QTreeWidget // Yea thats the equivalent to how Godot does the extends KinematicBody
 {
-    Q_OBJECT  // without this slots will never be found "no such slot runtime error"
-    QMediaPlayer * player;
-    QMenu playlist_contextMenu;
-    Raiting_tree_wg *raiting_stack;
-    Podcast_manager *manager;
-    QStackedWidget* corresponing_stack_wg;
-    QStringList dirs;
-    QString tab_name;
-    QTimer* timer;
-    bool connected_to_player;
-    std::set<QString> myset_epi;
-    std::set<QString> myset_pod;
-    Epi_list_item* current_item;
+    Q_OBJECT                                // without this slots will never be found "no such slot runtime error"
+
+
+    QMediaPlayer *      player;
+    QMenu               playlist_contextMenu;
+    Raiting_tree_wg *   raiting_stack;
+    Podcast_manager *   manager;
+    QStackedWidget*     corresponing_stack_wg;
+    QStringList         dirs;
+    QString             tab_name;
+    QTimer*             timer;
+    bool                connected_to_player;
+    std::set<QString>   myset_epi;
+    std::set<QString>   myset_pod;
+    Epi_list_item*      current_item;
 
     list <Podcast*> pc; // TODO a MAP <String, Podcast*> would be better
     QStringList row_names;
