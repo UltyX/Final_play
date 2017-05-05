@@ -33,7 +33,7 @@ class Podcast_manager {
     void main_dir (QString path);
     void add_podcast_to_list(QString name,QString path);    //creates a new podcast in the pc list with the given path
     void add_episodes_to_(Podcast *parent_i);
-    void open_DB();
+
 
 
 public:

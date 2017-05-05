@@ -94,16 +94,16 @@ private:
 
 //unordered_map< string, string > settings_map;   //holds settings like podcast dir, last volume, ...
 //list<string> locations;
-//string local_pod_dir;   //name of the settingsmap[ key ] for the podcast dir string value
-    communiction_node *comm_interface;   ///my own class that responsible for the comuniation with other instances of this application over shared memory
-    Podcast_manager * manager;  ///my own class that walks through the filesystem and indexes the podcast and their episodes
-    QTimer *saver;
-    QDir cwdir;             //path to the exe
-    QDir settings_location; //path to the settings (~.config)
-    Ui::MainWindow *ui;     //default thing containing all the ui elements like qtreewiget and so on
-    Playlist_tree_wg * current_playlist;
-    QMediaPlayer *player;       //the player
-    QSystemTrayIcon *tray_icon; //system tray icon, bug when initaili set gets pixel noise, fix set icon later again after initail show.
+
+    communiction_node*      comm_interface;         ///my own class that is responsible for the comuniation with other instances of this application over shared memory
+    Podcast_manager*        manager;                ///my own class that walks through the filesystem and indexes the podcast and their episodes
+    QTimer*                 saver;
+    QDir                    cwdir;                  //path to the exe
+    QDir                    settings_location;      //path to the settings (~.config)
+    Ui::MainWindow *        ui;                     //default thing containing all the ui elements like qtreewiget and so on
+    Playlist_tree_wg *      current_playlist;
+    QMediaPlayer *          player;                 //the player
+    QSystemTrayIcon *       tray_icon;              //system tray icon, bug when initaili set gets pixel noise, fix set icon later again after initail show.
 
 };
 

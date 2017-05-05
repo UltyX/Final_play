@@ -23,7 +23,7 @@ Podcast_manager::Podcast_manager()        // Constructor
 {
     myTimer.start();
     qDebug()<< "manager";
-    open_DB();
+    querys = new Querys(); // must be done after DB opened
     filters <<"*.mp*"<<"*.ogg"<<"*.ogv"<<"*.flac"<<"*.wav" <<"*.oga" <<"*.ogx" <<"*.ogm" <<"*.spx"<< "*.opus"<< "*.m4a";
     qDebug()<< "manager";
 }
@@ -185,13 +185,7 @@ void Podcast_manager::delete_locations(QString tab_name){
 // Locations
 
 
-void Podcast_manager::open_DB(){// kindly only call this once, no mem leek prevention here
 
-
-
-    querys = new Querys(); // must be done after DB opened
-
-}
 
 
 

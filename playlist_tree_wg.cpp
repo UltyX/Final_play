@@ -6,7 +6,7 @@ Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player,Podcast_manager* Pod
     timer                   = save_timer;                       // timeout used for save pos, when this playlist is current
     tab_name                = tab_name_i;                       // say my name. For saving of locations
     player                  = the_player;                       // the only player in this programm, we share it between tabs and use its signals to set position, also we give it our playlist
-    manager                 =  Podcast_manager_i;               // the manager, DB access, HDD indexing
+    manager                 = Podcast_manager_i;                // the manager, DB access, HDD indexing
     corresponing_stack_wg   = stack_wg;                         // the stack WG, we put our Raiting WG on it, and display it from there
     connected_to_player     = false;
     current_item            = NULL;
@@ -238,6 +238,7 @@ void Playlist_tree_wg::on_podcast_list_tw_itemChanged(QTreeWidgetItem *item_i, i
     }
 }
 
+// Creates the Podcast | Raiting  line in the podcast stack wg
 void Playlist_tree_wg::add_podcast(Podcast *pod_i)
 {
     Pod_list_item *new_podcast = new Pod_list_item(raiting_stack);
@@ -246,11 +247,12 @@ void Playlist_tree_wg::add_podcast(Podcast *pod_i)
     raiting_stack->addTopLevelItem(new_podcast);
 }
 
+// Creates the Episode line in the playlist
 void Playlist_tree_wg::add_media(Episode *epi)
 {
     Epi_list_item *new_episode = new Epi_list_item(this);
     new_episode->setEpisode(epi);
-    new_episode->setFlags(Qt::ItemIsDragEnabled |  Qt::ItemIsSelectable |  Qt::ItemIsEnabled);
+    new_episode->setFlags(Qt::ItemIsSelectable |  Qt::ItemIsEnabled);                           // Qt::ItemIsDragEnabled
     this->addTopLevelItem(new_episode);                                                         // add to playlist WG
 }
 

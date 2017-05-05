@@ -3,21 +3,21 @@
 #include <QSqlError>
 #include <QSplitter>  // alow user at some point to resize the ratio between widgetsizes TODO
 
-MainWindow::MainWindow(QStringList args_i, QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+MainWindow::MainWindow(QStringList args_i, QWidget *parent):QMainWindow(parent)
+// ,ui(new Ui::MainWindow) in the header is the same as ui = new Ui::MainWindow(); in the body
 {
-    ui->setupUi(this);
+    ui = new Ui::MainWindow();                              // create a new window and assigne it to the ui variable
+    ui->setupUi(this);                                      // setup the mainwindow to this class
 
-    comm_interface = new communiction_node(args_i);                  // create instance of the shared memory communication interface
+    comm_interface = new communiction_node(args_i);         // create instance of the shared memory communication interface
     if(comm_interface->was_other_instance_detected()){      // nothing more we need to do, commands if there have been written to s.mem
         return;                                             // return without creating the UI
     }
     connect(comm_interface,SIGNAL(message_found(int)),this,SLOT(apply_remote_commands(int)) );  // interpret recived commands HERE
-    manager = new Podcast_manager();
-    current_playlist = NULL;
+    manager             = new Podcast_manager();            // Create the Podcast Manager instance
+    current_playlist    = NULL;                             // Put current playlist into a defined state
 
-    cwdir= QCoreApplication::applicationDirPath();
+    cwdir               = QCoreApplication::applicationDirPath();   // get exe path
 
     // Tabwidget config -begin
     QLabel *l =new QLabel;   
@@ -26,21 +26,21 @@ MainWindow::MainWindow(QStringList args_i, QWidget *parent) :
     //l->setScaledContents(true); //useless if aspect ratio is not maintained, we got have order
     l->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored );
     ui->tabWidget->addTab( l, "");
-    ui->tabWidget->tabBar()->tabButton( 0,QTabBar::RightSide)->resize(0,0);  //    hide closebutton on new_tab tab ->hide() leaves big empty space, will crash if closeable tabs not enabeled
+    ui->tabWidget->tabBar()->tabButton( 0,QTabBar::RightSide)->resize(0,0);  // hide closebutton on new_tab tab ->hide() leaves big empty space, will crash if closeable tabs not enabeled
     ui->tabWidget->tabBar()->tabButton( 0,QTabBar::RightSide)->hide();       //
     ui->tabWidget->tabBar()->setTabIcon(0,QIcon::fromTheme("list-add"));
-    connect(ui->tabWidget, SIGNAL(tabBarClicked(int)),this,SLOT(add_new_on_plus_click(int)) );
-    connect(ui->tabWidget->tabBar(), SIGNAL(currentChanged(int)),this,SLOT(scroll_bounds(int)) );
+    connect(ui->tabWidget, SIGNAL(tabBarClicked(int)),this,SLOT(add_new_on_plus_click(int)) );      // +
+    connect(ui->tabWidget->tabBar(), SIGNAL(currentChanged(int)),this,SLOT(scroll_bounds(int)) );   // Scroll
     // Tabwidget config -- end
 
-                                         // location of the executable, and icons
+                                            // location of the executable, and icons
 
 
 
-    saver = new QTimer(this);                                        //save QTimer, will be connected to the Playlist_tree_wg's.
-    saver->start(2000);                                              //save signal ever x ms
+    saver = new QTimer(this);               //save QTimer, will be connected to the Playlist_tree_wg's.
+    saver->start(2000);                     //save signal ever x ms
 
-    player = new QMediaPlayer(this);    // THE MEDIA PLAYER BACKEND HERE
+    player = new QMediaPlayer(this);        // THE MEDIA PLAYER BACKEND HERE
 
 
 
@@ -71,7 +71,7 @@ MainWindow::MainWindow(QStringList args_i, QWidget *parent) :
 
 
 
-    // ----------------------------------------------------------------------------------------------------------------------------------------------- Icon begin
+    // ----------------------------------------------------------------------------------------------------------------------------------------------- Icon + Menu begin
 
     QIcon icon_temp(cwdir.filePath("xx.png"));          // generate a temporary icon
     if ( icon_temp.isNull() ){
@@ -84,18 +84,18 @@ MainWindow::MainWindow(QStringList args_i, QWidget *parent) :
 
     QAction *quit_action = new QAction( "Exit", tray_icon );            // tray menu exit option
     connect( quit_action, SIGNAL(triggered()), qApp, SLOT(quit()));     //
-
+/*
     QAction *up_action = new QAction( "update", tray_icon );                                // tray menu re- generate playlist
-    connect( up_action, SIGNAL(triggered()), this, SLOT(generate_ordered_playlist()) );     //
-
+    connect( up_action, SIGNAL(triggered()), this, SLOT(generate_ordered_playlist()) );     // (update disabeled / not propperly implemented)
+*/
     QMenu *tray_icon_menu = new QMenu("File");              // make the menu
-    tray_icon_menu->addAction( up_action );                 // add the option
+//  tray_icon_menu->addAction( up_action );                 // add the option (update disabeled / not propperly implemented)
     tray_icon_menu->addAction( quit_action );               // add the option
     tray_icon->setContextMenu( tray_icon_menu );            /// link menu with tray objekt
-    ui->menuBar->addMenu( tray_icon_menu );
-    tray_icon->show();
+    ui->menuBar->addMenu( tray_icon_menu );                 /// link menu to menu bar
+    tray_icon->show();                                      // Show the Tray-Icon
 
-    // ----------------------------------------------------------------------------------------------------------------------------------------------- Icon end
+    // ----------------------------------------------------------------------------------------------------------------------------------------------- Icon + Menu end
 
 
     setWindowTitle("Final Play");   // in windo decoration set app name
@@ -155,7 +155,7 @@ void MainWindow::switch_play_pause()    //play / pause with one button. this slo
     if(player->mediaStatus()== QMediaPlayer::NoMedia){
         return;              //can't play with no media...
     }
-    if(player->state() != QMediaPlayer::PlayingState){      //ask if playing or not (paused)
+    if(player->state() != QMediaPlayer::PlayingState){                      //ask if playing or not (paused)
         emit play();                                                        // tell it over the singal/slot connection to play
         ui->play_b->setIcon(style()->standardIcon(QStyle::SP_MediaPause));  // set the pause icon on the button
     }
@@ -197,7 +197,7 @@ void MainWindow::save_volume(){
 }
 
 
-
+// this function handels the click event on the system tray icon
 void MainWindow::tray_icon_clicked(QSystemTrayIcon::ActivationReason reason){   //ICON RIGHTCLICK MENU DISPLAY
     if(reason==QSystemTrayIcon::MiddleClick  || reason==QSystemTrayIcon::Context ){ // or context middle button is bugged TODO remove once
     emit play_pause();
