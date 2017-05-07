@@ -12,8 +12,7 @@ struct Episode {
 
 };
 
-//#include <sqlite3.h>
-//investigate sqllite
+
 
 struct Podcast {
     std::string name;

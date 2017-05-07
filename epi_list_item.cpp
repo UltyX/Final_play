@@ -24,6 +24,11 @@
     return the_clone;
     }*/
 
+
+
+
+
+//  Normal constructor
 //                              parameter          parameter given to parent class constructor first
 Epi_list_item::Epi_list_item(QTreeWidget* parent):QTreeWidgetItem(parent){
     episode=NULL;
@@ -31,7 +36,7 @@ Epi_list_item::Epi_list_item(QTreeWidget* parent):QTreeWidgetItem(parent){
     main_w = parent->parent();
 }
 
-
+// Copy Constructor
 Epi_list_item::Epi_list_item(const Epi_list_item* other):QTreeWidgetItem(other->parent()){
     setEpisode(other->episode);
     main_w = other->main_w;
@@ -40,7 +45,7 @@ Epi_list_item::Epi_list_item(const Epi_list_item* other):QTreeWidgetItem(other->
     std::cout<<"copy from other"<<std::endl;
 }
 
-
+// Assign an episode to this Episode List item. Sets the text fields so it shows what episode it has loaded.
 void Epi_list_item::setEpisode(Episode * epi_i){
       episode=epi_i;
       setText(0,QString::fromStdString(epi_i->name) );

@@ -19,13 +19,12 @@
 */
 
 
-Podcast_manager::Podcast_manager()        // Constructor
+Podcast_manager::Podcast_manager()          // Constructor
 {
-    myTimer.start();
-    qDebug()<< "manager";
-    querys = new Querys(); // must be done after DB opened
+    myTimer.start();    
+    querys = new Querys();                  // Opens the DB and prepares the querys
+
     filters <<"*.mp*"<<"*.ogg"<<"*.ogv"<<"*.flac"<<"*.wav" <<"*.oga" <<"*.ogx" <<"*.ogm" <<"*.spx"<< "*.opus"<< "*.m4a";
-    qDebug()<< "manager";
 }
 
 
@@ -97,9 +96,9 @@ void Podcast_manager::add_podcast_to_list(QString name,QString path){
 
 void Podcast_manager::add_episodes_to_(Podcast *parent_i) {
 
-    Episode * epi_new;
-    QDir folders;
-    QString path = QString::fromStdString(parent_i->dir);
+    Episode *       epi_new;    // Temp Var for episode instance
+    QDir            folders;    // The location of the episodes
+    QString         path = QString::fromStdString(parent_i->dir);
     folders.cd(path);
 
     if(!folders.exists()) {

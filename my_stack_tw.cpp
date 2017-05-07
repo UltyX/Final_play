@@ -22,6 +22,7 @@ void Raiting_tree_wg::on_podcast_list_tw_itemDoubleClicked(QTreeWidgetItem *item
     column++;                   // removes the warning "unused var"
 }
 
+// Just to test and debug.
 Raiting_tree_wg::~Raiting_tree_wg(){
     std::cout <<"stack wg got removed"<<std::endl;
 }
