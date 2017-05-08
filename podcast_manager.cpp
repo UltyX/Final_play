@@ -19,13 +19,17 @@
 */
 
 
-Podcast_manager::Podcast_manager()          // Constructor
+
+// Constructor runns once and opens the DB and defines the file types.
+Podcast_manager::Podcast_manager()
 {
     myTimer.start();    
     querys = new Querys();                  // Opens the DB and prepares the querys
 
     filters <<"*.mp*"<<"*.ogg"<<"*.ogv"<<"*.flac"<<"*.wav" <<"*.oga" <<"*.ogx" <<"*.ogm" <<"*.spx"<< "*.opus"<< "*.m4a";
 }
+
+
 
 
 
@@ -94,6 +98,7 @@ void Podcast_manager::add_podcast_to_list(QString name,QString path){
     }
 }
 
+// Creates new Episodes and initializes them. Path is taken from the parent podcast.
 void Podcast_manager::add_episodes_to_(Podcast *parent_i) {
 
     Episode *       epi_new;    // Temp Var for episode instance
@@ -110,11 +115,11 @@ void Podcast_manager::add_episodes_to_(Podcast *parent_i) {
         if(myset_epi->find(temp.fileName()) == myset_epi->end() ){ // if in set
             epi_new = new Episode;
             qDebug() << temp.fileName();
-            epi_new->name               =temp.fileName().toStdString();
-            epi_new->parent             =parent_i;
-            epi_new->dir                =temp.absoluteFilePath().toStdString();
-            epi_new->last_position      =0;                                     // sain default value
-             epi_new->listend            =false;                                 // sain default value
+            epi_new->name               = temp.fileName().toStdString();
+            epi_new->parent             = parent_i;
+            epi_new->dir                = temp.absoluteFilePath().toStdString();
+            epi_new->last_position      = 0;                                     // sain default value
+            epi_new->listend            = false;                                 // sain default value
             querys->get_time_from_DB(epi_new);
             parent_i->episodes.push_front(epi_new);
         }
@@ -123,15 +128,16 @@ void Podcast_manager::add_episodes_to_(Podcast *parent_i) {
 
 
 
+// Simple DB access -------------------------------------------------------------V
 
 
-
-
-void Podcast_manager::update_value(Podcast* podc)// update the values of a given podcast in the DB
+// update the raiting of a given podcast in the DB
+void Podcast_manager::update_value(Podcast* podc)
 {
     querys->set_DB_raiting_from(podc);
 }
 
+// update the last position of a given episode in the DB
 void Podcast_manager::save_position(Episode *epi)
 {
     querys->set_DB_time_from(epi);
@@ -148,11 +154,17 @@ int Podcast_manager::get_volume(){
 }
 // volume
 
+
+// Simple DB access -------------------------------------------------------------A
+
+
+
 // TODO remove old entrys HERE
 // Locations one entry for all tabnames saved in the DB and for each name one entry with their locations
 QStringList Podcast_manager::get_saved_tabs_names(){
     return querys->get_setting_from_DB("tab_names").split("\n", QString::SkipEmptyParts);
 }
+
 void Podcast_manager::save_locations(QString tab_name, QStringList locations){
 
     QStringList  temp_list=get_saved_tabs_names();
@@ -164,10 +176,12 @@ void Podcast_manager::save_locations(QString tab_name, QStringList locations){
     querys->set_DB_setting_from(tab_name,value);
     qDebug()<< "atempt to save "<<tab_name<<value;
 }
+
 QStringList Podcast_manager::get_locations(QString tab_name){
     qDebug()<< "atempt to load "<<querys->get_setting_from_DB(tab_name).split("\n", QString::SkipEmptyParts);
     return querys->get_setting_from_DB(tab_name).split("\n", QString::SkipEmptyParts);
 }
+
 void Podcast_manager::delete_locations(QString tab_name){
     QStringList  temp_list=get_saved_tabs_names();
     if(temp_list.contains( tab_name ) ){

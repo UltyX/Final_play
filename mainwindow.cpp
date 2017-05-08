@@ -36,18 +36,18 @@ MainWindow::MainWindow(QStringList args_i, QWidget *parent):QMainWindow(parent)
                                             // location of the executable, and icons
 
 
-
+    // Save position timer
     saver = new QTimer(this);               //save QTimer, will be connected to the Playlist_tree_wg's.
     saver->start(2000);                     //save signal ever x ms
+    // Save position timer
 
+
+    // Player
     player = new QMediaPlayer(this);        // THE MEDIA PLAYER BACKEND HERE
-
-
-
     connect(this,SIGNAL(play())         ,player ,SLOT(play()));       //play  button hooked up over main window signal emit for play/pause switching
     connect(this,SIGNAL(pause())        ,player ,SLOT(pause()));      //pause button hooked up over main window signal emit for play/pause switching
     connect(this,SIGNAL(play_pause())   ,this   ,SLOT(switch_play_pause()));    //switch between playing and pause, had to implement it myselfe. not in player as funktion available
-
+    // Player
 
     ui->previos_b->setIcon(style()->standardIcon(QStyle::SP_MediaSeekBackward));    // give it the nice icon
     ui->next_b->setIcon(style()->standardIcon(QStyle::SP_MediaSeekForward));        // give it the nice icon
@@ -55,16 +55,20 @@ MainWindow::MainWindow(QStringList args_i, QWidget *parent):QMainWindow(parent)
     connect(ui->play_b   ,SIGNAL(clicked()), this, SIGNAL(play_pause()));   // play/pause button pressed, emits just a signal
     ui->play_b->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));       // give it the nice play icon
 
+    // Volume
     ui->vol_sl->setRange(0,100); //set range 0-100%
     connect(ui->vol_sl,SIGNAL(valueChanged(int)),player,SLOT(setVolume(int)));  //volume slider moved
     connect(ui->vol_sl,SIGNAL(sliderReleased()),this,SLOT(save_volume()) );
     connect(ui->vol_sl,SIGNAL(valueChanged(int)),this,SLOT(save_volume()) );
     ui->vol_sl->setValue(manager->get_volume());   // decent iniatail value
+    //Volume
 
+
+    //Seek slider
     connect(  this, SIGNAL(seeking(qint64))        ,player,SLOT(setPosition(qint64))       );   //seek slider moved
     connect(player, SIGNAL(durationChanged(qint64)),  this,SLOT(seek_sl_setLenght(qint64)) );   //update seek slider over mainwindow slot
     connect(player, SIGNAL(positionChanged(qint64)),  this,SLOT(seek_sl_setValue (qint64)) );   //update seek slider over mainwindow slot
-
+    //Seek slider
 
 
 
@@ -101,11 +105,12 @@ MainWindow::MainWindow(QStringList args_i, QWidget *parent):QMainWindow(parent)
     setWindowTitle("Final Play");   // in windo decoration set app name
     show();                         // display main window
 
+
+
+    // Restore last session by getting the locations from the DB and reopen the stuff ?
     foreach ( QString tab_name, manager->get_saved_tabs_names() ){  //resotre tabs from DB
-        add_tab( manager->get_locations(tab_name),tab_name );
+        add_tab( manager->get_locations(tab_name),tab_name );       //
     }
-
-
 
 }
 /*
@@ -165,8 +170,8 @@ void MainWindow::switch_play_pause()    //play / pause with one button. this slo
     }
 }
 
-
-void MainWindow::seek_sl_setLenght(qint64 lenght)//since the slider got no fitting slot for set lenght compatible with player signals I wrote this over main window.  this slot..signal player
+//since the slider got no fitting slot for set lenght compatible with player signals I wrote this over main window.  this slot..signal player
+void MainWindow::seek_sl_setLenght(qint64 lenght)
 {
     ui->seek_sl->setMaximum(lenght);
     lenght=lenght/1000;
@@ -272,41 +277,46 @@ void MainWindow::add_new_on_plus_click(int index){              //TAB ADD
 
 // Main part of the Program, creates the playlist and the tab
 void MainWindow::add_tab(QStringList locations, QString tab_name){    // instance and connect new Tab
-    int number_of_items=ui->tabWidget->count()-1;
+
+    int number_of_items = ui->tabWidget->count()-1;
+
     if(tab_name.isEmpty()){
         int i =0;
-        QStringList names = manager->get_saved_tabs_names();
+        QStringList names = manager->get_saved_tabs_names();    // get the list of tabs from the db
         do{
             tab_name=QString::number(i);
             i++;
         }while(names.contains(tab_name));
     }
+
+    // If no file path is given the open folder dialog is opened in the playlist_wg constructor
     Playlist_tree_wg* new_playlist = new Playlist_tree_wg(player,manager,ui->stackedWidget,saver,locations,tab_name);
 
-    connect( new_playlist,SIGNAL( connect_me(Playlist_tree_wg*) ),this,SLOT( connect_playlist(Playlist_tree_wg*))   ); // playlist has been set current
-    connect( new_playlist,SIGNAL( disconnect_me(Playlist_tree_wg*)),this,SLOT(disconnect_playlist(Playlist_tree_wg*)));
+    connect( new_playlist   ,SIGNAL( connect_me(Playlist_tree_wg*) )        ,this           ,SLOT( connect_playlist(Playlist_tree_wg*))   );    // playlist has been set current
+    connect( new_playlist   ,SIGNAL( disconnect_me(Playlist_tree_wg*))      ,this           ,SLOT(disconnect_playlist(Playlist_tree_wg*)));
 
-    connect( new_playlist,SIGNAL( current_wg_update(Playlist_tree_wg*)  ),this,SIGNAL( current_wg_update(Playlist_tree_wg*)  )); // tell others to disconect
-    connect( this,SIGNAL( current_wg_update(Playlist_tree_wg*)  ),new_playlist,SLOT(set_current(Playlist_tree_wg*))  );         // tell others to disconect
+    connect( new_playlist   ,SIGNAL( current_wg_update(Playlist_tree_wg*)  ),this           ,SIGNAL( current_wg_update(Playlist_tree_wg*)  ));  // tell others to disconect
+    connect( this           ,SIGNAL( current_wg_update(Playlist_tree_wg*)  ),new_playlist   ,SLOT(set_current(Playlist_tree_wg*))  );          // tell others to disconect
 
     ui->tabWidget->insertTab(number_of_items, new_playlist  , tab_name);
     ui->tabWidget->setCurrentIndex(number_of_items);
-    if(current_playlist == NULL){   // set a ini playlist
-        new_playlist->set_current( new_playlist );
-        current_playlist = new_playlist;
+
+    if(current_playlist == NULL){                       // set a ini playlist if no playlist is set yet
+        new_playlist->set_current( new_playlist );      //
+        current_playlist = new_playlist;                //
         //ui->row_sort0_b->addItems(  current_playlist->get_row_names() ); // get _row for button
     }
 }
 
-void MainWindow::connect_playlist(Playlist_tree_wg* playlist_wg){ // Connect TAB
+void MainWindow::connect_playlist(Playlist_tree_wg* playlist_wg){       // Connect TAB
     //emit current_wg_update(playlist_wg);
-    connect(ui->previos_b,SIGNAL(pressed()),playlist_wg,SLOT(play_prev()) );
-    connect(ui->next_b,SIGNAL(pressed()),playlist_wg,SLOT(play_next()) );
+    connect(ui->previos_b   ,SIGNAL(pressed()),playlist_wg,SLOT(play_prev()) );
+    connect(ui->next_b      ,SIGNAL(pressed()),playlist_wg,SLOT(play_next()) );
     playlist_wg->connect_signals();
 }
-void MainWindow::disconnect_playlist(Playlist_tree_wg* playlist_wg){  // DISConnect TAB
+void MainWindow::disconnect_playlist(Playlist_tree_wg* playlist_wg){    // DISConnect TAB
     disconnect(ui->previos_b,SIGNAL(pressed()),playlist_wg,SLOT(play_prev()) );
-    disconnect(ui->next_b,SIGNAL(pressed()),playlist_wg,SLOT(play_next()) );
+    disconnect(ui->next_b   ,SIGNAL(pressed()),playlist_wg,SLOT(play_next()) );
     playlist_wg->disconnect_temp();
 }
 

@@ -12,13 +12,16 @@ Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player,Podcast_manager* Pod
     current_item            = NULL;
     raiting_stack           = new Raiting_tree_wg();            // create our very own Raiting WG
 
+    corresponing_stack_wg->addWidget(raiting_stack);            //add our raintings widget to the stack wg
 
-    this->setColumnCount(4);                                    // 2 Collums Playlist WG
-    row_names=QStringList({"Name","Last Position","Raiting","Duration"});
-    this->setHeaderLabels(row_names);                  // Lable all the things
+    // Basic setup: Number of columbs, names...
+    this->setColumnCount(4);                                                // 2 Collums Playlist WG
+    row_names = QStringList({"Name","Last Position","Raiting","Duration"}); //
+    this->setHeaderLabels(row_names);                                       // Lable all the things
+    // Basic setup ende
 
-    corresponing_stack_wg->addWidget(raiting_stack);   //add our raintings widget to the stack wg
 
+    // Ask the user for the file path for the podcast folder
     if( locations.isEmpty() ){
         dirs.append( QFileDialog::getExistingDirectory(this, tr("Open Podcast Dir"),"",QFileDialog::ShowDirsOnly) );  // ask the user for the dir of the podcasts
         manager->save_locations(tab_name,dirs);
@@ -26,21 +29,24 @@ Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player,Podcast_manager* Pod
         dirs=locations;
     }
 
-    my_timer.setSingleShot(false);
-    my_timer.setInterval(5);
-    connect(&my_timer,SIGNAL(timeout()),this,SLOT(timer_stop()) );
+    // workaround for media loaded but not skippable yet
+    my_timer.setSingleShot(false);  // do untill it worked
+    my_timer.setInterval(5);        // very 5ms try to skipp to last pos
+    connect(&my_timer       ,SIGNAL(timeout())                              ,this   ,SLOT(timer_stop()) );                                          // stream timer workaround
+    // workaround for media loaded but not skippable yet
 
-    connect(this  ,SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),this, SLOT(item_dubble_clck(QTreeWidgetItem*,int)  ) );              //
-    connect(raiting_stack,SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(on_podcast_list_tw_itemChanged(QTreeWidgetItem*,int)) );  // here because manager
+    connect(this            ,SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),this   ,SLOT(item_dubble_clck(QTreeWidgetItem*,int)  ) );              //
+    connect(raiting_stack   ,SIGNAL(itemChanged(QTreeWidgetItem*,int))      ,this   ,SLOT(on_podcast_list_tw_itemChanged(QTreeWidgetItem*,int)) );  // here because manager
 
 
-    setSortingEnabled(true);            // sorting enable
-    sortItems(2,Qt::DescendingOrder);    // sort initial
+    setSortingEnabled(true);                // sorting enable
+    sortItems(2,Qt::DescendingOrder);       // sort initial
 
-    generate_ordered_playlist();           // use the manager to run through the filesystem and add 1lvl of folders and their contents to the mix
+    generate_ordered_playlist();            // use the manager to run through the filesystem and add 1lvl of folders and their contents to the mix
 
-    // begin context menu setup                        puting things into context :D (Menu)
-    setContextMenuPolicy(Qt::CustomContextMenu);                                                // gives me in mainwondow the event when right clicked
+
+    // begin context menu setup ------------------------------------------------------------------------------------------------------------------------------------------------ V
+    setContextMenuPolicy(Qt::CustomContextMenu);                                                        // gives me in mainwondow the event when right clicked
 
     QAction *mark_as_listened = new QAction( "soft mark as listened", &playlist_contextMenu );          // create  action
     connect(mark_as_listened,SIGNAL(triggered()),this,SIGNAL(listend_soft()) );                         // connect  action to a signal with false value
@@ -56,7 +62,8 @@ Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player,Podcast_manager* Pod
     connect(reset_play_time,SIGNAL(triggered()),this,SLOT( reset_playtime_slot() ) );
     playlist_contextMenu.addAction(reset_play_time);
     connect(this,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT( on_Playlist_tree_wg_customContextMenuRequested(QPoint)) );
-    // end context menu setup
+    // end context menu setup ------------------------------------------------------------------------------------------------------------------------------------------------ A
+
 
     this->setSelectionMode(QAbstractItemView::ExtendedSelection);   // multi select
     /*
@@ -109,11 +116,12 @@ void Playlist_tree_wg::player_mediastatus_changed(QMediaPlayer::MediaStatus stat
     }
     else if( (state == QMediaPlayer::LoadedMedia )||(state == QMediaPlayer::BufferedMedia ) )
     {
-        timer_start();
-        skipp_to_last_pos();
+        timer_start();          // make sure the last pos is skipped to !
+        skipp_to_last_pos();    // try skipping to last pos now
     }
 }
 
+// unable to skipp to pos bug workaround. my timer will atempt to skipp to the last playback position untill it worked ------------------------------V
 void Playlist_tree_wg::timer_start(){
     Episode *epi;
     if( (current_item!=NULL)&&(this->topLevelItemCount()>0)){ // catch bad states
@@ -133,6 +141,8 @@ void Playlist_tree_wg::timer_stop(){
         player->setPosition(soll_time);
     }
 }
+// unable to skipp to pos bug workaround. my timer will atempt to skipp to the last playback position untill it worked ------------------------------A
+
 
 void Playlist_tree_wg::on_Playlist_tree_wg_customContextMenuRequested(const QPoint &pos)// rigthclick context menu
 {

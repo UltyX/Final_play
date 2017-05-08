@@ -41,10 +41,12 @@ class Playlist_tree_wg : public QTreeWidget // Yea thats the equivalent to how G
     std::set<QString>   myset_pod;
     Epi_list_item*      current_item;
 
-    list <Podcast*> pc; // TODO a MAP <String, Podcast*> would be better
-    QStringList row_names;
-    QTimer my_timer;
-    int soll_time;
+    list <Podcast*>     pc;                         // TODO a MAP <String, Podcast*> would be better
+    QStringList         row_names;
+
+    QTimer              my_timer;                   // used to jump to last pos untill successful
+    int                 soll_time;                  // the time my_timer is trying to set
+
 //int playerstate_old;
 
 private slots:

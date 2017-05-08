@@ -27,8 +27,8 @@ class Podcast_manager {
     QStringList filters;
     Querys* querys;
     list<Podcast*> * current_list;
-    std::set<QString> *myset_epi;
-    std::set<QString> *myset_pod;
+    std::set<QString> *myset_epi;       // used to check if a episode has allready been created
+    std::set<QString> *myset_pod;       // used to check if a podcast has allready been created
 
     void main_dir (QString path);
     void add_podcast_to_list(QString name,QString path);    //creates a new podcast in the pc list with the given path

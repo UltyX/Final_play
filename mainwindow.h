@@ -25,7 +25,7 @@
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 #include <QSystemTrayIcon>
-#include <QFileDialog>
+//#include <QFileDialog>
 #include <QTime>
 #include <QTimer>
 #include <QTreeWidgetItem>
