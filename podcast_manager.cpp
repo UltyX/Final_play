@@ -2,9 +2,9 @@
 
 
 /*
- perform the middelman duties between HDD Databas and the playlist
- go over HDD and writ it into DB
- make querys to DB and give the results to the playlist that asked
+ This class performs the middelman duties between Databas and the playlist.
+ It goes over the HDD and looks for episodes and podcasts.
+
 
  usage: Ask it to scann a folder for items / subfolder_items
  it shall add these to the DB
@@ -49,7 +49,8 @@ void Podcast_manager::apend_to_list(QDir Podcast_Dir,list<Podcast*> * the_list,s
 
 }
 
-void Podcast_manager::main_dir (QString path) { // expand to handle single files
+// find podcasts and use sub_dir to add episodes, set time and listened
+void Podcast_manager::main_dir (QString path) {
 
     QFileInfo info(path);
     QDir dir(path);
@@ -78,22 +79,22 @@ void Podcast_manager::main_dir (QString path) { // expand to handle single files
 }
 
 
-
-void Podcast_manager::add_podcast_to_list(QString name,QString path){
+// Take the path and the name of a folder and create a Podcast out of it. Also adds the Episodes in the folder to it from the add_episodes_to_() function.
+void Podcast_manager::add_podcast_to_list(QString name, QString path){
     Podcast* pod_new;
 
     if(myset_pod->find(name) == myset_pod->end() ){
         pod_new = new Podcast;
         pod_new->name     = name.toStdString();
         pod_new->dir      = path.toStdString();
-        pod_new->raiting  = -2;   // default value
+        pod_new->raiting  = -2;                             // default value
 
-        querys->get_raiting_from_DB(pod_new);     // ask DB for raiting
+        querys->get_raiting_from_DB(pod_new);               // ask DB for raiting
         current_list->push_front(pod_new);
     }
-    for(auto podi: (*current_list) ) { // easyer MAP  <Name,Podcast*> it would have been with dedicated update function TODO
+    for(auto podi: (*current_list) ) {                      // easyer MAP  <Name,Podcast*> it would have been with dedicated update function TODO
         if(QString::fromStdString(podi->name) == name ){
-            add_episodes_to_(podi);// go through the folder and add all its episodes
+            add_episodes_to_(podi);                         // go through the folder and add all its episodes
         }
     }
 }
@@ -111,8 +112,8 @@ void Podcast_manager::add_episodes_to_(Podcast *parent_i) {
         return;
     }
 
-    for (auto temp:folders.entryInfoList(filters,QDir::Files | QDir::NoDotAndDotDot)) {    //can also add sorting Here BY DATE
-        if(myset_epi->find(temp.fileName()) == myset_epi->end() ){ // if in set
+    for (auto temp:folders.entryInfoList(filters,QDir::Files | QDir::NoDotAndDotDot)) {     //can also add sorting Here BY DATE
+        if(myset_epi->find(temp.fileName()) == myset_epi->end() ){                          // if in set
             epi_new = new Episode;
             qDebug() << temp.fileName();
             epi_new->name               = temp.fileName().toStdString();
@@ -159,73 +160,52 @@ int Podcast_manager::get_volume(){
 
 
 
-// TODO remove old entrys HERE
+
 // Locations one entry for all tabnames saved in the DB and for each name one entry with their locations
 QStringList Podcast_manager::get_saved_tabs_names(){
     return querys->get_setting_from_DB("tab_names").split("\n", QString::SkipEmptyParts);
 }
 
+// Saves the location for a new tab. { Name of the tab : Location }
 void Podcast_manager::save_locations(QString tab_name, QStringList locations){
 
-    QStringList  temp_list=get_saved_tabs_names();
+    QStringList  temp_list = get_saved_tabs_names();
     if(!temp_list.contains( tab_name ) ){
         temp_list.append(tab_name);
         querys->set_DB_setting_from("tab_names",temp_list.join("\n"));
     }
     QString value = locations.join("\n");
-    querys->set_DB_setting_from(tab_name,value);
+    querys->set_DB_setting_from(tab_name, value);                           // Settings table: Tabname : Path
     qDebug()<< "atempt to save "<<tab_name<<value;
 }
 
+// Asks the DB for the stored locations that will be turened into open tabs.
 QStringList Podcast_manager::get_locations(QString tab_name){
+
     qDebug()<< "atempt to load "<<querys->get_setting_from_DB(tab_name).split("\n", QString::SkipEmptyParts);
+
     return querys->get_setting_from_DB(tab_name).split("\n", QString::SkipEmptyParts);
 }
 
+// Removes the tab path from the DB - called from mainwindow when a tab is closed
 void Podcast_manager::delete_locations(QString tab_name){
-    QStringList  temp_list=get_saved_tabs_names();
+
+    QStringList  temp_list = get_saved_tabs_names();
+
     if(temp_list.contains( tab_name ) ){
         qDebug()<<  temp_list;
-        temp_list.removeAt( temp_list.lastIndexOf(tab_name) );
+        temp_list.removeAt( temp_list.lastIndexOf(tab_name) );          // remove the given path from the temp list
         qDebug()<<  temp_list;
-        querys->set_DB_setting_from("tab_names",temp_list.join("\n"));
+        querys->set_DB_setting_from("tab_names",temp_list.join("\n"));  // overwite the tab paths with the same minus one less entry
     }
     else{
         qDebug()<< "delete_locations, bad call not item found";
     }
-    qDebug()<< "delete_locations TODO manager";
-}
-// Locations
-
-
-
-
-
-
-
-/*
-void Podcast_manager::add_from_url(QUrl where){
-
-    if(where.path()!=where.toLocalFile()){
-        qDebug()<<"warning path my missbehave Podcast_manager::add_from_url";
-        qDebug()<<where.path();
-        qDebug()<<where.toLocalFile();
-    }
-    QFileInfo info(where.toLocalFile());
-
-
-    if(info.isDir()){
-        main_dir(info.absoluteFilePath());
-        qDebug()<<"dir";
-    }else if(info.isFile()){
-
-        qDebug()<<"file/s not yet supported";
-
-    }
-    else{qDebug()<<"Podcast_manager::add_from_url unknown filetype or other error: is no file and is no dir...";}
 }
 
-*/
+
+
+
 
 // DB - I/O Functions --------------------------------------------------------------------------------------------- V
 
@@ -238,51 +218,12 @@ void Podcast_manager::add_from_url(QUrl where){
 
     Actually, SQLite will easily do 50,000 or more INSERT statements per second on an average desktop computer. But it will only do a few dozen transactions per second.
 
-    Transaction speed is limited by disk drive speed because (by default) SQLite actually waits until the data really is safely stored on the disk surface before the transaction is complete. That way, if you suddenly lose power or if your OS crashes, your data is still safe. For details, read about atomic commit in SQLite..
+    Transaction speed is limited by disk drive speed because (by default) SQLite actually waits until the data really is safely stored on the disk surface before the transaction
+    is complete. That way, if you suddenly lose power or if your OS crashes, your data is still safe. For details, read about atomic commit in SQLite..
 
-    By default, each INSERT statement is its own transaction. But if you surround multiple INSERT statements with BEGIN...COMMIT then all the inserts are grouped into a single transaction. The time needed to commit the transaction is amortized over all the enclosed insert statements and so the time per insert statement is greatly reduced.
+    By default, each INSERT statement is its own transaction. But if you surround multiple INSERT statements with BEGIN...COMMIT then all the inserts are grouped into a single transaction.
+    The time needed to commit the transaction is amortized over all the enclosed insert statements and so the time per insert statement is greatly reduced.
 
 */
 
-
-
-
-/*
-QString sqlQuery = QString("SELECT name FROM sqlite_master WHERE type =:table AND name = :tablename ");
-query.prepare(sqlQuery);
-query.bindValue(":table", "table");
-query.bindValue(":tablename", tableName);
-query.exec();
-*/
-
-/* cleaning out a list
-    for(auto xxp  : pc){              // clean up any old items first -begin
-        for (auto xxe : xxp->episodes){
-            delete xxe;
-    }
-    delete xxp;
-    }
-    pc.clear();
-*/
-
-/*
-void Podcast_manager::main_dir () {
-
-
-    if( !Podcast_Dir.exists() ) {
-        cout << "main_dir, did not find dir: "<< Podcast_Dir.absolutePath().toStdString()<< endl;
-        return;
-    }
-
-    for ( auto temp:Podcast_Dir.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries) ) {    //get all folders in location
-        if(temp.isDir()) {                                                                  //current dir is folder?
-
-               add_podcast_to_list(temp.baseName(),temp.absoluteFilePath());
-        }
-    }
-    if(pc.empty()){                                                                 // no subfolders found, asume this is the only relevant folder
-        add_podcast_to_list( Podcast_Dir.dirName() , Podcast_Dir.absolutePath() );  //use foldername as pocast name
-    }
-}
-*/
 

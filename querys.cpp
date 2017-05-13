@@ -1,5 +1,7 @@
 #include "querys.h"
-
+/*
+This class opens and accesses the sqlite Database.
+*/
 
 
 Querys::Querys()// TODO deletion, we only add and never delete, this may posibly fill the DB up a tiny bit.

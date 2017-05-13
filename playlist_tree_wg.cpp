@@ -31,9 +31,9 @@ Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player,Podcast_manager* Pod
     // Ask the user for the file path for the podcast folder
     if( locations.isEmpty() ){
         dirs.append( QFileDialog::getExistingDirectory(this, tr("Open Podcast Dir"),"",QFileDialog::ShowDirsOnly) );  // ask the user for the dir of the podcasts
-        manager->save_locations(tab_name,dirs);
+        manager->save_locations(tab_name, dirs);
     }else{
-        dirs=locations;
+        dirs = locations;
     }
 
     // workaround for media loaded but not skippable yet
