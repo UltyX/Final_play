@@ -1,4 +1,9 @@
 #include "epi_list_item.hpp"
+/*
+This class extends Q Tree Widget Item and add some Attributes and methodes to the item.
+
+*/
+
 
  /*QTreeWidgetItem *Epi_list_item::clone()const{
 

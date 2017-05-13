@@ -1,5 +1,12 @@
 #include "playlist_tree_wg.h"
 #include <Qt>
+
+/*
+This class extends the Q Tree Widget.
+It is the quasi playlist that holds the items to playback as children ( epi_list_item.cpp ).
+
+*/
+
 Playlist_tree_wg::Playlist_tree_wg(QMediaPlayer* the_player,Podcast_manager* Podcast_manager_i,
                                    QStackedWidget *stack_wg, QTimer* save_timer,QStringList locations,QString tab_name_i):QTreeWidget()
 {

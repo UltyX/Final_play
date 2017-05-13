@@ -64,9 +64,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="-982.85481"
-     inkscape:cy="2887.6464"
+     inkscape:zoom="0.175"
+     inkscape:cx="1278.5461"
+     inkscape:cy="-1363.0909"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -2885,5 +2885,49 @@
          id="tspan492"
          x="-550"
          y="-1801.0518">DB</tspan></text>
+    <g
+       id="g491"
+       transform="translate(-2.8571429,-172.85714)">
+      <rect
+         style="fill:#ffffff;stroke:#000000;stroke-width:1.06666672;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect470"
+         width="241.35912"
+         height="229.50665"
+         x="-963.27234"
+         y="-1369.2749" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.80000019px;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.06666672"
+         x="-880.65839"
+         y="-1379.2992"
+         id="text474"><tspan
+           sodipodi:role="line"
+           id="tspan472"
+           x="-880.65839"
+           y="-1379.2992"
+           style="font-size:21.33333397px;line-height:1.25;stroke-width:1.06666672">playlist</tspan></text>
+    </g>
+    <g
+       transform="translate(281.42857,-107.14285)"
+       id="g499">
+      <rect
+         y="-1369.2749"
+         x="-963.27234"
+         height="229.50665"
+         width="241.35912"
+         id="rect493"
+         style="fill:#ffffff;stroke:#000000;stroke-width:1.06666672;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         id="text497"
+         y="-1379.2992"
+         x="-880.65839"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.80000019px;line-height:0%;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.06666672"
+         xml:space="preserve"><tspan
+           style="font-size:21.33333397px;line-height:1.25;stroke-width:1.06666672"
+           y="-1379.2992"
+           x="-880.65839"
+           id="tspan495"
+           sodipodi:role="line">playlist</tspan></text>
+    </g>
   </g>
 </svg>

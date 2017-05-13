@@ -3,6 +3,14 @@
 #include <QSqlError>
 #include <QSplitter>  // alow user at some point to resize the ratio between widgetsizes TODO
 
+/*
+This class extends the Q Main Window.
+It connects the scrollbar and volumebar to the player.
+It connects the next and previos button to the current playlist.
+It creates the Menus and makes the window close to the system tray.
+*/
+
+
 MainWindow::MainWindow(QStringList args_i, QWidget *parent):QMainWindow(parent)
 // ,ui(new Ui::MainWindow) in the header is the same as ui = new Ui::MainWindow(); in the body
 {

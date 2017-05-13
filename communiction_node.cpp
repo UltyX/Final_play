@@ -1,5 +1,8 @@
 #include "communiction_node.h"
-
+/*
+Here lives the interface for terminal communication.
+Commandline arguments are given to another instance of the application via shared memory.
+*/
 
 communiction_node::communiction_node(QStringList args)
 {
