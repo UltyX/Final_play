@@ -26,7 +26,7 @@ Podcast_manager::Podcast_manager()
     myTimer.start();    
     querys = new Querys();                  // Opens the DB and prepares the querys
 
-    filters <<"*.mp*"<<"*.ogg"<<"*.ogv"<<"*.flac"<<"*.wav" <<"*.oga" <<"*.ogx" <<"*.ogm" <<"*.spx"<< "*.opus"<< "*.m4a";
+    filters <<"*.mp*"<<"*.ogg"<<"*.ogv"<<"*.flac"<<"*.wav" <<"*.oga" <<"*.ogx" <<"*.ogm" <<"*.spx"<< "*.opus"<< "*.m4a"<< "*.m4b";
 }
 
 
